@@ -5,6 +5,7 @@ const dedent = require('dedent')
 
 const exampleCode = dedent`
 @if(username)
+  <h2> Hello {{ username }} </h2>
 @endif
 `
 const tagsDef = {

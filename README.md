@@ -138,7 +138,7 @@ The output of the above text will be
         "properties": {
           "name": "mustache",
           "jsArg": " username ",
-          "raw": "{{ username }}"
+          "raw": "<h2> Hello {{ username }} </h2>"
         }
       },
       {
