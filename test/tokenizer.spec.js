@@ -667,7 +667,7 @@ test.group('Tokenizer', () => {
     ])
   })
 
-  test('Allow escaped mustache', (assert) => {
+  test('Allow safe mustache', (assert) => {
     const template = dedent`List of users are {{{
       users.map((user) => {
         return user.username
@@ -689,7 +689,7 @@ test.group('Tokenizer', () => {
         type: 'mustache',
         lineno: 1,
         properties: {
-          name: 'emustache',
+          name: 's__mustache',
           jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
           raw: template
         }
@@ -888,6 +888,88 @@ test.group('Tokenizer', () => {
       {
         type: 'newline',
         lineno: 1
+      }
+    ])
+  })
+
+  test('work fine with escaped and regular mustache braces', (assert) => {
+    const template = dedent`{{ username }}, @{{ age }}`
+
+    const tokenizer = new Tokenizer(template, tagsDef)
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'mustache',
+        lineno: 1,
+        properties: {
+          name: 'mustache',
+          jsArg: ' username ',
+          raw: '{{ username }}, @{{ age }}'
+        }
+      },
+      {
+        type: 'raw',
+        lineno: 1,
+        value: ', '
+      },
+      {
+        type: 'mustache',
+        lineno: 1,
+        properties: {
+          name: 'e__mustache',
+          jsArg: ' age ',
+          raw: ', @{{ age }}'
+        }
+      },
+      {
+        type: 'newline',
+        lineno: 1
+      }
+    ])
+  })
+
+  test('work fine with multiline escaped', (assert) => {
+    const template = dedent`{{ username }}, @{{
+      users.map((user) => user.username)
+    }}`
+
+    const tokenizer = new Tokenizer(template, tagsDef)
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'mustache',
+        lineno: 1,
+        properties: {
+          name: 'mustache',
+          jsArg: ' username ',
+          raw: '{{ username }}, @{{'
+        }
+      },
+      {
+        type: 'raw',
+        lineno: 1,
+        value: ', '
+      },
+      {
+        type: 'mustache',
+        lineno: 1,
+        properties: {
+          name: 'e__mustache',
+          jsArg: '\n  users.map((user) => user.username)\n',
+          raw: ', @{{\n  users.map((user) => user.username)\n}}'
+        }
+      },
+      {
+        type: 'newline',
+        lineno: 3
       }
     ])
   })

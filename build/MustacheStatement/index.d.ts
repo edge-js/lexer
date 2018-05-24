@@ -48,6 +48,16 @@ export default class MustacheStatement implements IStatement {
      */
     feed(line: string): void;
     /**
+     * Returns a boolean telling, if value is a safe mustache or
+     * escaped safe mustache type.
+     */
+    private isSafeMustache(value);
+    /**
+     * Returns a boolean telling, if value is a mustache or
+     * escaped mustache type.
+     */
+    private isMustache(value);
+    /**
      * Returns the name of the type of the mustache tag. If char and
      * surrounding chars, doesn't form an opening `{{` mustache
      * pattern, then `null` will be returned

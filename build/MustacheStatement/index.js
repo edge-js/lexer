@@ -52,7 +52,7 @@ class MustacheStatement {
          */
         this.ended = false;
         this.props = {
-            name: '',
+            name: null,
             jsArg: '',
             raw: '',
             textLeft: '',
@@ -105,6 +105,20 @@ class MustacheStatement {
         }
     }
     /**
+     * Returns a boolean telling, if value is a safe mustache or
+     * escaped safe mustache type.
+     */
+    isSafeMustache(value) {
+        return [Contracts_1.MustacheType.SMUSTACHE, Contracts_1.MustacheType.ESMUSTACHE].indexOf(value) !== -1;
+    }
+    /**
+     * Returns a boolean telling, if value is a mustache or
+     * escaped mustache type.
+     */
+    isMustache(value) {
+        return [Contracts_1.MustacheType.MUSTACHE, Contracts_1.MustacheType.EMUSTACHE].indexOf(value) !== -1;
+    }
+    /**
      * Returns the name of the type of the mustache tag. If char and
      * surrounding chars, doesn't form an opening `{{` mustache
      * pattern, then `null` will be returned
@@ -122,21 +136,29 @@ class MustacheStatement {
         if (!isMustache) {
             return null;
         }
+        /**
+         * If mustache braces were escaped, then we need to ignore them
+         * and set the prop name properly
+         */
+        const isEscaped = this.internalProps.textLeft.lastChar === '@';
+        if (isEscaped) {
+            this.internalProps.textLeft.pop();
+        }
         chars.shift();
         if (!chars.length) {
-            return 'mustache';
+            return isEscaped ? Contracts_1.MustacheType.EMUSTACHE : Contracts_1.MustacheType.MUSTACHE;
         }
         /**
-         * Will be considered as `escaped mustache`, when consecutive
+         * Will be considered as `safe mustache`, when consecutive
          * chars are {{{
          */
         next = chars[0].charCodeAt(0);
         const isEMustache = next === OPENING_BRACE;
         if (!isEMustache) {
-            return 'mustache';
+            return isEscaped ? Contracts_1.MustacheType.EMUSTACHE : Contracts_1.MustacheType.MUSTACHE;
         }
         chars.shift();
-        return 'emustache';
+        return isEscaped ? Contracts_1.MustacheType.ESMUSTACHE : Contracts_1.MustacheType.SMUSTACHE;
     }
     /**
      * Returns a boolean telling whether the current char and surrounding
@@ -150,7 +172,7 @@ class MustacheStatement {
          * If opening statement was detected as `emustache`, then expect
          * 2 more consecutive chars as CLOSING_BRACE
          */
-        if (this.props.name === 'emustache' && chars.length >= 2) {
+        if (this.isSafeMustache(this.props.name) && chars.length >= 2) {
             const next = chars[0].charCodeAt(0);
             const nextToNext = chars[1].charCodeAt(0);
             if (next === CLOSING_BRACE && nextToNext === CLOSING_BRACE) {
@@ -164,7 +186,7 @@ class MustacheStatement {
          * If opening statement was detected as `mustache`, then expect
          * 1 more consecutive char as CLOSING_BRACE
          */
-        if (this.props.name === 'mustache' && chars.length >= 1) {
+        if (this.isMustache(this.props.name) && chars.length >= 1) {
             const next = chars[0].charCodeAt(0);
             if (next === CLOSING_BRACE) {
                 chars.shift();

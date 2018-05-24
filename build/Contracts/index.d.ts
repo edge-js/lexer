@@ -7,6 +7,12 @@ declare enum NodeType {
     NEWLINE = "newline",
     MUSTACHE = "mustache",
 }
+declare enum MustacheType {
+    SMUSTACHE = "s__mustache",
+    ESMUSTACHE = "es__mustache",
+    MUSTACHE = "mustache",
+    EMUSTACHE = "e__mustache",
+}
 declare enum WhiteSpaceModes {
     NONE = 0,
     ALL = 1,
@@ -24,6 +30,7 @@ interface IProp {
     raw: string;
 }
 interface IMustacheProp extends IProp {
+    name: null | MustacheType;
     textLeft: string;
     textRight: string;
 }
@@ -47,3 +54,4 @@ export { NodeType as NodeType };
 export { IStatement as IStatement };
 export { IMustacheProp as IMustacheProp };
 export { WhiteSpaceModes as WhiteSpaceModes };
+export { MustacheType as MustacheType };

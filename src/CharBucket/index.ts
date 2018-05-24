@@ -41,8 +41,8 @@ import { WhiteSpaceModes } from '../Contracts'
  * ```
  */
 export default class CharBucket {
+  public lastChar: string = ''
   private chars: string = ''
-  private lastChar: string = ''
 
   constructor (private whitespace: WhiteSpaceModes) {
   }
@@ -58,19 +58,15 @@ export default class CharBucket {
 
   /**
    * Feed a char to the bucket
-   *
-   * @param  {string} char
-   *
-   * @returns void
    */
   public feed (char: string): void {
+    this.lastChar = char
+
     if (this.whitespace === WhiteSpaceModes.CONTROLLED) {
       if (whitespace(char) && whitespace(this.lastChar)) {
         return
       }
-
       this.chars += char
-      this.lastChar = char
       return
     }
 
@@ -83,5 +79,12 @@ export default class CharBucket {
     }
 
     this.chars += char
+  }
+
+  /**
+   * Remove last character from the string
+   */
+  public pop (): void {
+    this.chars = this.chars.slice(0, -1)
   }
 }

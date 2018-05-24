@@ -118,7 +118,7 @@ test.group('Mustache Statement', () => {
     assert.isTrue(statement.ended)
     assert.isNull(statement['internalProps'])
     assert.deepEqual(statement.props, {
-      name: 'emustache',
+      name: 's__mustache',
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: ' \'<span> user </span>\' ',
@@ -134,7 +134,7 @@ test.group('Mustache Statement', () => {
     assert.isFalse(statement.ended)
     assert.isNull(statement['internalProps'])
     assert.deepEqual(statement.props, {
-      name: '',
+      name: null,
       textLeft: 'Welcome dude }}}',
       textRight: '',
       jsArg: '',
@@ -160,7 +160,7 @@ test.group('Mustache Statement', () => {
     })
   })
 
-  test('mixing emustache and mustache make statement to keep on seeking', (assert) => {
+  test('mixing safe mustache and mustache make statement to keep on seeking', (assert) => {
     const statement = new MustacheStatement(1)
     statement.feed(`Welcome {{{ username }}`)
 
@@ -170,11 +170,30 @@ test.group('Mustache Statement', () => {
     assert.isNotNull(statement['internalProps'])
 
     assert.deepEqual(statement.props, {
-      name: 'emustache',
+      name: 's__mustache',
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: '',
       raw: 'Welcome {{{ username }}'
+    })
+  })
+
+  test('ignore escaped mustache braces', (assert) => {
+    const statement = new MustacheStatement(1)
+    const template = 'Welcome @{{ username }}'
+    statement.feed(template)
+
+    assert.isTrue(statement.started)
+    assert.isTrue(statement.ended)
+    assert.isFalse(statement.seeking)
+    assert.isNull(statement['internalProps'])
+
+    assert.deepEqual(statement.props, {
+      name: 'e__mustache',
+      textLeft: 'Welcome ',
+      textRight: '',
+      jsArg: ' username ',
+      raw: 'Welcome @{{ username }}'
     })
   })
 })

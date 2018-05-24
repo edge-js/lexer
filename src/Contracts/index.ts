@@ -9,6 +9,13 @@ enum NodeType {
   MUSTACHE = 'mustache',
 }
 
+enum MustacheType {
+  SMUSTACHE = 's__mustache',
+  ESMUSTACHE = 'es__mustache',
+  MUSTACHE = 'mustache',
+  EMUSTACHE = 'e__mustache',
+}
+
 enum WhiteSpaceModes { NONE, ALL, CONTROLLED }
 
 interface IStatement {
@@ -25,6 +32,7 @@ interface IProp {
 }
 
 interface IMustacheProp extends IProp {
+  name: null | MustacheType
   textLeft: string
   textRight: string
 }
@@ -52,3 +60,4 @@ export { NodeType as NodeType }
 export { IStatement as IStatement }
 export { IMustacheProp as IMustacheProp }
 export { WhiteSpaceModes as WhiteSpaceModes }
+export { MustacheType as MustacheType }

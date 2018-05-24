@@ -11,7 +11,7 @@
 * file that was distributed with this source code.
 */
 
-import { IStatement, IMustacheProp, WhiteSpaceModes } from '../Contracts'
+import { IStatement, IMustacheProp, WhiteSpaceModes, MustacheType } from '../Contracts'
 import CharBucket from '../CharBucket'
 
 /** @hidden */
@@ -55,7 +55,7 @@ export default class MustacheStatement implements IStatement {
   public ended: boolean = false
 
   public props: IMustacheProp = {
-    name: '',
+    name: null,
     jsArg: '',
     raw: '',
     textLeft: '',
@@ -116,11 +116,27 @@ export default class MustacheStatement implements IStatement {
   }
 
   /**
+   * Returns a boolean telling, if value is a safe mustache or
+   * escaped safe mustache type.
+   */
+  private isSafeMustache (value: MustacheType): boolean {
+    return [MustacheType.SMUSTACHE, MustacheType.ESMUSTACHE].indexOf(value) !== -1
+  }
+
+  /**
+   * Returns a boolean telling, if value is a mustache or
+   * escaped mustache type.
+   */
+  private isMustache (value: MustacheType): boolean {
+    return [MustacheType.MUSTACHE, MustacheType.EMUSTACHE].indexOf(value) !== -1
+  }
+
+  /**
    * Returns the name of the type of the mustache tag. If char and
    * surrounding chars, doesn't form an opening `{{` mustache
    * pattern, then `null` will be returned
    */
-  private getName (chars: string[], charCode: number): null | string {
+  private getName (chars: string[], charCode: number): null | MustacheType {
     if (charCode !== OPENING_BRACE || !chars.length) {
       return null
     }
@@ -136,24 +152,32 @@ export default class MustacheStatement implements IStatement {
       return null
     }
 
+    /**
+     * If mustache braces were escaped, then we need to ignore them
+     * and set the prop name properly
+     */
+    const isEscaped = this.internalProps.textLeft.lastChar === '@'
+    if (isEscaped) {
+      this.internalProps.textLeft.pop()
+    }
+
     chars.shift()
     if (!chars.length) {
-      return 'mustache'
+      return isEscaped ? MustacheType.EMUSTACHE : MustacheType.MUSTACHE
     }
 
     /**
-     * Will be considered as `escaped mustache`, when consecutive
+     * Will be considered as `safe mustache`, when consecutive
      * chars are {{{
      */
-
     next = chars[0].charCodeAt(0)
     const isEMustache = next === OPENING_BRACE
     if (!isEMustache) {
-      return 'mustache'
+      return isEscaped ? MustacheType.EMUSTACHE : MustacheType.MUSTACHE
     }
 
     chars.shift()
-    return 'emustache'
+    return isEscaped ? MustacheType.ESMUSTACHE : MustacheType.SMUSTACHE
   }
 
   /**
@@ -169,7 +193,7 @@ export default class MustacheStatement implements IStatement {
      * If opening statement was detected as `emustache`, then expect
      * 2 more consecutive chars as CLOSING_BRACE
      */
-    if (this.props.name === 'emustache' && chars.length >= 2) {
+    if (this.isSafeMustache(this.props.name) && chars.length >= 2) {
       const next = chars[0].charCodeAt(0)
       const nextToNext = chars[1].charCodeAt(0)
 
@@ -186,7 +210,7 @@ export default class MustacheStatement implements IStatement {
      * If opening statement was detected as `mustache`, then expect
      * 1 more consecutive char as CLOSING_BRACE
      */
-    if (this.props.name === 'mustache' && chars.length >= 1) {
+    if (this.isMustache(this.props.name) && chars.length >= 1) {
       const next = chars[0].charCodeAt(0)
 
       if (next === CLOSING_BRACE) {

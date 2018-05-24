@@ -27,8 +27,8 @@ import { WhiteSpaceModes } from '../Contracts';
  */
 export default class CharBucket {
     private whitespace;
+    lastChar: string;
     private chars;
-    private lastChar;
     constructor(whitespace: WhiteSpaceModes);
     /**
      * Returns all chars recorded so far
@@ -38,10 +38,10 @@ export default class CharBucket {
     get(): string;
     /**
      * Feed a char to the bucket
-     *
-     * @param  {string} char
-     *
-     * @returns void
      */
     feed(char: string): void;
+    /**
+     * Remove last character from the string
+     */
+    pop(): void;
 }

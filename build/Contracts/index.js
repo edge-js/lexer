@@ -11,6 +11,14 @@ var NodeType;
     NodeType["MUSTACHE"] = "mustache";
 })(NodeType || (NodeType = {}));
 exports.NodeType = NodeType;
+var MustacheType;
+(function (MustacheType) {
+    MustacheType["SMUSTACHE"] = "s__mustache";
+    MustacheType["ESMUSTACHE"] = "es__mustache";
+    MustacheType["MUSTACHE"] = "mustache";
+    MustacheType["EMUSTACHE"] = "e__mustache";
+})(MustacheType || (MustacheType = {}));
+exports.MustacheType = MustacheType;
 var WhiteSpaceModes;
 (function (WhiteSpaceModes) {
     WhiteSpaceModes[WhiteSpaceModes["NONE"] = 0] = "NONE";

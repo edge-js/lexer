@@ -42,8 +42,8 @@ const Contracts_1 = require("../Contracts");
 class CharBucket {
     constructor(whitespace) {
         this.whitespace = whitespace;
-        this.chars = '';
         this.lastChar = '';
+        this.chars = '';
     }
     /**
      * Returns all chars recorded so far
@@ -55,18 +55,14 @@ class CharBucket {
     }
     /**
      * Feed a char to the bucket
-     *
-     * @param  {string} char
-     *
-     * @returns void
      */
     feed(char) {
+        this.lastChar = char;
         if (this.whitespace === Contracts_1.WhiteSpaceModes.CONTROLLED) {
             if (whitespace(char) && whitespace(this.lastChar)) {
                 return;
             }
             this.chars += char;
-            this.lastChar = char;
             return;
         }
         if (this.whitespace === Contracts_1.WhiteSpaceModes.NONE) {
@@ -77,6 +73,12 @@ class CharBucket {
             return;
         }
         this.chars += char;
+    }
+    /**
+     * Remove last character from the string
+     */
+    pop() {
+        this.chars = this.chars.slice(0, -1);
     }
 }
 exports.default = CharBucket;
