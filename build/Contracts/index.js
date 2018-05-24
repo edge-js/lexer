@@ -23,6 +23,5 @@ var WhiteSpaceModes;
 (function (WhiteSpaceModes) {
     WhiteSpaceModes[WhiteSpaceModes["NONE"] = 0] = "NONE";
     WhiteSpaceModes[WhiteSpaceModes["ALL"] = 1] = "ALL";
-    WhiteSpaceModes[WhiteSpaceModes["CONTROLLED"] = 2] = "CONTROLLED";
 })(WhiteSpaceModes || (WhiteSpaceModes = {}));
 exports.WhiteSpaceModes = WhiteSpaceModes;

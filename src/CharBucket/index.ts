@@ -62,14 +62,6 @@ export default class CharBucket {
   public feed (char: string): void {
     this.lastChar = char
 
-    if (this.whitespace === WhiteSpaceModes.CONTROLLED) {
-      if (whitespace(char) && whitespace(this.lastChar)) {
-        return
-      }
-      this.chars += char
-      return
-    }
-
     if (this.whitespace === WhiteSpaceModes.NONE) {
       if (whitespace(char)) {
         return

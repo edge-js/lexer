@@ -25,17 +25,6 @@ test.group('CharBucket', () => {
     assert.equal(charbucket.get(), '2 +  2')
   })
 
-  test('consider only one white space when mode is controlled', (assert) => {
-    const charbucket = new CharBucket(WhiteSpaceModes.CONTROLLED)
-    charbucket.feed('2')
-    charbucket.feed(' ')
-    charbucket.feed('+')
-    charbucket.feed(' ')
-    charbucket.feed(' ')
-    charbucket.feed('2')
-    assert.equal(charbucket.get(), '2 + 2')
-  })
-
   test('consider zero whitespaces when mode is none', (assert) => {
     const charbucket = new CharBucket(WhiteSpaceModes.NONE)
     charbucket.feed('2')

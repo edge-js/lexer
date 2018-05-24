@@ -16,7 +16,6 @@ declare enum MustacheType {
 declare enum WhiteSpaceModes {
     NONE = 0,
     ALL = 1,
-    CONTROLLED = 2,
 }
 interface IStatement {
     started: boolean;

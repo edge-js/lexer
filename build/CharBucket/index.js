@@ -58,13 +58,6 @@ class CharBucket {
      */
     feed(char) {
         this.lastChar = char;
-        if (this.whitespace === Contracts_1.WhiteSpaceModes.CONTROLLED) {
-            if (whitespace(char) && whitespace(this.lastChar)) {
-                return;
-            }
-            this.chars += char;
-            return;
-        }
         if (this.whitespace === Contracts_1.WhiteSpaceModes.NONE) {
             if (whitespace(char)) {
                 return;
