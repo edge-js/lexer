@@ -1,6 +1,6 @@
 # Edge lexer
 
-Edge lexer detects tags from any markup language and converts them into tokens. Later these tokens can be used with a Javascript parser like `esprima` or `babylon` to complete a logical template engine ( this is what Edge does ).
+Edge lexer detects tags from any markup language and converts them into tokens. Later these tokens can be used with a Javascript parser like `esprima` or `babylon` to complete a logical template engine ( this is what [edge-parser](https://github.com/poppinss/edge-parser) does).
 
 This guide is an outline of the lexer.
 
@@ -100,6 +100,36 @@ The properties `Prop` is used to define meta data for a given Node. Nodes like `
 | name | The name is the subtype for a given node. For example: `if` will be the name of the `@if` tag. |
 | jsArg | The `jsArg` is the Javascript expression to evaluate |
 | raw | The raw representation of a given expression. Used for debugging purposes. |
+
+For mustache nodes props, the `name` is the type of mustache expressions. The lexer supports 4 mustache expressions.
+
+**mustache**
+
+```
+{{ username }}
+```
+
+**e__mustache (Escaped mustache)**
+
+The following expression is ignored by edge. Helpful when you want this expression to be parsed by a frontend template engine
+
+```
+@{{ username }}
+```
+
+**s__mustache (Safe mustache)**
+
+The following expression output is considered HTML safe.
+
+```
+{{{ '<p> Hello world </p>' }}}
+```
+
+**es__mustache (Escaped safe mustache)**
+
+```
+@{{{ '<p> Not touched </p>' }}}
+```
 
 ## Example
 Before reading more about the syntax and their output, let's check the following example.
@@ -272,9 +302,9 @@ At times block level tags can work fine without any body inside them. To keep th
 ## Mustache
 The mustache braces `{{` are used to define inline Javascript expressions. The lexer allows
 
-1. Multiline expressions
+1. Multiline expressions.
 2. A valid Javascript expression, that yields to a value.
-3. The return value is HTML escaped by Edge, so make sure to use `{{{ '<p>' Hello world </p> }}}` for rendering HTML nodes.
+3. The HTML output from mustache will be escaped, so make sure to use `{{{ '<p>' Hello world </p> }}}` for rendering HTML nodes.
 
 **VALID**
 
@@ -320,12 +350,14 @@ The starting curly brace, must be in one line.
 
 ## Escaping
 
-The backslash `\` is used for escaping mustache braces and tags.
+The backslash `\` has a special meaning in Javascript, that's why we make use of `@` to escape Edge statements.
 
 > There is no need to escape the `@end` statements, since they are tightly mapped with the start statements. So if a start statement doesn't exists, the end statement will be considered as a raw node.
 
+**ESCAPED**
+
 ```
-\@if(username)
+@@if(username)
 @endif
 ```
 
@@ -354,14 +386,10 @@ yields
 ]
 ```
 
-In the same fashion, the mustache braces can be escaped using `\`.
+In the same fashion, the mustache braces can be escaped using `@`.
+
+**ESCAPED**
 
 ```
-Hello \{{username}}
-```
-
-For legacy reasons, the `@` symbol can also be used for escaping mustache braces.
-
-```
-Hello @{{username}}
+Hello @{{ username }}
 ```
