@@ -483,7 +483,7 @@ test.group('Tokenizer', () => {
   })
 
   test('ignore tag when escaped', (assert) => {
-    const template = dedent`\@if(username)
+    const template = dedent`@@if(username)
     @endif
     `
 

@@ -15,11 +15,11 @@ const TagStatement_1 = require("../TagStatement");
 const MustacheStatement_1 = require("../MustacheStatement");
 const Contracts_1 = require("../Contracts");
 /** @hidden */
-const TAG_REGEX = /^(\\)?@(?:!)?(\w+)/;
+const TAG_REGEX = /^(@{1,2})(?:!)?(\w+)/;
 /** @hidden */
 const MUSTACHE_REGEX = /{{2}/;
 /** @hidden */
-const ESCAPE_REGEX = /^(\s*)\\/;
+const ESCAPE_REGEX = /^(\s*)@/;
 /** @hidden */
 const TRIM_TAG_REGEX = /^@/;
 /**
@@ -81,7 +81,7 @@ class Tokenizer {
         if (!this.tagsDef[tagName]) {
             return null;
         }
-        if (match[1]) {
+        if (match[1] === '@@') {
             return { escaped: true };
         }
         return this.tagsDef[tagName];
