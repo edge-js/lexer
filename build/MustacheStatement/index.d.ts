@@ -1,7 +1,7 @@
 /**
  * @module Lexer
  */
-import { IStatement, IMustacheProp } from '../Contracts';
+import { IMustacheProp } from '../Contracts';
 /**
  * The mustache statement parses the content inside the curly
  * braces. Since the statement can be in multiple lines, this
@@ -16,13 +16,13 @@ import { IStatement, IMustacheProp } from '../Contracts';
  * {
  *   name: 'mustache',
  *   jsArg: ' username ',
- *   raw: '{{ username }}',
+ *   raw: 'Hello {{ username }}!',
  *   textLeft: 'Hello ',
  *   textRight: '!'
  * }
  * ```
  */
-export default class MustacheStatement implements IStatement {
+export default class MustacheStatement {
     startPosition: number;
     /**
      * Whether or not the statement has been started. Statement
@@ -35,6 +35,11 @@ export default class MustacheStatement implements IStatement {
      * cannot feed more content.
      */
     ended: boolean;
+    /**
+     * Statement meta data
+     *
+     * @type {IMustacheProp}
+     */
     props: IMustacheProp;
     private firstCall;
     private currentProp;

@@ -84,7 +84,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 {
   name: <span class="hljs-string">'mustache'</span>,
   jsAr<span class="hljs-variable">g:</span> <span class="hljs-string">' username '</span>,
-  ra<span class="hljs-variable">w:</span> <span class="hljs-string">'{{ username }}'</span>,
+  ra<span class="hljs-variable">w:</span> <span class="hljs-string">'Hello {{ username }}!'</span>,
   textLef<span class="hljs-variable">t:</span> <span class="hljs-string">'Hello '</span>,
   textRigh<span class="hljs-variable">t:</span> <span class="hljs-string">'!'</span>
 }
@@ -97,12 +97,6 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<li>
 						<span class="target">MustacheStatement</span>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/lexer.istatement.html" class="tsd-signature-type">IStatement</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -120,8 +114,10 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#currentprop" class="tsd-kind-icon">current<wbr>Prop</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lexer.mustachestatement.html#ended" class="tsd-kind-icon">ended</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#firstcall" class="tsd-kind-icon">first<wbr>Call</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#internalbraces" class="tsd-kind-icon">internal<wbr>Braces</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#internalprops" class="tsd-kind-icon">internal<wbr>Props</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lexer.mustachestatement.html#props" class="tsd-kind-icon">props</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lexer.mustachestatement.html#startposition" class="tsd-kind-icon">start<wbr>Position</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lexer.mustachestatement.html#started" class="tsd-kind-icon">started</a></li>
 							</ul>
@@ -138,14 +134,10 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="lexer.mustachestatement.html#feed" class="tsd-kind-icon">feed</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#getname" class="tsd-kind-icon">get<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#isclosing" class="tsd-kind-icon">is<wbr>Closing</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#ismustache" class="tsd-kind-icon">is<wbr>Mustache</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#issafemustache" class="tsd-kind-icon">is<wbr>Safe<wbr>Mustache</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#processchar" class="tsd-kind-icon">process<wbr>Char</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.mustachestatement.html#setprop" class="tsd-kind-icon">set<wbr>Prop</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Object literals</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-parent-kind-class"><a href="lexer.mustachestatement.html#props" class="tsd-kind-icon">props</a></li>
 							</ul>
 						</section>
 					</div>
@@ -163,7 +155,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L67">MustacheStatement/index.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L67">MustacheStatement/index.ts:67</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -185,7 +177,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<div class="tsd-signature tsd-kind-icon">current<wbr>Prop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;textLeft&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L65">MustacheStatement/index.ts:65</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L65">MustacheStatement/index.ts:65</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -194,9 +186,8 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<h3>ended</h3>
 					<div class="tsd-signature tsd-kind-icon">ended<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/lexer.istatement.html">IStatement</a>.<a href="../interfaces/lexer.istatement.html#ended">ended</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L55">MustacheStatement/index.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L55">MustacheStatement/index.ts:55</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -207,12 +198,22 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="firstcall" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> first<wbr>Call</h3>
+					<div class="tsd-signature tsd-kind-icon">first<wbr>Call<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L64">MustacheStatement/index.ts:64</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="internalbraces" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> internal<wbr>Braces</h3>
 					<div class="tsd-signature tsd-kind-icon">internal<wbr>Braces<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L66">MustacheStatement/index.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L66">MustacheStatement/index.ts:66</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -222,9 +223,29 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<div class="tsd-signature tsd-kind-icon">internal<wbr>Props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L67">MustacheStatement/index.ts:67</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L67">MustacheStatement/index.ts:67</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="props" class="tsd-anchor"></a>
+					<h3>props</h3>
+					<div class="tsd-signature tsd-kind-icon">props<span class="tsd-signature-symbol">:</span> <a href="../interfaces/lexer.imustacheprop.html" class="tsd-signature-type">IMustacheProp</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L62">MustacheStatement/index.ts:62</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Statement meta data</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>type</dt>
+							<dd><p>{IMustacheProp}</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="startposition" class="tsd-anchor"></a>
@@ -232,7 +253,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<div class="tsd-signature tsd-kind-icon">start<wbr>Position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L69">MustacheStatement/index.ts:69</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L69">MustacheStatement/index.ts:69</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -241,9 +262,8 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<h3>started</h3>
 					<div class="tsd-signature tsd-kind-icon">started<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/lexer.istatement.html">IStatement</a>.<a href="../interfaces/lexer.istatement.html#started">started</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L49">MustacheStatement/index.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L49">MustacheStatement/index.ts:49</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -267,7 +287,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L194">MustacheStatement/index.ts:194</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L237">MustacheStatement/index.ts:237</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -291,9 +311,8 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/lexer.istatement.html">IStatement</a>.<a href="../interfaces/lexer.istatement.html#feed">feed</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L82">MustacheStatement/index.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L90">MustacheStatement/index.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -317,13 +336,13 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<a name="getname" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Name</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Name<span class="tsd-signature-symbol">(</span>chars<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, charCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Name<span class="tsd-signature-symbol">(</span>chars<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, charCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../enums/lexer.mustachetype.html" class="tsd-signature-type">MustacheType</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L107">MustacheStatement/index.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L146">MustacheStatement/index.ts:146</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -344,7 +363,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span>
 								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">string</span>
+								<a href="../enums/lexer.mustachetype.html" class="tsd-signature-type">MustacheType</a>
 							</h4>
 						</li>
 					</ul>
@@ -359,7 +378,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L149">MustacheStatement/index.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L194">MustacheStatement/index.ts:194</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -382,6 +401,64 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="ismustache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> is<wbr>Mustache</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Mustache<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><a href="../enums/lexer.mustachetype.html" class="tsd-signature-type">MustacheType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L137">MustacheStatement/index.ts:137</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a boolean telling, if value is a mustache or
+									escaped mustache type.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <a href="../enums/lexer.mustachetype.html" class="tsd-signature-type">MustacheType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="issafemustache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> is<wbr>Safe<wbr>Mustache</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Safe<wbr>Mustache<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><a href="../enums/lexer.mustachetype.html" class="tsd-signature-type">MustacheType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L129">MustacheStatement/index.ts:129</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a boolean telling, if value is a safe mustache or
+									escaped safe mustache type.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <a href="../enums/lexer.mustachetype.html" class="tsd-signature-type">MustacheType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="processchar" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> process<wbr>Char</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
@@ -391,7 +468,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L201">MustacheStatement/index.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L244">MustacheStatement/index.ts:244</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -422,7 +499,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L258">MustacheStatement/index.ts:258</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/MustacheStatement/index.ts#L294">MustacheStatement/index.ts:294</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -434,70 +511,6 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Object literals</h2>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class">
-					<a name="props" class="tsd-anchor"></a>
-					<h3>props</h3>
-					<div class="tsd-signature tsd-kind-icon">props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/lexer.istatement.html">IStatement</a>.<a href="../interfaces/lexer.istatement.html#props">props</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L57">MustacheStatement/index.ts:57</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="props.jsarg" class="tsd-anchor"></a>
-						<h3>js<wbr>Arg</h3>
-						<div class="tsd-signature tsd-kind-icon">js<wbr>Arg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L59">MustacheStatement/index.ts:59</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="props.name" class="tsd-anchor"></a>
-						<h3>name</h3>
-						<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L58">MustacheStatement/index.ts:58</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="props.raw" class="tsd-anchor"></a>
-						<h3>raw</h3>
-						<div class="tsd-signature tsd-kind-icon">raw<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L60">MustacheStatement/index.ts:60</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="props.textleft" class="tsd-anchor"></a>
-						<h3>text<wbr>Left</h3>
-						<div class="tsd-signature tsd-kind-icon">text<wbr>Left<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L61">MustacheStatement/index.ts:61</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="props.textright" class="tsd-anchor"></a>
-						<h3>text<wbr>Right</h3>
-						<div class="tsd-signature tsd-kind-icon">text<wbr>Right<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/MustacheStatement/index.ts#L62">MustacheStatement/index.ts:62</a></li>
-							</ul>
-						</aside>
-					</section>
 				</section>
 			</section>
 		</div>
@@ -514,6 +527,9 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../enums/lexer.mustachetype.html" class="tsd-kind-icon">Mustache<wbr>Type</a>
+					</li>
 					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../enums/lexer.nodetype.html" class="tsd-kind-icon">Node<wbr>Type</a>
 					</li>
@@ -538,10 +554,16 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 								<a href="lexer.mustachestatement.html#ended" class="tsd-kind-icon">ended</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="lexer.mustachestatement.html#firstcall" class="tsd-kind-icon">first<wbr>Call</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.mustachestatement.html#internalbraces" class="tsd-kind-icon">internal<wbr>Braces</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.mustachestatement.html#internalprops" class="tsd-kind-icon">internal<wbr>Props</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="lexer.mustachestatement.html#props" class="tsd-kind-icon">props</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="lexer.mustachestatement.html#startposition" class="tsd-kind-icon">start<wbr>Position</a>
@@ -562,13 +584,16 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 								<a href="lexer.mustachestatement.html#isclosing" class="tsd-kind-icon">is<wbr>Closing</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="lexer.mustachestatement.html#ismustache" class="tsd-kind-icon">is<wbr>Mustache</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="lexer.mustachestatement.html#issafemustache" class="tsd-kind-icon">is<wbr>Safe<wbr>Mustache</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.mustachestatement.html#processchar" class="tsd-kind-icon">process<wbr>Char</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.mustachestatement.html#setprop" class="tsd-kind-icon">set<wbr>Prop</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class">
-								<a href="lexer.mustachestatement.html#props" class="tsd-kind-icon">props</a>
 							</li>
 						</ul>
 					</li>
@@ -594,9 +619,6 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../interfaces/lexer.iprop.html" class="tsd-kind-icon">IProp</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../interfaces/lexer.istatement.html" class="tsd-kind-icon">IStatement</a>
 					</li>
 				</ul>
 			</nav>

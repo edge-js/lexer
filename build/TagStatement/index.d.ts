@@ -1,7 +1,7 @@
 /**
  * @module Lexer
  */
-import { IProp, IStatement } from '../Contracts';
+import { IProp } from '../Contracts';
 /**
  * The tag statement parses multiline content inside
  * an edge tag starting block.
@@ -20,7 +20,7 @@ import { IProp, IStatement } from '../Contracts';
  * }
  * ```
  */
-export default class TagStatement implements IStatement {
+export default class TagStatement {
     startPosition: number;
     private seekable;
     /**

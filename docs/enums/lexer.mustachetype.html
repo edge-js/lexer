@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IStatement | edge-lexer</title>
+	<title>MustacheType | edge-lexer</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -59,109 +59,73 @@
 					<a href="../modules/lexer.html">Lexer</a>
 				</li>
 				<li>
-					<a href="lexer.istatement.html">IStatement</a>
+					<a href="lexer.mustachetype.html">MustacheType</a>
 				</li>
 			</ul>
-			<h1>Interface IStatement</h1>
+			<h1>Enumeration MustacheType</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">IStatement</span>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/lexer.mustachestatement.html" class="tsd-signature-type">MustacheStatement</a></li>
-					<li><a href="../classes/lexer.tagstatement.html" class="tsd-signature-type">TagStatement</a></li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Properties</h3>
+							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="lexer.istatement.html#ended" class="tsd-kind-icon">ended</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="lexer.istatement.html#props" class="tsd-kind-icon">props</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="lexer.istatement.html#started" class="tsd-kind-icon">started</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-not-exported"><a href="lexer.istatement.html#feed" class="tsd-kind-icon">feed</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported"><a href="lexer.mustachetype.html#emustache" class="tsd-kind-icon">EMUSTACHE</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported"><a href="lexer.mustachetype.html#esmustache" class="tsd-kind-icon">ESMUSTACHE</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported"><a href="lexer.mustachetype.html#mustache" class="tsd-kind-icon">MUSTACHE</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported"><a href="lexer.mustachetype.html#smustache" class="tsd-kind-icon">SMUSTACHE</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="ended" class="tsd-anchor"></a>
-					<h3>ended</h3>
-					<div class="tsd-signature tsd-kind-icon">ended<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<h2>Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported">
+					<a name="emustache" class="tsd-anchor"></a>
+					<h3>EMUSTACHE</h3>
+					<div class="tsd-signature tsd-kind-icon">EMUSTACHE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;e__mustache&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/Contracts/index.ts#L16">Contracts/index.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/Contracts/index.ts#L16">Contracts/index.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="props" class="tsd-anchor"></a>
-					<h3>props</h3>
-					<div class="tsd-signature tsd-kind-icon">props<span class="tsd-signature-symbol">:</span> <a href="lexer.iprop.html" class="tsd-signature-type">IProp</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported">
+					<a name="esmustache" class="tsd-anchor"></a>
+					<h3>ESMUSTACHE</h3>
+					<div class="tsd-signature tsd-kind-icon">ESMUSTACHE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;es__mustache&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/Contracts/index.ts#L17">Contracts/index.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/Contracts/index.ts#L14">Contracts/index.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="started" class="tsd-anchor"></a>
-					<h3>started</h3>
-					<div class="tsd-signature tsd-kind-icon">started<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported">
+					<a name="mustache" class="tsd-anchor"></a>
+					<h3>MUSTACHE</h3>
+					<div class="tsd-signature tsd-kind-icon">MUSTACHE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;mustache&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/Contracts/index.ts#L15">Contracts/index.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/Contracts/index.ts#L15">Contracts/index.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="feed" class="tsd-anchor"></a>
-					<h3>feed</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">feed<span class="tsd-signature-symbol">(</span>line<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/Contracts/index.ts#L18">Contracts/index.ts:18</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>line: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported">
+					<a name="smustache" class="tsd-anchor"></a>
+					<h3>SMUSTACHE</h3>
+					<div class="tsd-signature tsd-kind-icon">SMUSTACHE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;s__mustache&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/Contracts/index.ts#L13">Contracts/index.ts:13</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -178,11 +142,32 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="lexer.mustachetype.html" class="tsd-kind-icon">Mustache<wbr>Type</a>
+						<ul>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported">
+								<a href="lexer.mustachetype.html#emustache" class="tsd-kind-icon">EMUSTACHE</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported">
+								<a href="lexer.mustachetype.html#esmustache" class="tsd-kind-icon">ESMUSTACHE</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported">
+								<a href="lexer.mustachetype.html#mustache" class="tsd-kind-icon">MUSTACHE</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-not-exported">
+								<a href="lexer.mustachetype.html#smustache" class="tsd-kind-icon">SMUSTACHE</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../enums/lexer.nodetype.html" class="tsd-kind-icon">Node<wbr>Type</a>
+						<a href="lexer.nodetype.html" class="tsd-kind-icon">Node<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../enums/lexer.whitespacemodes.html" class="tsd-kind-icon">White<wbr>Space<wbr>Modes</a>
+						<a href="lexer.whitespacemodes.html" class="tsd-kind-icon">White<wbr>Space<wbr>Modes</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/lexer.charbucket.html" class="tsd-kind-icon">Char<wbr>Bucket</a>
@@ -197,41 +182,20 @@
 						<a href="../classes/lexer.tokenizer.html" class="tsd-kind-icon">Tokenizer</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="lexer.iblocknode.html" class="tsd-kind-icon">IBlock<wbr>Node</a>
+						<a href="../interfaces/lexer.iblocknode.html" class="tsd-kind-icon">IBlock<wbr>Node</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="lexer.imustachenode.html" class="tsd-kind-icon">IMustache<wbr>Node</a>
+						<a href="../interfaces/lexer.imustachenode.html" class="tsd-kind-icon">IMustache<wbr>Node</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="lexer.imustacheprop.html" class="tsd-kind-icon">IMustache<wbr>Prop</a>
+						<a href="../interfaces/lexer.imustacheprop.html" class="tsd-kind-icon">IMustache<wbr>Prop</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="lexer.inode.html" class="tsd-kind-icon">INode</a>
+						<a href="../interfaces/lexer.inode.html" class="tsd-kind-icon">INode</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="lexer.iprop.html" class="tsd-kind-icon">IProp</a>
+						<a href="../interfaces/lexer.iprop.html" class="tsd-kind-icon">IProp</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="lexer.istatement.html" class="tsd-kind-icon">IStatement</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="lexer.istatement.html#ended" class="tsd-kind-icon">ended</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="lexer.istatement.html#props" class="tsd-kind-icon">props</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="lexer.istatement.html#started" class="tsd-kind-icon">started</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="lexer.istatement.html#feed" class="tsd-kind-icon">feed</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="after-current">
 				</ul>
 			</nav>
 		</div>

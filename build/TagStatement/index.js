@@ -49,17 +49,14 @@ class TagStatement {
          * `)` is detected.
          */
         this.ended = false;
-        /**
-         * Prop defines the meta data for a statement
-         */
+        this.currentProp = 'name';
+        this.internalParens = 0;
+        this.firstCall = true;
         this.props = {
             name: '',
             jsArg: '',
             raw: '',
         };
-        this.currentProp = 'name';
-        this.internalParens = 0;
-        this.firstCall = true;
         this.internalProps = {
             name: new CharBucket_1.default(Contracts_1.WhiteSpaceModes.NONE),
             jsArg: new CharBucket_1.default(Contracts_1.WhiteSpaceModes.ALL),

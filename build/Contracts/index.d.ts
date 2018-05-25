@@ -17,19 +17,15 @@ declare enum WhiteSpaceModes {
     NONE = 0,
     ALL = 1,
 }
-interface IStatement {
-    started: boolean;
-    ended: boolean;
-    props: IProp;
-    feed(line: string): void;
-}
 interface IProp {
     name: string;
     jsArg: string;
     raw: string;
 }
-interface IMustacheProp extends IProp {
-    name: null | MustacheType;
+interface IMustacheProp {
+    name?: MustacheType;
+    jsArg: string;
+    raw: string;
     textLeft: string;
     textRight: string;
 }
@@ -50,7 +46,6 @@ export { INode as INode };
 export { IBlockNode as IBlockNode };
 export { IMustacheNode as IMustacheNode };
 export { NodeType as NodeType };
-export { IStatement as IStatement };
 export { IMustacheProp as IMustacheProp };
 export { WhiteSpaceModes as WhiteSpaceModes };
 export { MustacheType as MustacheType };

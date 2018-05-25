@@ -97,12 +97,6 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/lexer.istatement.html" class="tsd-signature-type">IStatement</a></li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -118,8 +112,10 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#currentprop" class="tsd-kind-icon">current<wbr>Prop</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lexer.tagstatement.html#ended" class="tsd-kind-icon">ended</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#firstcall" class="tsd-kind-icon">first<wbr>Call</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#internalparens" class="tsd-kind-icon">internal<wbr>Parens</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#internalprops" class="tsd-kind-icon">internal<wbr>Props</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lexer.tagstatement.html#props" class="tsd-kind-icon">props</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#seekable" class="tsd-kind-icon">seekable</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lexer.tagstatement.html#startposition" class="tsd-kind-icon">start<wbr>Position</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lexer.tagstatement.html#started" class="tsd-kind-icon">started</a></li>
@@ -142,15 +138,8 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#feedseekable" class="tsd-kind-icon">feed<wbr>Seekable</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#isendofstatement" class="tsd-kind-icon">is<wbr>End<wbr>OfStatement</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#isstartofstatement" class="tsd-kind-icon">is<wbr>Start<wbr>OfStatement</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#recordraw" class="tsd-kind-icon">record<wbr>Raw</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#setprop" class="tsd-kind-icon">set<wbr>Prop</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="lexer.tagstatement.html#startstatement" class="tsd-kind-icon">start<wbr>Statement</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Object literals</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-parent-kind-class"><a href="lexer.tagstatement.html#props" class="tsd-kind-icon">props</a></li>
 							</ul>
 						</section>
 					</div>
@@ -168,7 +157,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L62">TagStatement/index.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L62">TagStatement/index.ts:62</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -193,7 +182,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<div class="tsd-signature tsd-kind-icon">current<wbr>Prop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;name&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L60">TagStatement/index.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L59">TagStatement/index.ts:59</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -202,9 +191,8 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<h3>ended</h3>
 					<div class="tsd-signature tsd-kind-icon">ended<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/lexer.istatement.html">IStatement</a>.<a href="../interfaces/lexer.istatement.html#ended">ended</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L52">TagStatement/index.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L52">TagStatement/index.ts:52</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -215,12 +203,22 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="firstcall" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> first<wbr>Call</h3>
+					<div class="tsd-signature tsd-kind-icon">first<wbr>Call<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L62">TagStatement/index.ts:62</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="internalparens" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> internal<wbr>Parens</h3>
 					<div class="tsd-signature tsd-kind-icon">internal<wbr>Parens<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L61">TagStatement/index.ts:61</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L60">TagStatement/index.ts:60</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -230,9 +228,24 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<div class="tsd-signature tsd-kind-icon">internal<wbr>Props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L62">TagStatement/index.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L61">TagStatement/index.ts:61</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="props" class="tsd-anchor"></a>
+					<h3>props</h3>
+					<div class="tsd-signature tsd-kind-icon">props<span class="tsd-signature-symbol">:</span> <a href="../interfaces/lexer.iprop.html" class="tsd-signature-type">IProp</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L57">TagStatement/index.ts:57</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Prop defines the meta data for a statement</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="seekable" class="tsd-anchor"></a>
@@ -240,7 +253,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<div class="tsd-signature tsd-kind-icon">seekable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L64">TagStatement/index.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L64">TagStatement/index.ts:64</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -250,7 +263,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<div class="tsd-signature tsd-kind-icon">start<wbr>Position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L64">TagStatement/index.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L64">TagStatement/index.ts:64</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -259,9 +272,8 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<h3>started</h3>
 					<div class="tsd-signature tsd-kind-icon">started<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/lexer.istatement.html">IStatement</a>.<a href="../interfaces/lexer.istatement.html#started">started</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L46">TagStatement/index.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L46">TagStatement/index.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -284,7 +296,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L113">TagStatement/index.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L126">TagStatement/index.ts:126</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -311,7 +323,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L148">TagStatement/index.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L161">TagStatement/index.ts:161</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -341,7 +353,7 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L178">TagStatement/index.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L191">TagStatement/index.ts:191</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -370,9 +382,8 @@ console.<span class="hljs-built_in">log</span>(statement.props)
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/lexer.istatement.html">IStatement</a>.<a href="../interfaces/lexer.istatement.html#feed">feed</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L83">TagStatement/index.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L89">TagStatement/index.ts:89</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -407,7 +418,7 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L161">TagStatement/index.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L174">TagStatement/index.ts:174</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -439,7 +450,7 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L206">TagStatement/index.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L208">TagStatement/index.ts:208</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -467,7 +478,7 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L216">TagStatement/index.ts:216</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L218">TagStatement/index.ts:218</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -495,7 +506,7 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L129">TagStatement/index.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L142">TagStatement/index.ts:142</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -524,7 +535,7 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L121">TagStatement/index.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L134">TagStatement/index.ts:134</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -544,34 +555,6 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="recordraw" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> record<wbr>Raw</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">record<wbr>Raw<span class="tsd-signature-symbol">(</span>line<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L195">TagStatement/index.ts:195</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Records the line as raw string.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>line: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="setprop" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> set<wbr>Prop</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
@@ -581,7 +564,7 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L188">TagStatement/index.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L201">TagStatement/index.ts:201</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -604,7 +587,7 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L137">TagStatement/index.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/TagStatement/index.ts#L150">TagStatement/index.ts:150</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -616,50 +599,6 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Object literals</h2>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class">
-					<a name="props" class="tsd-anchor"></a>
-					<h3>props</h3>
-					<div class="tsd-signature tsd-kind-icon">props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/lexer.istatement.html">IStatement</a>.<a href="../interfaces/lexer.istatement.html#props">props</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L54">TagStatement/index.ts:54</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="props.jsarg" class="tsd-anchor"></a>
-						<h3>js<wbr>Arg</h3>
-						<div class="tsd-signature tsd-kind-icon">js<wbr>Arg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L56">TagStatement/index.ts:56</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="props.name" class="tsd-anchor"></a>
-						<h3>name</h3>
-						<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L55">TagStatement/index.ts:55</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="props.raw" class="tsd-anchor"></a>
-						<h3>raw</h3>
-						<div class="tsd-signature tsd-kind-icon">raw<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/TagStatement/index.ts#L57">TagStatement/index.ts:57</a></li>
-							</ul>
-						</aside>
-					</section>
 				</section>
 			</section>
 		</div>
@@ -676,6 +615,9 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../enums/lexer.mustachetype.html" class="tsd-kind-icon">Mustache<wbr>Type</a>
+					</li>
 					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../enums/lexer.nodetype.html" class="tsd-kind-icon">Node<wbr>Type</a>
 					</li>
@@ -703,10 +645,16 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 								<a href="lexer.tagstatement.html#ended" class="tsd-kind-icon">ended</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="lexer.tagstatement.html#firstcall" class="tsd-kind-icon">first<wbr>Call</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.tagstatement.html#internalparens" class="tsd-kind-icon">internal<wbr>Parens</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.tagstatement.html#internalprops" class="tsd-kind-icon">internal<wbr>Props</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="lexer.tagstatement.html#props" class="tsd-kind-icon">props</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.tagstatement.html#seekable" class="tsd-kind-icon">seekable</a>
@@ -745,16 +693,10 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 								<a href="lexer.tagstatement.html#isstartofstatement" class="tsd-kind-icon">is<wbr>Start<wbr>OfStatement</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="lexer.tagstatement.html#recordraw" class="tsd-kind-icon">record<wbr>Raw</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.tagstatement.html#setprop" class="tsd-kind-icon">set<wbr>Prop</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.tagstatement.html#startstatement" class="tsd-kind-icon">start<wbr>Statement</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class">
-								<a href="lexer.tagstatement.html#props" class="tsd-kind-icon">props</a>
 							</li>
 						</ul>
 					</li>
@@ -777,9 +719,6 @@ statement.props.jsArg <span class="hljs-comment">// 2+2===4</span>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../interfaces/lexer.iprop.html" class="tsd-kind-icon">IProp</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../interfaces/lexer.istatement.html" class="tsd-kind-icon">IStatement</a>
 					</li>
 				</ul>
 			</nav>

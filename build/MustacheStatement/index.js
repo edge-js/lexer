@@ -31,7 +31,7 @@ const CLOSING_BRACE = 125;
  * {
  *   name: 'mustache',
  *   jsArg: ' username ',
- *   raw: '{{ username }}',
+ *   raw: 'Hello {{ username }}!',
  *   textLeft: 'Hello ',
  *   textRight: '!'
  * }
@@ -51,6 +51,9 @@ class MustacheStatement {
          * cannot feed more content.
          */
         this.ended = false;
+        this.firstCall = true;
+        this.currentProp = 'textLeft';
+        this.internalBraces = 0;
         this.props = {
             name: null,
             jsArg: '',
@@ -58,9 +61,6 @@ class MustacheStatement {
             textLeft: '',
             textRight: '',
         };
-        this.firstCall = true;
-        this.currentProp = 'textLeft';
-        this.internalBraces = 0;
         this.internalProps = {
             jsArg: new CharBucket_1.default(Contracts_1.WhiteSpaceModes.ALL),
             textLeft: new CharBucket_1.default(Contracts_1.WhiteSpaceModes.ALL),

@@ -11,7 +11,7 @@
 * file that was distributed with this source code.
 */
 
-import { IProp, IStatement, WhiteSpaceModes } from '../Contracts'
+import { IProp, WhiteSpaceModes } from '../Contracts'
 import CharBucket from '../CharBucket'
 
 /** @hidden */
@@ -38,7 +38,7 @@ const CLOSING_BRACE = 41
  * }
  * ```
  */
-export default class TagStatement implements IStatement {
+export default class TagStatement {
   /**
    * Whether or not the statement has been started. This flag
    * is set to true when we detect first `(`.
@@ -54,11 +54,7 @@ export default class TagStatement implements IStatement {
   /**
    * Prop defines the meta data for a statement
    */
-  public props: IProp = {
-    name: '',
-    jsArg: '',
-    raw: '',
-  }
+  public props: IProp
 
   private currentProp: string = 'name'
   private internalParens: number = 0
@@ -66,6 +62,12 @@ export default class TagStatement implements IStatement {
   private firstCall: boolean = true
 
   constructor (public startPosition: number, private seekable: boolean = true) {
+    this.props = {
+      name: '',
+      jsArg: '',
+      raw: '',
+    }
+
     this.internalProps = {
       name: new CharBucket(WhiteSpaceModes.NONE),
       jsArg: new CharBucket(WhiteSpaceModes.ALL),

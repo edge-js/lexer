@@ -79,7 +79,6 @@
 					</div>
 					<p>There are 3 modes in total</p>
 					<ol>
-						<li>CONTROLLED - Only one whitspace at a time</li>
 						<li>NONE - Zero whitespaces</li>
 						<li>ALL - All whitespaces</li>
 					</ol>
@@ -115,11 +114,11 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="lexer.charbucket.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.charbucket.html#chars" class="tsd-kind-icon">chars</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.charbucket.html#lastchar" class="tsd-kind-icon">last<wbr>Char</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lexer.charbucket.html#lastchar" class="tsd-kind-icon">last<wbr>Char</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="lexer.charbucket.html#whitespace" class="tsd-kind-icon">whitespace</a></li>
 							</ul>
 						</section>
@@ -128,6 +127,7 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="lexer.charbucket.html#feed" class="tsd-kind-icon">feed</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="lexer.charbucket.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="lexer.charbucket.html#pop" class="tsd-kind-icon">pop</a></li>
 							</ul>
 						</section>
 					</div>
@@ -145,7 +145,7 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/CharBucket/index.ts#L45">CharBucket/index.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/CharBucket/index.ts#L44">CharBucket/index.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -159,7 +159,7 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="chars" class="tsd-anchor"></a>
@@ -167,17 +167,17 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 					<div class="tsd-signature tsd-kind-icon">chars<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/CharBucket/index.ts#L44">CharBucket/index.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/CharBucket/index.ts#L44">CharBucket/index.ts:44</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="lastchar" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> last<wbr>Char</h3>
+					<h3>last<wbr>Char</h3>
 					<div class="tsd-signature tsd-kind-icon">last<wbr>Char<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/CharBucket/index.ts#L45">CharBucket/index.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/CharBucket/index.ts#L43">CharBucket/index.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,7 +187,7 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 					<div class="tsd-signature tsd-kind-icon">whitespace<span class="tsd-signature-symbol">:</span> <a href="../enums/lexer.whitespacemodes.html" class="tsd-signature-type">WhiteSpaceModes</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/CharBucket/index.ts#L47">CharBucket/index.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/CharBucket/index.ts#L46">CharBucket/index.ts:46</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -204,7 +204,7 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/CharBucket/index.ts#L66">CharBucket/index.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/CharBucket/index.ts#L61">CharBucket/index.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -216,12 +216,9 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 							<ul class="tsd-parameters">
 								<li>
 									<h5>char: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-							<p>void</p>
 						</li>
 					</ul>
 				</section>
@@ -235,7 +232,7 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poppinss/edge/blob/d45f741/packages/lexer/src/CharBucket/index.ts#L55">CharBucket/index.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/CharBucket/index.ts#L54">CharBucket/index.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -245,6 +242,28 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 							<p>string</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="pop" class="tsd-anchor"></a>
+					<h3>pop</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">pop<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/thetutlage/edge-lexer/blob/770599f/src/CharBucket/index.ts#L78">CharBucket/index.ts:78</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove last character from the string</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -264,6 +283,9 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../enums/lexer.mustachetype.html" class="tsd-kind-icon">Mustache<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../enums/lexer.nodetype.html" class="tsd-kind-icon">Node<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
@@ -280,7 +302,7 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="lexer.charbucket.html#chars" class="tsd-kind-icon">chars</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="lexer.charbucket.html#lastchar" class="tsd-kind-icon">last<wbr>Char</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
@@ -291,6 +313,9 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="lexer.charbucket.html#get" class="tsd-kind-icon">get</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="lexer.charbucket.html#pop" class="tsd-kind-icon">pop</a>
 							</li>
 						</ul>
 					</li>
@@ -319,9 +344,6 @@ charBucket.<span class="hljs-built_in">get</span>() <span class="hljs-comment">/
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../interfaces/lexer.iprop.html" class="tsd-kind-icon">IProp</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../interfaces/lexer.istatement.html" class="tsd-kind-icon">IStatement</a>
 					</li>
 				</ul>
 			</nav>

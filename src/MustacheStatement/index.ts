@@ -11,7 +11,7 @@
 * file that was distributed with this source code.
 */
 
-import { IStatement, IMustacheProp, WhiteSpaceModes, MustacheType } from '../Contracts'
+import { IMustacheProp, WhiteSpaceModes, MustacheType } from '../Contracts'
 import CharBucket from '../CharBucket'
 
 /** @hidden */
@@ -34,13 +34,13 @@ const CLOSING_BRACE = 125
  * {
  *   name: 'mustache',
  *   jsArg: ' username ',
- *   raw: '{{ username }}',
+ *   raw: 'Hello {{ username }}!',
  *   textLeft: 'Hello ',
  *   textRight: '!'
  * }
  * ```
  */
-export default class MustacheStatement implements IStatement {
+export default class MustacheStatement {
   /**
    * Whether or not the statement has been started. Statement
    * is considered as started, when opening curly braces
@@ -54,13 +54,12 @@ export default class MustacheStatement implements IStatement {
    */
   public ended: boolean = false
 
-  public props: IMustacheProp = {
-    name: null,
-    jsArg: '',
-    raw: '',
-    textLeft: '',
-    textRight: '',
-  }
+  /**
+   * Statement meta data
+   *
+   * @type {IMustacheProp}
+   */
+  public props: IMustacheProp
 
   private firstCall: boolean = true
   private currentProp: string = 'textLeft'
@@ -68,6 +67,14 @@ export default class MustacheStatement implements IStatement {
   private internalProps: null | { jsArg: CharBucket, textLeft: CharBucket, textRight: CharBucket }
 
   constructor (public startPosition: number) {
+    this.props = {
+      name: null,
+      jsArg: '',
+      raw: '',
+      textLeft: '',
+      textRight: '',
+    }
+
     this.internalProps = {
       jsArg: new CharBucket(WhiteSpaceModes.ALL),
       textLeft: new CharBucket(WhiteSpaceModes.ALL),

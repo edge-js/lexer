@@ -22,9 +22,8 @@ import { WhiteSpaceModes } from '../Contracts'
  *
  * There are 3 modes in total
  *
- * 1. CONTROLLED - Only one whitspace at a time
- * 2. NONE - Zero whitespaces
- * 3. ALL - All whitespaces
+ * 1. NONE - Zero whitespaces
+ * 2. ALL - All whitespaces
  *
  * ```
  * const charBucket = new CharBucket(WhiteSpaceModes.NONE)

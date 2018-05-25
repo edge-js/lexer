@@ -19,9 +19,6 @@ import { IProp, INode, IBlockNode, NodeType, IMustacheProp, IMustacheNode } from
 const TAG_REGEX = /^(\\)?@(?:!)?(\w+)/
 
 /** @hidden */
-const IGNORED_MUSTACHE_REGEX = /@{{2}/
-
-/** @hidden */
 const MUSTACHE_REGEX = /{{2}/
 
 /** @hidden */
@@ -139,7 +136,7 @@ export default class Tokenizer {
   /**
    * Returns the mustache node
    */
-  private getMustacheNode (properties: IProp, lineno: number): IMustacheNode {
+  private getMustacheNode (properties: IProp | IMustacheProp, lineno: number): IMustacheNode {
     return {
       type: NodeType.MUSTACHE,
       lineno,

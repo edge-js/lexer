@@ -17,8 +17,6 @@ const Contracts_1 = require("../Contracts");
 /** @hidden */
 const TAG_REGEX = /^(\\)?@(?:!)?(\w+)/;
 /** @hidden */
-const IGNORED_MUSTACHE_REGEX = /@{{2}/;
-/** @hidden */
 const MUSTACHE_REGEX = /{{2}/;
 /** @hidden */
 const ESCAPE_REGEX = /^(\s*)\\/;
