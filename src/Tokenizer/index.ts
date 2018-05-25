@@ -13,10 +13,19 @@
 
 import BlockStatement from '../TagStatement'
 import MustacheStatement from '../MustacheStatement'
-import { IProp, INode, IBlockNode, NodeType, IMustacheProp, IMustacheNode } from '../Contracts'
+
+import {
+  IProp,
+  INode,
+  IBlockNode,
+  NodeType,
+  IMustacheProp,
+  IMustacheNode,
+  ITagDefination,
+} from '../Contracts'
 
 /** @hidden */
-const TAG_REGEX = /^(@{1,2})(?:!)?(\w+)/
+const TAG_REGEX = /^(@{1,2})(!)?(\w+)/
 
 /** @hidden */
 const MUSTACHE_REGEX = /{{2}/
@@ -41,7 +50,7 @@ export default class Tokenizer {
   private line: number = 0
   private openedTags: IBlockNode[] = []
 
-  constructor (private template: string, private tagsDef: object) {
+  constructor (private template: string, private tagsDef: { key: string, ITagDefination }) {
   }
 
   /**
@@ -76,28 +85,49 @@ export default class Tokenizer {
       this.consumeNode(this.getRawNode(raw))
       this.consumeNode(this.getBlankLineNode())
     }
+
+    /**
+     * Throw exception when there are opened tags
+     */
+    if (this.openedTags.length) {
+      const message = `Unclosed tag ${this.openedTags[this.openedTags.length - 1].properties.name}`
+      throw new Error(message)
+    }
   }
 
   /**
    * Returns the tag defination when line matches the regex
    * of a tag.
    */
-  private getTag (line: string): null | { block?: boolean, seekable?: boolean, escaped?: boolean } {
+  private getTag (line: string): null | ITagDefination {
     const match = TAG_REGEX.exec(line.trim())
     if (!match) {
       return null
     }
 
-    const tagName = match[2]
+    const tagName = match[3]
+
+    /**
+     * Makes sure the tag exists in the tags defination
+     */
     if (!this.tagsDef[tagName]) {
       return null
     }
 
+    /**
+     * Tag is escaped
+     */
     if (match[1] === '@@') {
-      return { escaped: true }
+      return {
+        escaped: true,
+        block: false,
+        selfclosed: false,
+        seekable: false,
+      }
     }
 
-    return this.tagsDef[tagName]
+    const defination = this.tagsDef[tagName]
+    return Object.assign({ selfclosed: !!match[2] }, defination)
   }
 
   /**
@@ -201,13 +231,13 @@ export default class Tokenizer {
       return
     }
 
-    const { props, startPosition } = this.blockStatement
+    const { props, tagDef, startPosition } = this.blockStatement
 
     /**
      * If tag is a block level, then we added it to the openedTags
      * array, otherwise we add it to the tokens.
      */
-    if (this.tagsDef[props.name].block) {
+    if (tagDef.block && !tagDef.selfclosed) {
       this.openedTags.push(this.getTagNode(props, startPosition))
     } else {
       this.consumeNode(this.getTagNode(props, startPosition))
@@ -291,7 +321,7 @@ export default class Tokenizer {
      * Text is a tag
      */
     if (tag) {
-      this.blockStatement = new BlockStatement(this.line, tag.seekable)
+      this.blockStatement = new BlockStatement(this.line, tag)
       this.feedTextToBlockStatement(text.trim().replace(TRIM_TAG_REGEX, ''))
       return
     }

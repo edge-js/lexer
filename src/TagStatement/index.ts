@@ -11,7 +11,7 @@
 * file that was distributed with this source code.
 */
 
-import { IProp, WhiteSpaceModes } from '../Contracts'
+import { IProp, WhiteSpaceModes, ITagDefination } from '../Contracts'
 import CharBucket from '../CharBucket'
 
 /** @hidden */
@@ -61,7 +61,7 @@ export default class TagStatement {
   private internalProps: null | { name: CharBucket, jsArg: CharBucket }
   private firstCall: boolean = true
 
-  constructor (public startPosition: number, private seekable: boolean = true) {
+  constructor (public startPosition: number, public tagDef: ITagDefination) {
     this.props = {
       name: '',
       jsArg: '',
@@ -107,7 +107,7 @@ export default class TagStatement {
      * If statement doesn't seek for args, then end it
      * write their
      */
-    if (!this.seekable) {
+    if (!this.tagDef.seekable) {
       this.feedNonSeekable(line)
       return
     }
@@ -178,6 +178,13 @@ export default class TagStatement {
 
     if (charCode === CLOSING_BRACE) {
       this.internalParens--
+    }
+
+    /**
+     * Ignore ! when tag is selfclosed and currentProp is name
+     */
+    if (this.currentProp === 'name' && char === '!' && this.tagDef.selfclosed) {
+      return
     }
 
     this.internalProps[this.currentProp].feed(char)

@@ -1,7 +1,7 @@
 /**
  * @module Lexer
  */
-import { IProp } from '../Contracts';
+import { IProp, ITagDefination } from '../Contracts';
 /**
  * The tag statement parses multiline content inside
  * an edge tag starting block.
@@ -22,7 +22,7 @@ import { IProp } from '../Contracts';
  */
 export default class TagStatement {
     startPosition: number;
-    private seekable;
+    tagDef: ITagDefination;
     /**
      * Whether or not the statement has been started. This flag
      * is set to true when we detect first `(`.
@@ -41,7 +41,7 @@ export default class TagStatement {
     private internalParens;
     private internalProps;
     private firstCall;
-    constructor(startPosition: number, seekable?: boolean);
+    constructor(startPosition: number, tagDef: ITagDefination);
     /**
      * Feed a new line to be tokenized into a statement.
      * This method will collapse all whitespaces.

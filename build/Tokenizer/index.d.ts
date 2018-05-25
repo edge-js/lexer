@@ -14,7 +14,10 @@ export default class Tokenizer {
     private mustacheStatement;
     private line;
     private openedTags;
-    constructor(template: string, tagsDef: object);
+    constructor(template: string, tagsDef: {
+        key: string;
+        ITagDefination;
+    });
     /**
      * Parses the AST
      */

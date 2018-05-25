@@ -13,9 +13,14 @@ const test = require('japa')
 const dedent = require('dedent')
 const TagStatement = require('../build/TagStatement').default
 
+const tagDef  = {
+  seekable: true,
+  selfclosed: false
+}
+
 test.group('Statement', () => {
   test('tokenize all chars of a statement', (assert) => {
-    const statement = new TagStatement(1)
+    const statement = new TagStatement(1, tagDef)
     statement.feed('if(username)')
 
     assert.equal(statement.ended, true)
@@ -31,7 +36,7 @@ test.group('Statement', () => {
   })
 
   test('tokenize chars when it has multiple parens', (assert) => {
-    const statement = new TagStatement(1)
+    const statement = new TagStatement(1, tagDef)
     statement.feed('if((2 + 2))')
 
     assert.equal(statement.ended, true)
@@ -46,20 +51,20 @@ test.group('Statement', () => {
   })
 
   test('throw error when trying to feed after statement has been ended', (assert) => {
-    const statement = new TagStatement(1)
+    const statement = new TagStatement(1, tagDef)
     const fn = () => statement.feed('if((2 + 2)) then run')
     assert.throw(fn, 'Unexpected token { then run}. Write in a new line')
   })
 
   test('throw error when calling feed multiple times and statement is ended', (assert) => {
-    const statement = new TagStatement(1)
+    const statement = new TagStatement(1, tagDef)
     statement.feed('if((2 + 2))')
     const fn = () => statement.feed('then run')
     assert.throw(fn, 'Unexpected token {then run}. Write in a new line')
   })
 
   test('parse statement into tokens when feeded in multiple lines', (assert) => {
-    const statement = new TagStatement(1)
+    const statement = new TagStatement(1, tagDef)
     const template = dedent`if (
       2 + 2 === 4
     )`
@@ -82,7 +87,7 @@ test.group('Statement', () => {
   })
 
   test('keep ended as false when there are no parens', (assert) => {
-    const statement = new TagStatement(1)
+    const statement = new TagStatement(1, tagDef)
     statement.feed('if')
 
     assert.equal(statement.ended, false)
@@ -97,7 +102,7 @@ test.group('Statement', () => {
   })
 
   test('keep ended as false when there are no closing parens', (assert) => {
-    const statement = new TagStatement(1)
+    const statement = new TagStatement(1, tagDef)
     statement.feed('if(')
 
     assert.equal(statement.ended, false)
@@ -113,13 +118,13 @@ test.group('Statement', () => {
   })
 
   test('throw error when there is a closing paren without opening paren', (assert) => {
-    const statement = new TagStatement(1)
+    const statement = new TagStatement(1, tagDef)
     const fn = () => statement.feed('if)')
     assert.throw(fn, 'Unexpected token ). Wrap statement inside ()')
   })
 
   test('do not seek statements which are not seekable', (assert) => {
-    const statement = new TagStatement(1, false)
+    const statement = new TagStatement(1, Object.assign({}, tagDef, { seekable: false }))
     statement.feed('else')
 
     assert.equal(statement.ended, true)
@@ -134,7 +139,7 @@ test.group('Statement', () => {
   })
 
   test('trim whitespaces from statements which are not seekable', (assert) => {
-    const statement = new TagStatement(1, false)
+    const statement = new TagStatement(1, Object.assign({}, tagDef, { seekable: false }))
     statement.feed('  else  ')
 
     assert.equal(statement.ended, true)
@@ -149,7 +154,7 @@ test.group('Statement', () => {
   })
 
   test('record whitespaces for multi line statements', (assert) => {
-    const statement = new TagStatement(1)
+    const statement = new TagStatement(1, tagDef)
     const template = dedent`if(
       users.find((user) => {
         return user.username === 'virk'

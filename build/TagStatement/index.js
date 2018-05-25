@@ -36,9 +36,9 @@ const CLOSING_BRACE = 41;
  * ```
  */
 class TagStatement {
-    constructor(startPosition, seekable = true) {
+    constructor(startPosition, tagDef) {
         this.startPosition = startPosition;
-        this.seekable = seekable;
+        this.tagDef = tagDef;
         /**
          * Whether or not the statement has been started. This flag
          * is set to true when we detect first `(`.
@@ -94,7 +94,7 @@ class TagStatement {
          * If statement doesn't seek for args, then end it
          * write their
          */
-        if (!this.seekable) {
+        if (!this.tagDef.seekable) {
             this.feedNonSeekable(line);
             return;
         }
@@ -157,6 +157,12 @@ class TagStatement {
         }
         if (charCode === CLOSING_BRACE) {
             this.internalParens--;
+        }
+        /**
+         * Ignore ! when tag is selfclosed and currentProp is name
+         */
+        if (this.currentProp === 'name' && char === '!' && this.tagDef.selfclosed) {
+            return;
         }
         this.internalProps[this.currentProp].feed(char);
     }

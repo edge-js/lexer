@@ -15,7 +15,7 @@ const TagStatement_1 = require("../TagStatement");
 const MustacheStatement_1 = require("../MustacheStatement");
 const Contracts_1 = require("../Contracts");
 /** @hidden */
-const TAG_REGEX = /^(@{1,2})(?:!)?(\w+)/;
+const TAG_REGEX = /^(@{1,2})(!)?(\w+)/;
 /** @hidden */
 const MUSTACHE_REGEX = /{{2}/;
 /** @hidden */
@@ -67,6 +67,13 @@ class Tokenizer {
             this.consumeNode(this.getRawNode(raw));
             this.consumeNode(this.getBlankLineNode());
         }
+        /**
+         * Throw exception when there are opened tags
+         */
+        if (this.openedTags.length) {
+            const message = `Unclosed tag ${this.openedTags[this.openedTags.length - 1].properties.name}`;
+            throw new Error(message);
+        }
     }
     /**
      * Returns the tag defination when line matches the regex
@@ -77,14 +84,26 @@ class Tokenizer {
         if (!match) {
             return null;
         }
-        const tagName = match[2];
+        const tagName = match[3];
+        /**
+         * Makes sure the tag exists in the tags defination
+         */
         if (!this.tagsDef[tagName]) {
             return null;
         }
+        /**
+         * Tag is escaped
+         */
         if (match[1] === '@@') {
-            return { escaped: true };
+            return {
+                escaped: true,
+                block: false,
+                selfclosed: false,
+                seekable: false,
+            };
         }
-        return this.tagsDef[tagName];
+        const defination = this.tagsDef[tagName];
+        return Object.assign({ selfclosed: !!match[2] }, defination);
     }
     /**
      * Returns the node for a tag
@@ -176,12 +195,12 @@ class Tokenizer {
         if (!this.isSeeked(this.blockStatement)) {
             return;
         }
-        const { props, startPosition } = this.blockStatement;
+        const { props, tagDef, startPosition } = this.blockStatement;
         /**
          * If tag is a block level, then we added it to the openedTags
          * array, otherwise we add it to the tokens.
          */
-        if (this.tagsDef[props.name].block) {
+        if (tagDef.block && !tagDef.selfclosed) {
             this.openedTags.push(this.getTagNode(props, startPosition));
         }
         else {
@@ -256,7 +275,7 @@ class Tokenizer {
          * Text is a tag
          */
         if (tag) {
-            this.blockStatement = new TagStatement_1.default(this.line, tag.seekable);
+            this.blockStatement = new TagStatement_1.default(this.line, tag);
             this.feedTextToBlockStatement(text.trim().replace(TRIM_TAG_REGEX, ''));
             return;
         }

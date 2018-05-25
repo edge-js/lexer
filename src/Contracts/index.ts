@@ -47,6 +47,13 @@ interface IMustacheNode extends INode {
   properties: IProp
 }
 
+interface ITagDefination {
+  block: boolean
+  selfclosed: boolean
+  escaped: boolean
+  seekable: boolean
+}
+
 export { IProp as IProp }
 export { INode as INode }
 export { IBlockNode as IBlockNode }
@@ -55,3 +62,4 @@ export { NodeType as NodeType }
 export { IMustacheProp as IMustacheProp }
 export { WhiteSpaceModes as WhiteSpaceModes }
 export { MustacheType as MustacheType }
+export { ITagDefination as ITagDefination }

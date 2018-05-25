@@ -25,6 +25,10 @@ const tagsDef = {
   include: {
     block: false,
     seekable: true
+  },
+  each: {
+    block: true,
+    seekable: true
   }
 }
 
@@ -562,202 +566,32 @@ test.group('Tokenizer', () => {
     ])
   })
 
-  test('process mustache blocks', (assert) => {
-    const template = 'Hello {{ username }}'
-
-    const tokenizer = new Tokenizer(template, tagsDef)
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'raw',
-        lineno: 1,
-        value: 'Hello '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' username ',
-          raw: template
-        }
-      },
-      {
-        type: 'newline',
-        lineno: 1
-      }
-    ])
-  })
-
-  test('process mustache blocks with text around it', (assert) => {
-    const template = 'Hello {{ username }}!'
-
-    const tokenizer = new Tokenizer(template, tagsDef)
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'raw',
-        lineno: 1,
-        value: 'Hello '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' username ',
-          raw: template
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 1,
-        value: '!'
-      },
-      {
-        type: 'newline',
-        lineno: 1
-      }
-    ])
-  })
-
-  test('parse multiline mustache', (assert) => {
-    const template = dedent`List of users are {{
-      users.map((user) => {
-        return user.username
-      }).join(', ')
-    }}.`
-
-    const tokenizer = new Tokenizer(template, tagsDef)
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'raw',
-        lineno: 1,
-        value: 'List of users are '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
-          raw: template
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 5,
-        value: '.'
-      },
-      {
-        type: 'newline',
-        lineno: 5
-      }
-    ])
-  })
-
-  test('Allow safe mustache', (assert) => {
-    const template = dedent`List of users are {{{
-      users.map((user) => {
-        return user.username
-      }).join(', ')
-    }}}.`
-
-    const tokenizer = new Tokenizer(template, tagsDef)
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'raw',
-        lineno: 1,
-        value: 'List of users are '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 's__mustache',
-          jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
-          raw: template
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 5,
-        value: '.'
-      },
-      {
-        type: 'newline',
-        lineno: 5
-      }
-    ])
-  })
-
-  test('parse multiple mustache statements in a single line', (assert) => {
-    const template = dedent`Hello {{ username }}, your age is {{ age }}`
-
-    const tokenizer = new Tokenizer(template, tagsDef)
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'raw',
-        lineno: 1,
-        value: 'Hello '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' username ',
-          raw: template
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 1,
-        value: ', your age is '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' age ',
-          raw: ', your age is {{ age }}'
-        }
-      },
-      {
-        type: 'newline',
-        lineno: 1
-      }
-    ])
-  })
-
-  test('parse multiple mustache statements in multiple lines', (assert) => {
+  test('throw exception when there are unclosed tags', (assert) => {
     const template = dedent`
-    Hello {{ username }}, your friends are {{
-      users.map((user) => {
-        return user.username
-      }).join(', ')
-    }}!
-    Bye
+      @if(username)
+        Hello world
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef)
+    const fn = () => tokenizer.parse()
+    assert.throw(fn, 'Unclosed tag if')
+  })
+
+  test('throw exception when there are unclosed nested tags', (assert) => {
+    const template = dedent`
+      @if(username)
+        @each(user in users)
+      @endif
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef)
+    const fn = () => tokenizer.parse()
+    assert.throw(fn, 'Unclosed tag each')
+  })
+
+  test('work fine if a tag is self closed', (assert) => {
+    const template = dedent`
+    @!each(user in users, include = 'user')
     `
 
     const tokenizer = new Tokenizer(template, tagsDef)
@@ -765,70 +599,16 @@ test.group('Tokenizer', () => {
 
     assert.isNull(tokenizer['blockStatement'])
     assert.isNull(tokenizer['mustacheStatement'])
-
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
-        lineno: 1,
-        value: 'Hello '
-      },
-      {
-        type: 'mustache',
+        type: 'block',
         lineno: 1,
         properties: {
-          name: 'mustache',
-          jsArg: ' username ',
-          raw: 'Hello {{ username }}, your friends are {{'
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 1,
-        value: ', your friends are '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
-          raw: template.replace('Hello {{ username }}', '').replace('\nBye', '')
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 5,
-        value: '!'
-      },
-      {
-        type: 'newline',
-        lineno: 5
-      },
-      {
-        type: 'raw',
-        lineno: 6,
-        value: 'Bye'
-      },
-      {
-        type: 'newline',
-        lineno: 6
-      }
-    ])
-  })
-
-  test('convert incomplete mustache statements to raw string', (assert) => {
-    const template = 'Hello {{ username'
-
-    const tokenizer = new Tokenizer(template, tagsDef)
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'raw',
-        lineno: 1,
-        value: 'Hello {{ username'
+          name: 'each',
+          raw: template.replace('@', ''),
+          jsArg: `user in users, include = 'user'`
+        },
+        children: []
       },
       {
         type: 'newline',
@@ -837,138 +617,34 @@ test.group('Tokenizer', () => {
     ])
   })
 
-  test('parse 3 mustache statements in a single line', (assert) => {
-    const template = dedent`{{ username }}, {{ age }} and {{ state }}`
+  test('work fine when bang is defined in tag jsArg', (assert) => {
+    const template = dedent`
+    @if(!user)
+    @endif
+    `
 
     const tokenizer = new Tokenizer(template, tagsDef)
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
     assert.isNull(tokenizer['mustacheStatement'])
-
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'mustache',
+        type: 'block',
         lineno: 1,
         properties: {
-          name: 'mustache',
-          jsArg: ' username ',
-          raw: '{{ username }}, {{ age }} and {{ state }}'
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 1,
-        value: ', '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' age ',
-          raw: ', {{ age }} and {{ state }}'
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 1,
-        value: ' and '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' state ',
-          raw: ' and {{ state }}'
-        }
+          name: 'if',
+          raw: 'if(!user)',
+          jsArg: `!user`
+        },
+        children: [{
+          type: 'newline',
+          lineno: 1
+        }]
       },
       {
         type: 'newline',
-        lineno: 1
-      }
-    ])
-  })
-
-  test('work fine with escaped and regular mustache braces', (assert) => {
-    const template = dedent`{{ username }}, @{{ age }}`
-
-    const tokenizer = new Tokenizer(template, tagsDef)
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' username ',
-          raw: '{{ username }}, @{{ age }}'
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 1,
-        value: ', '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'e__mustache',
-          jsArg: ' age ',
-          raw: ', @{{ age }}'
-        }
-      },
-      {
-        type: 'newline',
-        lineno: 1
-      }
-    ])
-  })
-
-  test('work fine with multiline escaped', (assert) => {
-    const template = dedent`{{ username }}, @{{
-      users.map((user) => user.username)
-    }}`
-
-    const tokenizer = new Tokenizer(template, tagsDef)
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' username ',
-          raw: '{{ username }}, @{{'
-        }
-      },
-      {
-        type: 'raw',
-        lineno: 1,
-        value: ', '
-      },
-      {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'e__mustache',
-          jsArg: '\n  users.map((user) => user.username)\n',
-          raw: ', @{{\n  users.map((user) => user.username)\n}}'
-        }
-      },
-      {
-        type: 'newline',
-        lineno: 3
+        lineno: 2
       }
     ])
   })
