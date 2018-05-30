@@ -1,0 +1,32 @@
+{
+  "name": "edge-lexer",
+  "version": "1.0.0",
+  "description": "Parses raw markup files to converts them to Tokens",
+  "main": "index.js",
+  "scripts": {
+    "test": "builder run npm:test",
+    "lint": "builder run npm:lint",
+    "build": "builder run npm:build"
+  },
+  "files": [
+    "index.js",
+    "build",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "keywords": [
+    "edge",
+    "template",
+    "template-engine"
+  ],
+  "author": "virk",
+  "license": "MIT",
+  "devDependencies": {
+    "adonis-ts-arche": "^1.0.5",
+    "builder": "^4.0.0",
+    "dedent": "^0.7.0"
+  },
+  "dependencies": {
+    "is-whitespace-character": "^1.0.2"
+  }
+}
