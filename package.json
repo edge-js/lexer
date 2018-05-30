@@ -4,10 +4,9 @@
   "description": "Parses raw markup files to converts them to Tokens",
   "main": "index.js",
   "scripts": {
-    "pretest": "tsc && npm run lint",
-    "test": "japa",
-    "lint": "tslint --project tslint.json",
-    "build": "tsc && typedoc --out docs"
+    "test": "builder run npm:test",
+    "lint": "builder run npm:lint",
+    "build": "builder run npm:build"
   },
   "keywords": [
     "edge",
@@ -17,14 +16,9 @@
   "author": "virk",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^10.1.2",
-    "dedent": "^0.7.0",
-    "japa": "^1.0.6",
-    "japa-cli": "^1.0.1",
-    "tslint": "^5.10.0",
-    "typedoc": "^0.11.1",
-    "typedoc-plugin-external-module-name": "^1.1.1",
-    "typescript": "^2.8.3"
+    "adonis-ts-arche": "^1.0.5",
+    "builder": "^4.0.0",
+    "dedent": "^0.7.0"
   },
   "dependencies": {
     "is-whitespace-character": "^1.0.2"
