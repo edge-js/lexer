@@ -24,7 +24,7 @@ import { WhiteSpaceModes } from '../Contracts';
  * charBucket.get() // hi!
  * ```
  */
-export default class CharBucket {
+declare class CharBucket {
     private whitespace;
     lastChar: string;
     private chars;
@@ -44,3 +44,4 @@ export default class CharBucket {
      */
     pop(): void;
 }
+export = CharBucket;

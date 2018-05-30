@@ -2,7 +2,6 @@
 /**
  * @module Lexer
  */
-Object.defineProperty(exports, "__esModule", { value: true });
 /*
 * edge-lexer
 *
@@ -12,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 * file that was distributed with this source code.
 */
 const Contracts_1 = require("../Contracts");
-const CharBucket_1 = require("../CharBucket");
+const CharBucket = require("../CharBucket");
 /** @hidden */
 const OPENING_BRACE = 40;
 /** @hidden */
@@ -58,8 +57,8 @@ class TagStatement {
             raw: '',
         };
         this.internalProps = {
-            name: new CharBucket_1.default(Contracts_1.WhiteSpaceModes.NONE),
-            jsArg: new CharBucket_1.default(Contracts_1.WhiteSpaceModes.ALL),
+            name: new CharBucket(Contracts_1.WhiteSpaceModes.NONE),
+            jsArg: new CharBucket(Contracts_1.WhiteSpaceModes.ALL),
         };
     }
     /**
@@ -217,4 +216,4 @@ class TagStatement {
         }
     }
 }
-exports.default = TagStatement;
+module.exports = TagStatement;

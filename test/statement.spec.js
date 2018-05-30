@@ -11,11 +11,13 @@
 
 const test = require('japa')
 const dedent = require('dedent')
-const TagStatement = require('../build/TagStatement').default
+const TagStatement = require('../build/TagStatement')
 
 const tagDef  = {
   seekable: true,
-  selfclosed: false
+  selfclosed: false,
+  escaped: false,
+  block: true
 }
 
 test.group('Statement', () => {

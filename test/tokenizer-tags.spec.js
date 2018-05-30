@@ -11,7 +11,7 @@
 
 const test = require('japa')
 const dedent = require('dedent')
-const Tokenizer = require('../build/Tokenizer').default
+const Tokenizer = require('../build/Tokenizer')
 
 const tagsDef = {
   if: {

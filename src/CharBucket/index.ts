@@ -39,7 +39,7 @@ import { WhiteSpaceModes } from '../Contracts'
  * charBucket.get() // hi!
  * ```
  */
-export default class CharBucket {
+class CharBucket {
   public lastChar: string = ''
   private chars: string = ''
 
@@ -79,3 +79,5 @@ export default class CharBucket {
     this.chars = this.chars.slice(0, -1)
   }
 }
+
+export = CharBucket

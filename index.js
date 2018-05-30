@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * edge-lexer
  *
@@ -7,4 +9,4 @@
  * file that was distributed with this source code.
 */
 
-module.exports = require('./build/Tokenizer').default
+module.exports = require('./build/Tokenizer')

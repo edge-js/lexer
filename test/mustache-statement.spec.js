@@ -11,7 +11,7 @@
 
 const test = require('japa')
 const dedent = require('dedent')
-const MustacheStatement = require('../build/MustacheStatement').default
+const MustacheStatement = require('../build/MustacheStatement')
 
 test.group('Mustache Statement', () => {
   test('collect expression inside mustache braces', (assert) => {

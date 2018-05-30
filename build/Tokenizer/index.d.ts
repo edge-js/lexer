@@ -6,7 +6,7 @@ import { INode, IBlockNode } from '../Contracts';
  * Go through the README file to learn more about the syntax and
  * the tokens output.
  */
-export default class Tokenizer {
+declare class Tokenizer {
     private template;
     private tagsDef;
     tokens: Array<INode | IBlockNode>;
@@ -80,3 +80,4 @@ export default class Tokenizer {
      */
     private processText(text);
 }
+export = Tokenizer;

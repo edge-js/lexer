@@ -12,7 +12,7 @@
 */
 
 import { IMustacheProp, WhiteSpaceModes, MustacheType } from '../Contracts'
-import CharBucket from '../CharBucket'
+import CharBucket = require('../CharBucket')
 
 /** @hidden */
 const OPENING_BRACE = 123
@@ -40,7 +40,7 @@ const CLOSING_BRACE = 125
  * }
  * ```
  */
-export default class MustacheStatement {
+class MustacheStatement {
   /**
    * Whether or not the statement has been started. Statement
    * is considered as started, when opening curly braces
@@ -295,3 +295,5 @@ export default class MustacheStatement {
     this.props[this.currentProp] = this.internalProps[this.currentProp].get()
   }
 }
+
+export = MustacheStatement

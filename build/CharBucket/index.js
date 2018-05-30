@@ -2,7 +2,6 @@
 /**
  * @module Lexer
  */
-Object.defineProperty(exports, "__esModule", { value: true });
 /*
 * edge-lexer
 *
@@ -73,4 +72,4 @@ class CharBucket {
         this.chars = this.chars.slice(0, -1);
     }
 }
-exports.default = CharBucket;
+module.exports = CharBucket;

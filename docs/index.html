@@ -65,7 +65,7 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<h1 id="edge-lexer">Edge lexer</h1>
-				<p>Edge lexer detects tags from any markup language and converts them into tokens. Later these tokens can be used with a Javascript parser like <code>esprima</code> or <code>babylon</code> to complete a logical template engine ( this is what Edge does ).</p>
+				<p>Edge lexer detects tags from any markup language and converts them into tokens. Later these tokens can be used with a Javascript parser like <code>esprima</code> or <code>babylon</code> to complete a logical template engine ( this is what <a href="https://github.com/poppinss/edge-parser">edge-parser</a> does).</p>
 				<p>This guide is an outline of the lexer.</p>
 				<hr>
 				<h2 id="note">Note</h2>
@@ -210,7 +210,18 @@
 						</tr>
 					</tbody>
 				</table>
-				<h2 id="example">Example</h2>
+				<p>For mustache nodes props, the <code>name</code> is the type of mustache expressions. The lexer supports 4 mustache expressions.</p>
+				<p><strong>mustache</strong></p>
+				<pre><code>{{ username }}
+</code></pre><p><strong>e__mustache (Escaped mustache)</strong></p>
+				<p>The following expression is ignored by edge. Helpful when you want this expression to be parsed by a frontend template engine</p>
+				<pre><code>@{{ username }}
+</code></pre><p><strong>s__mustache (Safe mustache)</strong></p>
+				<p>The following expression output is considered HTML safe.</p>
+				<pre><code>{{{ <span class="hljs-string">'&lt;p&gt; Hello world &lt;/p&gt;'</span> }}}
+</code></pre><p><strong>es__mustache (Escaped safe mustache)</strong></p>
+				<pre><code>@{{{ <span class="hljs-string">'&lt;p&gt; Not touched &lt;/p&gt;'</span> }}}
+</code></pre><h2 id="example">Example</h2>
 				<p>Before reading more about the syntax and their output, let&#39;s check the following example.</p>
 				<pre><code class="lang-html">@if(username)
   <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span> Hello {{ username }} <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
@@ -324,9 +335,9 @@
 </code></pre><h2 id="mustache">Mustache</h2>
 				<p>The mustache braces <code>{{</code> are used to define inline Javascript expressions. The lexer allows</p>
 				<ol>
-					<li>Multiline expressions</li>
+					<li>Multiline expressions.</li>
 					<li>A valid Javascript expression, that yields to a value.</li>
-					<li>The return value is HTML escaped by Edge, so make sure to use <code>{{{ &#39;&lt;p&gt;&#39; Hello world &lt;/p&gt; }}}</code> for rendering HTML nodes.</li>
+					<li>The HTML output from mustache will be escaped, so make sure to use <code>{{{ &#39;&lt;p&gt;&#39; Hello world &lt;/p&gt; }}}</code> for rendering HTML nodes.</li>
 				</ol>
 				<p><strong>VALID</strong></p>
 				<pre><code>{{ username }}
@@ -350,11 +361,12 @@
 }
 }
 </code></pre><h2 id="escaping">Escaping</h2>
-				<p>The backslash <code>\</code> is used for escaping mustache braces and tags.</p>
+				<p>The backslash <code>\</code> has a special meaning in Javascript, that&#39;s why we make use of <code>@</code> to escape Edge statements.</p>
 				<blockquote>
 					<p>There is no need to escape the <code>@end</code> statements, since they are tightly mapped with the start statements. So if a start statement doesn&#39;t exists, the end statement will be considered as a raw node.</p>
 				</blockquote>
-				<pre><code>\<span class="hljs-variable">@if</span>(username)
+				<p><strong>ESCAPED</strong></p>
+				<pre><code>@<span class="hljs-variable">@if</span>(username)
 <span class="hljs-variable">@endif</span>
 </code></pre><p>yields</p>
 				<pre><code class="lang-json">[
@@ -378,10 +390,9 @@
   }
 ]
 </code></pre>
-				<p>In the same fashion, the mustache braces can be escaped using <code>\</code>.</p>
-				<pre><code>Hello <span class="hljs-tag">\<span class="hljs-name">{</span><span class="hljs-string">{username}</span></span>}
-</code></pre><p>For legacy reasons, the <code>@</code> symbol can also be used for escaping mustache braces.</p>
-				<pre><code>Hello @{{username}}
+				<p>In the same fashion, the mustache braces can be escaped using <code>@</code>.</p>
+				<p><strong>ESCAPED</strong></p>
+				<pre><code>Hello @{{ username }}
 </code></pre>
 			</div>
 		</div>

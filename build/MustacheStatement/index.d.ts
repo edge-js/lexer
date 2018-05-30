@@ -22,7 +22,7 @@ import { IMustacheProp } from '../Contracts';
  * }
  * ```
  */
-export default class MustacheStatement {
+declare class MustacheStatement {
     startPosition: number;
     /**
      * Whether or not the statement has been started. Statement
@@ -87,3 +87,4 @@ export default class MustacheStatement {
      */
     private setProp();
 }
+export = MustacheStatement;

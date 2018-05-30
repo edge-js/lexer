@@ -10,7 +10,7 @@
 */
 
 const test = require('japa')
-const CharBucket = require('../build/CharBucket').default
+const CharBucket = require('../build/CharBucket')
 const { WhiteSpaceModes } = require('../build/Contracts')
 
 test.group('CharBucket', () => {

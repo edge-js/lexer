@@ -20,7 +20,7 @@ import { IProp, ITagDefination } from '../Contracts';
  * }
  * ```
  */
-export default class TagStatement {
+declare class TagStatement {
     startPosition: number;
     tagDef: ITagDefination;
     /**
@@ -107,3 +107,4 @@ export default class TagStatement {
      */
     private feedSeekable(line);
 }
+export = TagStatement;

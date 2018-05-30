@@ -12,7 +12,7 @@
 */
 
 import { IProp, WhiteSpaceModes, ITagDefination } from '../Contracts'
-import CharBucket from '../CharBucket'
+import CharBucket = require('../CharBucket')
 
 /** @hidden */
 const OPENING_BRACE = 40
@@ -38,7 +38,7 @@ const CLOSING_BRACE = 41
  * }
  * ```
  */
-export default class TagStatement {
+class TagStatement {
   /**
    * Whether or not the statement has been started. This flag
    * is set to true when we detect first `(`.
@@ -245,3 +245,5 @@ export default class TagStatement {
     }
   }
 }
+
+export = TagStatement

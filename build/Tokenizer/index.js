@@ -2,7 +2,6 @@
 /**
  * @module Lexer
  */
-Object.defineProperty(exports, "__esModule", { value: true });
 /*
 * edge-lexer
 *
@@ -11,8 +10,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 * For the full copyright and license information, please view the LICENSE
 * file that was distributed with this source code.
 */
-const TagStatement_1 = require("../TagStatement");
-const MustacheStatement_1 = require("../MustacheStatement");
+const BlockStatement = require("../TagStatement");
+const MustacheStatement = require("../MustacheStatement");
 const Contracts_1 = require("../Contracts");
 /** @hidden */
 const TAG_REGEX = /^(@{1,2})(!)?(\w+)/;
@@ -275,7 +274,7 @@ class Tokenizer {
          * Text is a tag
          */
         if (tag) {
-            this.blockStatement = new TagStatement_1.default(this.line, tag);
+            this.blockStatement = new BlockStatement(this.line, tag);
             this.feedTextToBlockStatement(text.trim().replace(TRIM_TAG_REGEX, ''));
             return;
         }
@@ -291,7 +290,7 @@ class Tokenizer {
          * Text contains mustache expressions
          */
         if (MUSTACHE_REGEX.test(text)) {
-            this.mustacheStatement = new MustacheStatement_1.default(this.line);
+            this.mustacheStatement = new MustacheStatement(this.line);
             this.feedTextToMustacheStatement(text);
             return;
         }
@@ -302,4 +301,4 @@ class Tokenizer {
         this.consumeNode(this.getBlankLineNode());
     }
 }
-exports.default = Tokenizer;
+module.exports = Tokenizer;

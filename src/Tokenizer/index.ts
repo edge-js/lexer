@@ -11,8 +11,8 @@
 * file that was distributed with this source code.
 */
 
-import BlockStatement from '../TagStatement'
-import MustacheStatement from '../MustacheStatement'
+import BlockStatement = require('../TagStatement')
+import MustacheStatement = require('../MustacheStatement')
 
 import {
   IProp,
@@ -43,7 +43,7 @@ const TRIM_TAG_REGEX = /^@/
  * Go through the README file to learn more about the syntax and
  * the tokens output.
  */
-export default class Tokenizer {
+class Tokenizer {
   public tokens: Array<INode | IBlockNode> = []
   private blockStatement: null | BlockStatement = null
   private mustacheStatement: null | MustacheStatement = null
@@ -351,3 +351,5 @@ export default class Tokenizer {
     this.consumeNode(this.getBlankLineNode())
   }
 }
+
+export = Tokenizer

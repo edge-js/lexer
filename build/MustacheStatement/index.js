@@ -2,7 +2,6 @@
 /**
  * @module Lexer
  */
-Object.defineProperty(exports, "__esModule", { value: true });
 /*
 * edge-lexer
 *
@@ -12,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 * file that was distributed with this source code.
 */
 const Contracts_1 = require("../Contracts");
-const CharBucket_1 = require("../CharBucket");
+const CharBucket = require("../CharBucket");
 /** @hidden */
 const OPENING_BRACE = 123;
 /** @hidden */
@@ -62,9 +61,9 @@ class MustacheStatement {
             textRight: '',
         };
         this.internalProps = {
-            jsArg: new CharBucket_1.default(Contracts_1.WhiteSpaceModes.ALL),
-            textLeft: new CharBucket_1.default(Contracts_1.WhiteSpaceModes.ALL),
-            textRight: new CharBucket_1.default(Contracts_1.WhiteSpaceModes.ALL),
+            jsArg: new CharBucket(Contracts_1.WhiteSpaceModes.ALL),
+            textLeft: new CharBucket(Contracts_1.WhiteSpaceModes.ALL),
+            textRight: new CharBucket(Contracts_1.WhiteSpaceModes.ALL),
         };
     }
     /**
@@ -252,4 +251,4 @@ class MustacheStatement {
         this.props[this.currentProp] = this.internalProps[this.currentProp].get();
     }
 }
-exports.default = MustacheStatement;
+module.exports = MustacheStatement;
