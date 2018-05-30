@@ -8,6 +8,12 @@
     "lint": "builder run npm:lint",
     "build": "builder run npm:build"
   },
+  "files": [
+    "index.js",
+    "build",
+    "README.md",
+    "LICENSE.md"
+  ],
   "keywords": [
     "edge",
     "template",
