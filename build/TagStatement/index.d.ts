@@ -65,46 +65,46 @@ declare class TagStatement {
      * Returns a boolean telling if charcode should be considered
      * as the start of the statement.
      */
-    private isStartOfStatement(charcode);
+    private isStartOfStatement;
     /**
      * Returns a boolean telling if charCode should be considered
      * as the end of the statement
      */
-    private isEndOfStatement(charcode);
+    private isEndOfStatement;
     /**
      * Starts the statement by switching the currentProp to
      * `jsArg` and setting the started flag to true.
      */
-    private startStatement();
+    private startStatement;
     /**
      * Ends the statement by switching the ended flag to true. Also
      * if `started` flag was never switched on, then it will throw
      * an exception.
      */
-    private endStatement(char);
+    private endStatement;
     /**
      * Feeds character to the currentProp. Also this method will
      * record the toll of `opening` and `closing` parenthesis.
      */
-    private feedChar(char, charCode);
+    private feedChar;
     /**
      * Throws exception when end of the statement is reached, but there
      * are more chars to be feeded. This can be because of unclosed
      * statement or following code is not in a new line.
      */
-    private ensureNoMoreCharsToFeed(chars);
+    private ensureNoMoreCharsToFeed;
     /**
      * Sets the prop value for the current Prop and set the
      * corresponding ChatBucket to null.
      */
-    private setProp();
+    private setProp;
     /**
      * Feeds a non-seekable statement
      */
-    private feedNonSeekable(line);
+    private feedNonSeekable;
     /**
      * Feeds a seekable statement
      */
-    private feedSeekable(line);
+    private feedSeekable;
 }
 export = TagStatement;

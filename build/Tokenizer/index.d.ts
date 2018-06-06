@@ -1,3 +1,6 @@
+/**
+ * @module Lexer
+ */
 import { INode, IBlockNode } from '../Contracts';
 /**
  * Tokenizer converts a bunch of text into an array of tokens. Later
@@ -16,7 +19,7 @@ declare class Tokenizer {
     private openedTags;
     constructor(template: string, tagsDef: {
         key: string;
-        ITagDefination;
+        ITagDefination: any;
     });
     /**
      * Parses the AST
@@ -26,58 +29,58 @@ declare class Tokenizer {
      * Returns the tag defination when line matches the regex
      * of a tag.
      */
-    private getTag(line);
+    private getTag;
     /**
      * Returns the node for a tag
      */
-    private getTagNode(properties, lineno);
+    private getTagNode;
     /**
      * Returns the node for a raw string
      */
-    private getRawNode(value);
+    private getRawNode;
     /**
      * Returns the node for a newline
      */
-    private getBlankLineNode();
+    private getBlankLineNode;
     /**
      * Returns the mustache node
      */
-    private getMustacheNode(properties, lineno);
+    private getMustacheNode;
     /**
      * Returns a boolean, when line content is a closing
      * tag
      */
-    private isClosingTag(line);
+    private isClosingTag;
     /**
      * Returns a boolean, telling if a given statement is seeking
      * for more content or not
      */
-    private isSeeking(statement);
+    private isSeeking;
     /**
      * Returns a boolean, telling if a given statement has ended or
      * not.
      */
-    private isSeeked(statement);
+    private isSeeked;
     /**
      * Here we add the node to tokens or as children for
      * the recentOpenedTag (if one exists).
      */
-    private consumeNode(tag);
+    private consumeNode;
     /**
      * Feeds the text to the currently opened block statement.
      * Make sure that `seeking` is true on the block
      * statement, before calling this method.
      */
-    private feedTextToBlockStatement(text);
+    private feedTextToBlockStatement;
     /**
      * Feeds text to the currently opened mustache statement. Make sure
      * to check `seeking` is true, before calling this method.
      */
-    private feedTextToMustacheStatement(text);
+    private feedTextToMustacheStatement;
     /**
      * Process a piece of text, by finding if text has reserved keywords,
      * otherwise process it as a raw node.
      */
-    private processText(text);
+    private processText;
 }
 export = Tokenizer;

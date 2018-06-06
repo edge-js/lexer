@@ -5,17 +5,17 @@ declare enum NodeType {
     BLOCK = "block",
     RAW = "raw",
     NEWLINE = "newline",
-    MUSTACHE = "mustache",
+    MUSTACHE = "mustache"
 }
 declare enum MustacheType {
     SMUSTACHE = "s__mustache",
     ESMUSTACHE = "es__mustache",
     MUSTACHE = "mustache",
-    EMUSTACHE = "e__mustache",
+    EMUSTACHE = "e__mustache"
 }
 declare enum WhiteSpaceModes {
     NONE = 0,
-    ALL = 1,
+    ALL = 1
 }
 interface IProp {
     name: string;
@@ -23,7 +23,7 @@ interface IProp {
     raw: string;
 }
 interface IMustacheProp {
-    name?: MustacheType;
+    name: MustacheType | null;
     jsArg: string;
     raw: string;
     textLeft: string;

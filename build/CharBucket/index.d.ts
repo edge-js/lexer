@@ -1,3 +1,6 @@
+/**
+ * @module Lexer
+ */
 import { WhiteSpaceModes } from '../Contracts';
 /**
  * Char bucket is used to control the white space inside

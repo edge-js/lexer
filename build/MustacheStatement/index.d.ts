@@ -56,23 +56,23 @@ declare class MustacheStatement {
      * Returns a boolean telling, if value is a safe mustache or
      * escaped safe mustache type.
      */
-    private isSafeMustache(value);
+    private isSafeMustache;
     /**
      * Returns a boolean telling, if value is a mustache or
      * escaped mustache type.
      */
-    private isMustache(value);
+    private isMustache;
     /**
      * Returns the name of the type of the mustache tag. If char and
      * surrounding chars, doesn't form an opening `{{` mustache
      * pattern, then `null` will be returned
      */
-    private getName(chars, charCode);
+    private getName;
     /**
      * Returns a boolean telling whether the current char and surrounding
      * chars form the closing of mustache.
      */
-    private isClosing(chars, charCode);
+    private isClosing;
     /**
      * Returns `true` when seeking for more content.
      */
@@ -80,11 +80,11 @@ declare class MustacheStatement {
     /**
      * Process one char at a time
      */
-    private processChar(chars, char);
+    private processChar;
     /**
      * Sets the value from internal prop to the public prop
      * as a string.
      */
-    private setProp();
+    private setProp;
 }
 export = MustacheStatement;

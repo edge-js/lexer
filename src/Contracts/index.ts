@@ -25,7 +25,7 @@ interface IProp {
 }
 
 interface IMustacheProp {
-  name?: MustacheType
+  name: MustacheType | null
   jsArg: string,
   raw: string
   textLeft: string
