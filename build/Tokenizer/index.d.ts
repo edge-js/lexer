@@ -1,7 +1,7 @@
 /**
  * @module Lexer
  */
-import { INode, IBlockNode } from '../Contracts';
+import { INode, IBlockNode, ITagDefination } from '../Contracts';
 /**
  * Tokenizer converts a bunch of text into an array of tokens. Later
  * these tokens can be used to build the transformed text.
@@ -18,8 +18,7 @@ declare class Tokenizer {
     private line;
     private openedTags;
     constructor(template: string, tagsDef: {
-        key: string;
-        ITagDefination: any;
+        [key: string]: ITagDefination;
     });
     /**
      * Parses the AST

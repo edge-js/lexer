@@ -126,22 +126,6 @@ test.group('Mustache Statement', () => {
     })
   })
 
-  test('do not close when didn\'t started', (assert) => {
-    const statement = new MustacheStatement(1)
-    statement.feed(`Welcome dude }}}`)
-
-    assert.isFalse(statement.started)
-    assert.isFalse(statement.ended)
-    assert.isNull(statement['internalProps'])
-    assert.deepEqual(statement.props, {
-      name: null,
-      textLeft: 'Welcome dude }}}',
-      textRight: '',
-      jsArg: '',
-      raw: 'Welcome dude }}}'
-    })
-  })
-
   test('multiple mustache should be parsed as raw string', (assert) => {
     const statement = new MustacheStatement(1)
     statement.feed(`Welcome {{ {{ username }} }}`)

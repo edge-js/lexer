@@ -164,7 +164,7 @@ class Tokenizer {
      * for more content or not
      */
     isSeeking(statement) {
-        return statement && statement.seeking;
+        return !!(statement && statement.seeking);
     }
     /**
      * Returns a boolean, telling if a given statement has ended or

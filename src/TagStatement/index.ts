@@ -97,7 +97,7 @@ class TagStatement {
      */
     if (!this.firstCall) {
       this.props.raw += `\n${line}`
-      this.internalProps[this.currentProp].feed('\n')
+      this.internalProps![this.currentProp].feed('\n')
     } else {
       this.props.raw += line
       this.firstCall = false
@@ -187,7 +187,7 @@ class TagStatement {
       return
     }
 
-    this.internalProps[this.currentProp].feed(char)
+    this.internalProps![this.currentProp].feed(char)
   }
 
   /**
@@ -206,7 +206,7 @@ class TagStatement {
    * corresponding ChatBucket to null.
    */
   private setProp (): void {
-    this.props[this.currentProp] = this.internalProps[this.currentProp].get()
+    this.props[this.currentProp] = this.internalProps![this.currentProp].get()
   }
 
   /**
@@ -226,7 +226,7 @@ class TagStatement {
     const chars = line.split('')
 
     while (chars.length) {
-      const char: string = chars.shift()
+      const char: string = chars.shift()!
       const charCode = char.charCodeAt(0)
 
       if (this.isStartOfStatement(charCode)) {

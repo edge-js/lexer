@@ -54,7 +54,7 @@ class MustacheStatement {
         this.currentProp = 'textLeft';
         this.internalBraces = 0;
         this.props = {
-            name: null,
+            name: Contracts_1.MustacheType.MUSTACHE,
             jsArg: '',
             raw: '',
             textLeft: '',

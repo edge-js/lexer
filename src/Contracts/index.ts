@@ -25,7 +25,7 @@ interface IProp {
 }
 
 interface IMustacheProp {
-  name: MustacheType | null
+  name: MustacheType
   jsArg: string,
   raw: string
   textLeft: string
@@ -50,7 +50,7 @@ interface IMustacheNode extends INode {
 interface ITagDefination {
   block: boolean
   selfclosed: boolean
-  escaped: boolean
+  escaped?: boolean
   seekable: boolean
 }
 

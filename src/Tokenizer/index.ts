@@ -50,7 +50,7 @@ class Tokenizer {
   private line: number = 0
   private openedTags: IBlockNode[] = []
 
-  constructor (private template: string, private tagsDef: { key: string, ITagDefination }) {
+  constructor (private template: string, private tagsDef: { [key: string]: ITagDefination }) {
   }
 
   /**
@@ -61,7 +61,7 @@ class Tokenizer {
 
     while (lines.length) {
       this.line++
-      this.processText(lines.shift())
+      this.processText(lines.shift()!)
     }
 
     /**
@@ -171,7 +171,7 @@ class Tokenizer {
       type: NodeType.MUSTACHE,
       lineno,
       properties: {
-        name: properties.name,
+        name: properties.name!,
         jsArg: properties.jsArg,
         raw: properties.raw,
       },
@@ -195,8 +195,8 @@ class Tokenizer {
    * Returns a boolean, telling if a given statement is seeking
    * for more content or not
    */
-  private isSeeking (statement: BlockStatement | MustacheStatement): boolean {
-    return statement && statement.seeking
+  private isSeeking (statement: null | BlockStatement | MustacheStatement): boolean {
+    return !!(statement && statement.seeking)
   }
 
   /**
@@ -225,13 +225,13 @@ class Tokenizer {
    * statement, before calling this method.
    */
   private feedTextToBlockStatement (text: string): void {
-    this.blockStatement.feed(text)
+    this.blockStatement!.feed(text)
 
-    if (!this.isSeeked(this.blockStatement)) {
+    if (!this.isSeeked(this.blockStatement!)) {
       return
     }
 
-    const { props, tagDef, startPosition } = this.blockStatement
+    const { props, tagDef, startPosition } = this.blockStatement!
 
     /**
      * If tag is a block level, then we added it to the openedTags
@@ -252,12 +252,12 @@ class Tokenizer {
    * to check `seeking` is true, before calling this method.
    */
   private feedTextToMustacheStatement (text: string): void {
-    this.mustacheStatement.feed(text)
-    if (!this.isSeeked(this.mustacheStatement)) {
+    this.mustacheStatement!.feed(text)
+    if (!this.isSeeked(this.mustacheStatement!)) {
       return
     }
 
-    const { props, startPosition } = this.mustacheStatement
+    const { props, startPosition } = this.mustacheStatement!
 
     /**
      * Process text left when exists
@@ -330,7 +330,7 @@ class Tokenizer {
      * Text is a closing block tag
      */
     if (this.isClosingTag(text)) {
-      this.consumeNode(this.openedTags.pop())
+      this.consumeNode(this.openedTags.pop()!)
       this.consumeNode(this.getBlankLineNode())
       return
     }

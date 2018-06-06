@@ -68,7 +68,7 @@ class MustacheStatement {
 
   constructor (public startPosition: number) {
     this.props = {
-      name: null,
+      name: MustacheType.MUSTACHE,
       jsArg: '',
       raw: '',
       textLeft: '',
@@ -98,7 +98,7 @@ class MustacheStatement {
      */
     if (!this.firstCall) {
       this.props.raw += `\n${line}`
-      this.internalProps[this.currentProp].feed('\n')
+      this.internalProps![this.currentProp].feed('\n')
     } else {
       this.props.raw += line
       this.firstCall = false
@@ -109,7 +109,7 @@ class MustacheStatement {
      */
     const chars = line.split('')
     while (chars.length) {
-      const char = chars.shift()
+      const char = chars.shift()!
       this.processChar(chars, char)
     }
 
@@ -163,9 +163,9 @@ class MustacheStatement {
      * If mustache braces were escaped, then we need to ignore them
      * and set the prop name properly
      */
-    const isEscaped = this.internalProps.textLeft.lastChar === '@'
+    const isEscaped = this.internalProps!.textLeft.lastChar === '@'
     if (isEscaped) {
-      this.internalProps.textLeft.pop()
+      this.internalProps!.textLeft.pop()
     }
 
     chars.shift()
@@ -200,7 +200,7 @@ class MustacheStatement {
      * If opening statement was detected as `emustache`, then expect
      * 2 more consecutive chars as CLOSING_BRACE
      */
-    if (this.isSafeMustache(this.props.name) && chars.length >= 2) {
+    if (this.isSafeMustache(this.props.name!) && chars.length >= 2) {
       const next = chars[0].charCodeAt(0)
       const nextToNext = chars[1].charCodeAt(0)
 
@@ -217,7 +217,7 @@ class MustacheStatement {
      * If opening statement was detected as `mustache`, then expect
      * 1 more consecutive char as CLOSING_BRACE
      */
-    if (this.isMustache(this.props.name) && chars.length >= 1) {
+    if (this.isMustache(this.props.name!) && chars.length >= 1) {
       const next = chars[0].charCodeAt(0)
 
       if (next === CLOSING_BRACE) {
@@ -242,7 +242,7 @@ class MustacheStatement {
    * Process one char at a time
    */
   private processChar (chars: string[], char: string): void {
-    let name = null
+    let name: null | MustacheType = null
     const charCode = char.charCodeAt(0)
 
     /**
@@ -284,7 +284,7 @@ class MustacheStatement {
       this.internalBraces--
     }
 
-    this.internalProps[this.currentProp].feed(char)
+    this.internalProps![this.currentProp].feed(char)
   }
 
   /**
@@ -292,7 +292,7 @@ class MustacheStatement {
    * as a string.
    */
   private setProp (): void {
-    this.props[this.currentProp] = this.internalProps[this.currentProp].get()
+    this.props[this.currentProp] = this.internalProps![this.currentProp].get()
   }
 }
 
