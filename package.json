@@ -22,8 +22,6 @@
   "author": "virk",
   "license": "MIT",
   "devDependencies": {
-    "adonis-ts-arche": "^1.0.7",
-    "builder": "^4.0.0",
     "dedent": "^0.7.0"
   },
   "dependencies": {
