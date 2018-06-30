@@ -11,7 +11,7 @@
     "build": "npm run compile",
     "commit": "git-cz",
     "prepublishOnly": "npm run build",
-    "test:win": "./node_modules/japa-cli/index.js",
+    "test:win": "node ./node_modules/japa-cli/index.js",
     "clean": "del build",
     "compile": "npm run lint && npm run clean && tsc",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -31,7 +31,7 @@
   "author": "virk",
   "license": "MIT",
   "devDependencies": {
-    "@adonisjs/mrm-preset": "^1.0.5",
+    "@adonisjs/mrm-preset": "^1.0.6",
     "@types/node": "^10.5.1",
     "commitizen": "^2.10.1",
     "coveralls": "^3.0.2",
