@@ -12,10 +12,10 @@
     "commit": "git-cz",
     "prepublishOnly": "npm run build",
     "test:win": "./node_modules/japa-cli/index.js",
-    "lint": "tslint --project tsconfig.json",
-    "clean": "del dist",
+    "clean": "del build",
     "compile": "npm run lint && npm run clean && tsc",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "lint": "tslint --project tsconfig.json"
   },
   "files": [
     "index.js",
@@ -31,7 +31,7 @@
   "author": "virk",
   "license": "MIT",
   "devDependencies": {
-    "@adonisjs/mrm-preset": "^1.0.4",
+    "@adonisjs/mrm-preset": "^1.0.5",
     "@types/node": "^10.5.1",
     "commitizen": "^2.10.1",
     "coveralls": "^3.0.2",
@@ -57,7 +57,12 @@
     }
   },
   "nyc": {
-    "extension": [".ts"],
-    "exclude": [ "test", "japaFile.js" ]
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "test",
+      "japaFile.js"
+    ]
   }
 }
