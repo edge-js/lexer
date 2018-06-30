@@ -19,7 +19,7 @@
   },
   "files": [
     "index.js",
-    "build",
+    "build/src",
     "README.md",
     "LICENSE.md"
   ],
