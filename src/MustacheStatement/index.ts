@@ -197,7 +197,7 @@ export class MustacheStatement {
     }
 
     /**
-     * If opening statement was detected as `emustache`, then expect
+     * If opening statement was detected as `s__mustache`, then expect
      * 2 more consecutive chars as CLOSING_BRACE
      */
     if (this.isSafeMustache(this.props.name!) && chars.length >= 2) {

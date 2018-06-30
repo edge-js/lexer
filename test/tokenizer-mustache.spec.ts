@@ -440,4 +440,71 @@ test.group('Tokenizer Mustache', () => {
       },
     ])
   })
+
+  test('parse multiple mustache statements when escaped and unescaped', (assert) => {
+    const template = dedent`Hello @{{ username }}, your age is {{ age }}`
+
+    const tokenizer = new Tokenizer(template, tagsDef)
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'raw',
+        lineno: 1,
+        value: 'Hello ',
+      },
+      {
+        type: 'mustache',
+        lineno: 1,
+        properties: {
+          name: 'e__mustache',
+          jsArg: ' username ',
+          raw: template,
+        },
+      },
+      {
+        type: 'raw',
+        lineno: 1,
+        value: ', your age is ',
+      },
+      {
+        type: 'mustache',
+        lineno: 1,
+        properties: {
+          name: 'mustache',
+          jsArg: ' age ',
+          raw: ', your age is {{ age }}',
+        },
+      },
+      {
+        type: 'newline',
+        lineno: 1,
+      },
+    ])
+  })
+
+  test('use raw text when mustache is not closed properly', (assert) => {
+    const template = dedent`Hello {{ username }.`
+
+    const tokenizer = new Tokenizer(template, tagsDef)
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'raw',
+        lineno: 1,
+        value: 'Hello {{ username }.',
+      },
+      {
+        type: 'newline',
+        lineno: 1,
+      },
+    ])
+  })
 })
