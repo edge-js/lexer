@@ -24,6 +24,10 @@ interface IProp {
   raw: string
 }
 
+interface IBlockProp extends IProp {
+  selfclosed: boolean
+}
+
 interface IMustacheProp {
   name: MustacheType
   jsArg: string,
@@ -39,7 +43,7 @@ interface INode {
 }
 
 interface IBlockNode extends INode {
-  properties: IProp
+  properties: IBlockProp
   children: Array<INode | IBlockNode>
 }
 
@@ -63,3 +67,4 @@ export { IMustacheProp as IMustacheProp }
 export { WhiteSpaceModes as WhiteSpaceModes }
 export { MustacheType as MustacheType }
 export { ITagDefination as ITagDefination }
+export { IBlockProp as IBlockProp }

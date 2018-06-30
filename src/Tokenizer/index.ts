@@ -11,11 +11,11 @@
 * file that was distributed with this source code.
 */
 
-import BlockStatement = require('../TagStatement')
-import MustacheStatement = require('../MustacheStatement')
+import { TagStatement as BlockStatement } from '../TagStatement'
+import { MustacheStatement } from '../MustacheStatement'
 
 import {
-  IProp,
+  IBlockProp,
   INode,
   IBlockNode,
   NodeType,
@@ -43,7 +43,7 @@ const TRIM_TAG_REGEX = /^@/
  * Go through the README file to learn more about the syntax and
  * the tokens output.
  */
-class Tokenizer {
+export class Tokenizer {
   public tokens: Array<INode | IBlockNode> = []
   private blockStatement: null | BlockStatement = null
   private mustacheStatement: null | MustacheStatement = null
@@ -133,7 +133,7 @@ class Tokenizer {
   /**
    * Returns the node for a tag
    */
-  private getTagNode (properties: IProp, lineno: number): IBlockNode {
+  private getTagNode (properties: IBlockProp, lineno: number): IBlockNode {
     return {
       type: NodeType.BLOCK,
       properties,
@@ -166,7 +166,7 @@ class Tokenizer {
   /**
    * Returns the mustache node
    */
-  private getMustacheNode (properties: IProp | IMustacheProp, lineno: number): IMustacheNode {
+  private getMustacheNode (properties: IMustacheProp, lineno: number): IMustacheNode {
     return {
       type: NodeType.MUSTACHE,
       lineno,
@@ -237,7 +237,7 @@ class Tokenizer {
      * If tag is a block level, then we added it to the openedTags
      * array, otherwise we add it to the tokens.
      */
-    if (tagDef.block && !tagDef.selfclosed) {
+    if (tagDef.block && (!tagDef.selfclosed || !props.selfclosed)) {
       this.openedTags.push(this.getTagNode(props, startPosition))
     } else {
       this.consumeNode(this.getTagNode(props, startPosition))
@@ -351,5 +351,3 @@ class Tokenizer {
     this.consumeNode(this.getBlankLineNode())
   }
 }
-
-export = Tokenizer

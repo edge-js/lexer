@@ -55,5 +55,9 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "nyc": {
+    "extension": [".ts"],
+    "exclude": [ "test", "japaFile.js" ]
   }
 }

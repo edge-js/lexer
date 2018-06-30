@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
 * edge-lexer
 *
@@ -9,9 +7,9 @@
 * file that was distributed with this source code.
 */
 
-const test = require('japa')
-const dedent = require('dedent')
-const MustacheStatement = require('../build/MustacheStatement')
+import * as test from 'japa'
+import * as dedent from 'dedent'
+import { MustacheStatement } from '../src/MustacheStatement'
 
 test.group('Mustache Statement', () => {
   test('collect expression inside mustache braces', (assert) => {
@@ -26,7 +24,7 @@ test.group('Mustache Statement', () => {
       textLeft: '',
       textRight: '',
       jsArg: ' 2 + 2 ',
-      raw: '{{ 2 + 2 }}'
+      raw: '{{ 2 + 2 }}',
     })
   })
 
@@ -42,7 +40,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'The value is ',
       textRight: '',
       jsArg: ' 2 + 2 ',
-      raw: 'The value is {{ 2 + 2 }}'
+      raw: 'The value is {{ 2 + 2 }}',
     })
   })
 
@@ -58,7 +56,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'The value is ',
       textRight: '. This is called addition',
       jsArg:  ' 2 + 2 ',
-      raw: 'The value is {{ 2 + 2 }}. This is called addition'
+      raw: 'The value is {{ 2 + 2 }}. This is called addition',
     })
   })
 
@@ -82,7 +80,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'The users are ',
       textRight: '',
       jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(',')\n`,
-      raw: template
+      raw: template,
     })
   })
 
@@ -106,7 +104,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'The users are ',
       textRight: '}',
       jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(',')\n`,
-      raw: template
+      raw: template,
     })
   })
 
@@ -122,7 +120,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: ' \'<span> user </span>\' ',
-      raw: `Welcome {{{ '<span> user </span>' }}}`
+      raw: `Welcome {{{ '<span> user </span>' }}}`,
     })
   })
 
@@ -140,7 +138,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: ' {{ username }} ',
-      raw: 'Welcome {{ {{ username }} }}'
+      raw: 'Welcome {{ {{ username }} }}',
     })
   })
 
@@ -158,7 +156,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: '',
-      raw: 'Welcome {{{ username }}'
+      raw: 'Welcome {{{ username }}',
     })
   })
 
@@ -177,7 +175,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: ' username ',
-      raw: 'Welcome @{{ username }}'
+      raw: 'Welcome @{{ username }}',
     })
   })
 })

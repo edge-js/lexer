@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
 * edge-lexer
 *
@@ -9,26 +7,29 @@
 * file that was distributed with this source code.
 */
 
-const test = require('japa')
-const dedent = require('dedent')
-const Tokenizer = require('../build/Tokenizer')
+import * as test from 'japa'
+import * as dedent from 'dedent'
+import { Tokenizer } from '../src/Tokenizer'
 
 const tagsDef = {
   if: {
     block: true,
-    seekable: true
+    selfclosed: false,
+    seekable: true,
   },
   else: {
     block: false,
-    seekable: false
+    selfclosed: false,
+    seekable: false,
   },
   include: {
     block: false,
-    seekable: true
-  }
+    selfclosed: false,
+    seekable: true,
+  },
 }
 
-test.group('Tokenizer', () => {
+test.group('Tokenizer Mustache', () => {
   test('process mustache blocks', (assert) => {
     const template = 'Hello {{ username }}'
 
@@ -41,7 +42,7 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         lineno: 1,
-        value: 'Hello '
+        value: 'Hello ',
       },
       {
         type: 'mustache',
@@ -49,13 +50,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' username ',
-          raw: template
-        }
+          raw: template,
+        },
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -71,7 +72,7 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         lineno: 1,
-        value: 'Hello '
+        value: 'Hello ',
       },
       {
         type: 'mustache',
@@ -79,18 +80,18 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' username ',
-          raw: template
-        }
+          raw: template,
+        },
       },
       {
         type: 'raw',
         lineno: 1,
-        value: '!'
+        value: '!',
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -110,7 +111,7 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         lineno: 1,
-        value: 'List of users are '
+        value: 'List of users are ',
       },
       {
         type: 'mustache',
@@ -118,18 +119,18 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
-          raw: template
-        }
+          raw: template,
+        },
       },
       {
         type: 'raw',
         lineno: 5,
-        value: '.'
+        value: '.',
       },
       {
         type: 'newline',
-        lineno: 5
-      }
+        lineno: 5,
+      },
     ])
   })
 
@@ -149,7 +150,7 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         lineno: 1,
-        value: 'List of users are '
+        value: 'List of users are ',
       },
       {
         type: 'mustache',
@@ -157,18 +158,18 @@ test.group('Tokenizer', () => {
         properties: {
           name: 's__mustache',
           jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
-          raw: template
-        }
+          raw: template,
+        },
       },
       {
         type: 'raw',
         lineno: 5,
-        value: '.'
+        value: '.',
       },
       {
         type: 'newline',
-        lineno: 5
-      }
+        lineno: 5,
+      },
     ])
   })
 
@@ -185,7 +186,7 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         lineno: 1,
-        value: 'Hello '
+        value: 'Hello ',
       },
       {
         type: 'mustache',
@@ -193,13 +194,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' username ',
-          raw: template
-        }
+          raw: template,
+        },
       },
       {
         type: 'raw',
         lineno: 1,
-        value: ', your age is '
+        value: ', your age is ',
       },
       {
         type: 'mustache',
@@ -207,13 +208,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' age ',
-          raw: ', your age is {{ age }}'
-        }
+          raw: ', your age is {{ age }}',
+        },
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -237,7 +238,7 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         lineno: 1,
-        value: 'Hello '
+        value: 'Hello ',
       },
       {
         type: 'mustache',
@@ -245,13 +246,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' username ',
-          raw: 'Hello {{ username }}, your friends are {{'
-        }
+          raw: 'Hello {{ username }}, your friends are {{',
+        },
       },
       {
         type: 'raw',
         lineno: 1,
-        value: ', your friends are '
+        value: ', your friends are ',
       },
       {
         type: 'mustache',
@@ -259,27 +260,27 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
-          raw: template.replace('Hello {{ username }}', '').replace('\nBye', '')
-        }
+          raw: template.replace('Hello {{ username }}', '').replace('\nBye', ''),
+        },
       },
       {
         type: 'raw',
         lineno: 5,
-        value: '!'
+        value: '!',
       },
       {
         type: 'newline',
-        lineno: 5
+        lineno: 5,
       },
       {
         type: 'raw',
         lineno: 6,
-        value: 'Bye'
+        value: 'Bye',
       },
       {
         type: 'newline',
-        lineno: 6
-      }
+        lineno: 6,
+      },
     ])
   })
 
@@ -295,12 +296,12 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         lineno: 1,
-        value: 'Hello {{ username'
+        value: 'Hello {{ username',
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -320,13 +321,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' username ',
-          raw: '{{ username }}, {{ age }} and {{ state }}'
-        }
+          raw: '{{ username }}, {{ age }} and {{ state }}',
+        },
       },
       {
         type: 'raw',
         lineno: 1,
-        value: ', '
+        value: ', ',
       },
       {
         type: 'mustache',
@@ -334,13 +335,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' age ',
-          raw: ', {{ age }} and {{ state }}'
-        }
+          raw: ', {{ age }} and {{ state }}',
+        },
       },
       {
         type: 'raw',
         lineno: 1,
-        value: ' and '
+        value: ' and ',
       },
       {
         type: 'mustache',
@@ -348,13 +349,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' state ',
-          raw: ' and {{ state }}'
-        }
+          raw: ' and {{ state }}',
+        },
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -374,13 +375,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' username ',
-          raw: '{{ username }}, @{{ age }}'
-        }
+          raw: '{{ username }}, @{{ age }}',
+        },
       },
       {
         type: 'raw',
         lineno: 1,
-        value: ', '
+        value: ', ',
       },
       {
         type: 'mustache',
@@ -388,13 +389,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'e__mustache',
           jsArg: ' age ',
-          raw: ', @{{ age }}'
-        }
+          raw: ', @{{ age }}',
+        },
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -416,13 +417,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'mustache',
           jsArg: ' username ',
-          raw: '{{ username }}, @{{'
-        }
+          raw: '{{ username }}, @{{',
+        },
       },
       {
         type: 'raw',
         lineno: 1,
-        value: ', '
+        value: ', ',
       },
       {
         type: 'mustache',
@@ -430,13 +431,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'e__mustache',
           jsArg: '\n  users.map((user) => user.username)\n',
-          raw: ', @{{\n  users.map((user) => user.username)\n}}'
-        }
+          raw: ', @{{\n  users.map((user) => user.username)\n}}',
+        },
       },
       {
         type: 'newline',
-        lineno: 3
-      }
+        lineno: 3,
+      },
     ])
   })
 })
