@@ -11,11 +11,11 @@
 * file that was distributed with this source code.
 */
 
-import BlockStatement = require('../TagStatement')
-import MustacheStatement = require('../MustacheStatement')
+import { TagStatement as BlockStatement } from '../TagStatement'
+import { MustacheStatement } from '../MustacheStatement'
 
 import {
-  IProp,
+  IBlockProp,
   INode,
   IBlockNode,
   NodeType,
@@ -43,14 +43,14 @@ const TRIM_TAG_REGEX = /^@/
  * Go through the README file to learn more about the syntax and
  * the tokens output.
  */
-class Tokenizer {
+export class Tokenizer {
   public tokens: Array<INode | IBlockNode> = []
   private blockStatement: null | BlockStatement = null
   private mustacheStatement: null | MustacheStatement = null
   private line: number = 0
   private openedTags: IBlockNode[] = []
 
-  constructor (private template: string, private tagsDef: { key: string, ITagDefination }) {
+  constructor (private template: string, private tagsDef: { [key: string]: ITagDefination }) {
   }
 
   /**
@@ -61,7 +61,7 @@ class Tokenizer {
 
     while (lines.length) {
       this.line++
-      this.processText(lines.shift())
+      this.processText(lines.shift()!)
     }
 
     /**
@@ -133,7 +133,7 @@ class Tokenizer {
   /**
    * Returns the node for a tag
    */
-  private getTagNode (properties: IProp, lineno: number): IBlockNode {
+  private getTagNode (properties: IBlockProp, lineno: number): IBlockNode {
     return {
       type: NodeType.BLOCK,
       properties,
@@ -166,12 +166,12 @@ class Tokenizer {
   /**
    * Returns the mustache node
    */
-  private getMustacheNode (properties: IProp | IMustacheProp, lineno: number): IMustacheNode {
+  private getMustacheNode (properties: IMustacheProp, lineno: number): IMustacheNode {
     return {
       type: NodeType.MUSTACHE,
       lineno,
       properties: {
-        name: properties.name,
+        name: properties.name!,
         jsArg: properties.jsArg,
         raw: properties.raw,
       },
@@ -195,8 +195,8 @@ class Tokenizer {
    * Returns a boolean, telling if a given statement is seeking
    * for more content or not
    */
-  private isSeeking (statement: BlockStatement | MustacheStatement): boolean {
-    return statement && statement.seeking
+  private isSeeking (statement: null | BlockStatement | MustacheStatement): boolean {
+    return !!(statement && statement.seeking)
   }
 
   /**
@@ -225,19 +225,19 @@ class Tokenizer {
    * statement, before calling this method.
    */
   private feedTextToBlockStatement (text: string): void {
-    this.blockStatement.feed(text)
+    this.blockStatement!.feed(text)
 
-    if (!this.isSeeked(this.blockStatement)) {
+    if (!this.isSeeked(this.blockStatement!)) {
       return
     }
 
-    const { props, tagDef, startPosition } = this.blockStatement
+    const { props, tagDef, startPosition } = this.blockStatement!
 
     /**
      * If tag is a block level, then we added it to the openedTags
      * array, otherwise we add it to the tokens.
      */
-    if (tagDef.block && !tagDef.selfclosed) {
+    if (tagDef.block && (!tagDef.selfclosed || !props.selfclosed)) {
       this.openedTags.push(this.getTagNode(props, startPosition))
     } else {
       this.consumeNode(this.getTagNode(props, startPosition))
@@ -252,12 +252,12 @@ class Tokenizer {
    * to check `seeking` is true, before calling this method.
    */
   private feedTextToMustacheStatement (text: string): void {
-    this.mustacheStatement.feed(text)
-    if (!this.isSeeked(this.mustacheStatement)) {
+    this.mustacheStatement!.feed(text)
+    if (!this.isSeeked(this.mustacheStatement!)) {
       return
     }
 
-    const { props, startPosition } = this.mustacheStatement
+    const { props, startPosition } = this.mustacheStatement!
 
     /**
      * Process text left when exists
@@ -330,7 +330,7 @@ class Tokenizer {
      * Text is a closing block tag
      */
     if (this.isClosingTag(text)) {
-      this.consumeNode(this.openedTags.pop())
+      this.consumeNode(this.openedTags.pop()!)
       this.consumeNode(this.getBlankLineNode())
       return
     }
@@ -351,5 +351,3 @@ class Tokenizer {
     this.consumeNode(this.getBlankLineNode())
   }
 }
-
-export = Tokenizer

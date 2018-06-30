@@ -1,12 +1,21 @@
 {
   "name": "edge-lexer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Parses raw markup files to converts them to Tokens",
   "main": "index.js",
   "scripts": {
-    "test": "builder run npm:test",
-    "lint": "builder run npm:lint",
-    "build": "builder run npm:build"
+    "mrm": "mrm --preset=@adonisjs/mrm-preset",
+    "pretest": "npm run lint",
+    "test": "nyc japa",
+    "posttest": "npm run coverage",
+    "build": "npm run compile",
+    "commit": "git-cz",
+    "prepublishOnly": "npm run build",
+    "test:win": "node ./node_modules/japa-cli/index.js",
+    "clean": "del build",
+    "compile": "npm run lint && npm run clean && tsc",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "lint": "tslint --project tsconfig.json"
   },
   "files": [
     "index.js",
@@ -22,11 +31,38 @@
   "author": "virk",
   "license": "MIT",
   "devDependencies": {
-    "adonis-ts-arche": "^1.0.5",
-    "builder": "^4.0.0",
-    "dedent": "^0.7.0"
+    "@adonisjs/mrm-preset": "^1.0.6",
+    "@types/node": "^10.5.1",
+    "commitizen": "^2.10.1",
+    "coveralls": "^3.0.2",
+    "cz-conventional-changelog": "^2.1.0",
+    "dedent": "^0.7.0",
+    "del-cli": "^1.1.0",
+    "japa": "^1.0.6",
+    "japa-cli": "^1.0.1",
+    "mrm": "^1.1.1",
+    "nyc": "^12.0.2",
+    "pkg-ok": "^2.2.0",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.10.0",
+    "tslint-eslint-rules": "^5.3.1",
+    "typescript": "^2.9.2"
   },
   "dependencies": {
     "is-whitespace-character": "^1.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "test",
+      "japaFile.js"
+    ]
   }
 }

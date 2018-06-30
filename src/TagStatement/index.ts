@@ -11,8 +11,8 @@
 * file that was distributed with this source code.
 */
 
-import { IProp, WhiteSpaceModes, ITagDefination } from '../Contracts'
-import CharBucket = require('../CharBucket')
+import { IBlockProp, WhiteSpaceModes, ITagDefination } from '../Contracts'
+import { CharBucket } from '../CharBucket'
 
 /** @hidden */
 const OPENING_BRACE = 40
@@ -38,7 +38,7 @@ const CLOSING_BRACE = 41
  * }
  * ```
  */
-class TagStatement {
+export class TagStatement {
   /**
    * Whether or not the statement has been started. This flag
    * is set to true when we detect first `(`.
@@ -54,7 +54,7 @@ class TagStatement {
   /**
    * Prop defines the meta data for a statement
    */
-  public props: IProp
+  public props: IBlockProp
 
   private currentProp: string = 'name'
   private internalParens: number = 0
@@ -66,6 +66,7 @@ class TagStatement {
       name: '',
       jsArg: '',
       raw: '',
+      selfclosed: false,
     }
 
     this.internalProps = {
@@ -97,7 +98,7 @@ class TagStatement {
      */
     if (!this.firstCall) {
       this.props.raw += `\n${line}`
-      this.internalProps[this.currentProp].feed('\n')
+      this.internalProps![this.currentProp].feed('\n')
     } else {
       this.props.raw += line
       this.firstCall = false
@@ -184,10 +185,11 @@ class TagStatement {
      * Ignore ! when tag is selfclosed and currentProp is name
      */
     if (this.currentProp === 'name' && char === '!' && this.tagDef.selfclosed) {
+      this.props.selfclosed = true
       return
     }
 
-    this.internalProps[this.currentProp].feed(char)
+    this.internalProps![this.currentProp].feed(char)
   }
 
   /**
@@ -206,7 +208,7 @@ class TagStatement {
    * corresponding ChatBucket to null.
    */
   private setProp (): void {
-    this.props[this.currentProp] = this.internalProps[this.currentProp].get()
+    this.props[this.currentProp] = this.internalProps![this.currentProp].get()
   }
 
   /**
@@ -226,7 +228,7 @@ class TagStatement {
     const chars = line.split('')
 
     while (chars.length) {
-      const char: string = chars.shift()
+      const char: string = chars.shift()!
       const charCode = char.charCodeAt(0)
 
       if (this.isStartOfStatement(charCode)) {
@@ -245,5 +247,3 @@ class TagStatement {
     }
   }
 }
-
-export = TagStatement

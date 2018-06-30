@@ -11,7 +11,8 @@ const exampleCode = dedent`
 const tagsDef = {
   if: {
     block: true,
-    seekable: true
+    seekable: true,
+    selfclosed: false
   }
 }
 

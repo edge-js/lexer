@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
 * edge-lexer
 *
@@ -9,30 +7,34 @@
 * file that was distributed with this source code.
 */
 
-const test = require('japa')
-const dedent = require('dedent')
-const Tokenizer = require('../build/Tokenizer')
+import * as test from 'japa'
+import * as dedent from 'dedent'
+import { Tokenizer } from '../src/Tokenizer'
 
 const tagsDef = {
   if: {
     block: true,
-    seekable: true
+    selfclosed: false,
+    seekable: true,
   },
   else: {
     block: false,
-    seekable: false
+    selfclosed: false,
+    seekable: false,
   },
   include: {
     block: false,
-    seekable: true
+    selfclosed: false,
+    seekable: true,
   },
   each: {
     block: true,
-    seekable: true
-  }
+    selfclosed: true,
+    seekable: true,
+  },
 }
 
-test.group('Tokenizer', () => {
+test.group('Tokenizer Tags', () => {
   test('tokenize a template into tokens', (assert) => {
     const template = dedent`
     Hello
@@ -50,40 +52,41 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         value: 'Hello',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'newline',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'raw',
         value: '',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'newline',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'block',
         properties: {
           name: 'if',
           jsArg: 'username',
-          raw: 'if(username)'
+          selfclosed: false,
+          raw: 'if(username)',
         },
         lineno: 3,
         children: [
           {
             type: 'newline',
-            lineno: 3
-          }
-        ]
+            lineno: 3,
+          },
+        ],
       },
       {
         type: 'newline',
-        lineno: 4
-      }
+        lineno: 4,
+      },
     ])
   })
 
@@ -105,20 +108,20 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         value: 'Hello',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'newline',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'raw',
         value: '',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'newline',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'block',
@@ -126,28 +129,29 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'if',
           jsArg: 'username',
-          raw: 'if(username)'
+          raw: 'if(username)',
+          selfclosed: false,
         },
         children: [
           {
             type: 'newline',
-            lineno: 3
+            lineno: 3,
           },
           {
             type: 'raw',
             value: '  Hello',
-            lineno: 4
+            lineno: 4,
           },
           {
             type: 'newline',
-            lineno: 4
-          }
-        ]
+            lineno: 4,
+          },
+        ],
       },
       {
         type: 'newline',
-        lineno: 5
-      }
+        lineno: 5,
+      },
     ])
   })
 
@@ -171,20 +175,20 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         value: 'Hello',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'newline',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'raw',
         value: '',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'newline',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'block',
@@ -192,12 +196,13 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'if',
           jsArg: 'username',
-          raw: 'if(username)'
+          raw: 'if(username)',
+          selfclosed: false,
         },
         children: [
           {
             type: 'newline',
-            lineno: 3
+            lineno: 3,
           },
           {
             type: 'block',
@@ -205,34 +210,35 @@ test.group('Tokenizer', () => {
             properties: {
               name: 'if',
               jsArg: 'username === \'virk\'',
-              raw: 'if(username === \'virk\')'
+              raw: 'if(username === \'virk\')',
+              selfclosed: false,
             },
             children: [
               {
                 type: 'newline',
-                lineno: 4
+                lineno: 4,
               },
               {
                 type: 'raw',
                 value: '    Hi',
-                lineno: 5
+                lineno: 5,
               },
               {
                 type: 'newline',
-                lineno: 5
-              }
-            ]
+                lineno: 5,
+              },
+            ],
           },
           {
             type: 'newline',
-            lineno: 6
-          }
-        ]
+            lineno: 6,
+          },
+        ],
       },
       {
         type: 'newline',
-        lineno: 7
-      }
+        lineno: 7,
+      },
     ])
   })
 
@@ -256,20 +262,20 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         value: 'Hello',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'newline',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'raw',
         value: '',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'newline',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'block',
@@ -277,28 +283,29 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'if',
           jsArg: '\n  username\n',
-          raw: 'if(\n  username\n)'
+          raw: 'if(\n  username\n)',
+          selfclosed: false,
         },
         children: [
           {
             type: 'newline',
-            lineno: 5
+            lineno: 5,
           },
           {
             type: 'raw',
             value: '  Hello',
-            lineno: 6
+            lineno: 6,
           },
           {
             type: 'newline',
-            lineno: 6
-          }
-        ]
+            lineno: 6,
+          },
+        ],
       },
       {
         type: 'newline',
-        lineno: 7
-      }
+        lineno: 7,
+      },
     ])
   })
 
@@ -322,20 +329,20 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         value: 'Hello',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'newline',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'raw',
         value: '',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'newline',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'block',
@@ -343,28 +350,29 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'if',
           jsArg: '(\n  2 + 2) * 3 === 12\n',
-          raw: 'if((\n  2 + 2) * 3 === 12\n)'
+          raw: 'if((\n  2 + 2) * 3 === 12\n)',
+          selfclosed: false,
         },
         children: [
           {
             type: 'newline',
-            lineno: 5
+            lineno: 5,
           },
           {
             type: 'raw',
             value: '  Answer is 12',
-            lineno: 6
+            lineno: 6,
           },
           {
             type: 'newline',
-            lineno: 6
-          }
-        ]
+            lineno: 6,
+          },
+        ],
       },
       {
         type: 'newline',
-        lineno: 7
-      }
+        lineno: 7,
+      },
     ])
   })
 
@@ -383,14 +391,15 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'include',
           jsArg: '\'partials.user\'',
-          raw: 'include(\'partials.user\')'
+          raw: 'include(\'partials.user\')',
+          selfclosed: false,
         },
-        children: []
+        children: [],
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -415,21 +424,22 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'if',
           jsArg: 'username',
-          raw: 'if(username)'
+          raw: 'if(username)',
+          selfclosed: false,
         },
         children: [
           {
             type: 'newline',
-            lineno: 1
+            lineno: 1,
           },
           {
             type: 'raw',
             value: '  Hello',
-            lineno: 2
+            lineno: 2,
           },
           {
             type: 'newline',
-            lineno: 2
+            lineno: 2,
           },
           {
             type: 'block',
@@ -437,29 +447,30 @@ test.group('Tokenizer', () => {
             properties: {
               name: 'else',
               jsArg: '',
-              raw: 'else'
+              raw: 'else',
+              selfclosed: false,
             },
-            children: []
+            children: [],
           },
           {
             type: 'newline',
-            lineno: 3
+            lineno: 3,
           },
           {
             type: 'raw',
             value: '  Hello guest',
-            lineno: 4
+            lineno: 4,
           },
           {
             type: 'newline',
-            lineno: 4
-          }
-        ]
+            lineno: 4,
+          },
+        ],
       },
       {
         type: 'newline',
-        lineno: 5
-      }
+        lineno: 5,
+      },
     ])
   })
 
@@ -477,12 +488,12 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         value: '@foo(\'hello world\')',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -500,21 +511,21 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         value: '@if(username)',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'newline',
-        lineno: 1
+        lineno: 1,
       },
       {
         type: 'raw',
         value: '@endif',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'newline',
-        lineno: 2
-      }
+        lineno: 2,
+      },
     ])
   })
 
@@ -531,12 +542,12 @@ test.group('Tokenizer', () => {
       {
         type: 'raw',
         value: '@if((2 + 2)\n@endif',
-        lineno: 2
+        lineno: 2,
       },
       {
         type: 'newline',
-        lineno: 2
-      }
+        lineno: 2,
+      },
     ])
   })
 
@@ -555,14 +566,15 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'include',
           raw: template.replace('@', ''),
-          jsArg: '\'header\''
+          jsArg: '\'header\'',
+          selfclosed: false,
         },
-        children: []
+        children: [],
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -606,14 +618,15 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'each',
           raw: template.replace('@', ''),
-          jsArg: `user in users, include = 'user'`
+          jsArg: `user in users, include = 'user'`,
+          selfclosed: true,
         },
-        children: []
+        children: [],
       },
       {
         type: 'newline',
-        lineno: 1
-      }
+        lineno: 1,
+      },
     ])
   })
 
@@ -635,17 +648,18 @@ test.group('Tokenizer', () => {
         properties: {
           name: 'if',
           raw: 'if(!user)',
-          jsArg: `!user`
+          jsArg: `!user`,
+          selfclosed: false,
         },
         children: [{
           type: 'newline',
-          lineno: 1
-        }]
+          lineno: 1,
+        }],
       },
       {
         type: 'newline',
-        lineno: 2
-      }
+        lineno: 2,
+      },
     ])
   })
 })

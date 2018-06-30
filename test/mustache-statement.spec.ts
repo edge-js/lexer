@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
 * edge-lexer
 *
@@ -9,9 +7,9 @@
 * file that was distributed with this source code.
 */
 
-const test = require('japa')
-const dedent = require('dedent')
-const MustacheStatement = require('../build/MustacheStatement')
+import * as test from 'japa'
+import * as dedent from 'dedent'
+import { MustacheStatement } from '../src/MustacheStatement'
 
 test.group('Mustache Statement', () => {
   test('collect expression inside mustache braces', (assert) => {
@@ -26,7 +24,7 @@ test.group('Mustache Statement', () => {
       textLeft: '',
       textRight: '',
       jsArg: ' 2 + 2 ',
-      raw: '{{ 2 + 2 }}'
+      raw: '{{ 2 + 2 }}',
     })
   })
 
@@ -42,7 +40,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'The value is ',
       textRight: '',
       jsArg: ' 2 + 2 ',
-      raw: 'The value is {{ 2 + 2 }}'
+      raw: 'The value is {{ 2 + 2 }}',
     })
   })
 
@@ -58,7 +56,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'The value is ',
       textRight: '. This is called addition',
       jsArg:  ' 2 + 2 ',
-      raw: 'The value is {{ 2 + 2 }}. This is called addition'
+      raw: 'The value is {{ 2 + 2 }}. This is called addition',
     })
   })
 
@@ -82,7 +80,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'The users are ',
       textRight: '',
       jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(',')\n`,
-      raw: template
+      raw: template,
     })
   })
 
@@ -106,7 +104,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'The users are ',
       textRight: '}',
       jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(',')\n`,
-      raw: template
+      raw: template,
     })
   })
 
@@ -122,23 +120,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: ' \'<span> user </span>\' ',
-      raw: `Welcome {{{ '<span> user </span>' }}}`
-    })
-  })
-
-  test('do not close when didn\'t started', (assert) => {
-    const statement = new MustacheStatement(1)
-    statement.feed(`Welcome dude }}}`)
-
-    assert.isFalse(statement.started)
-    assert.isFalse(statement.ended)
-    assert.isNull(statement['internalProps'])
-    assert.deepEqual(statement.props, {
-      name: null,
-      textLeft: 'Welcome dude }}}',
-      textRight: '',
-      jsArg: '',
-      raw: 'Welcome dude }}}'
+      raw: `Welcome {{{ '<span> user </span>' }}}`,
     })
   })
 
@@ -156,7 +138,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: ' {{ username }} ',
-      raw: 'Welcome {{ {{ username }} }}'
+      raw: 'Welcome {{ {{ username }} }}',
     })
   })
 
@@ -174,7 +156,7 @@ test.group('Mustache Statement', () => {
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: '',
-      raw: 'Welcome {{{ username }}'
+      raw: 'Welcome {{{ username }}',
     })
   })
 
@@ -193,7 +175,74 @@ test.group('Mustache Statement', () => {
       textLeft: 'Welcome ',
       textRight: '',
       jsArg: ' username ',
-      raw: 'Welcome @{{ username }}'
+      raw: 'Welcome @{{ username }}',
+    })
+  })
+
+  test('ignore escaped safe mustache braces', (assert) => {
+    const statement = new MustacheStatement(1)
+    const template = 'Welcome @{{{ username }}}'
+    statement.feed(template)
+
+    assert.isTrue(statement.started)
+    assert.isTrue(statement.ended)
+    assert.isFalse(statement.seeking)
+    assert.isNull(statement['internalProps'])
+
+    assert.deepEqual(statement.props, {
+      name: 'es__mustache',
+      textLeft: 'Welcome ',
+      textRight: '',
+      jsArg: ' username ',
+      raw: 'Welcome @{{{ username }}}',
+    })
+  })
+
+  test('do not collect expression when inside single braces', (assert) => {
+    const statement = new MustacheStatement(1)
+    statement.feed('{ 2 + 2 }')
+
+    assert.isFalse(statement.started)
+    assert.isFalse(statement.ended)
+
+    assert.deepEqual(statement.props, {
+      name: 'mustache',
+      textLeft: '{ 2 + 2 }',
+      textRight: '',
+      jsArg: '',
+      raw: '{ 2 + 2 }',
+    })
+  })
+
+  test('set ended as false when safe mustache is not closed properly', (assert) => {
+    const statement = new MustacheStatement(1)
+    statement.feed('{{{ 2 + 2 }} is 4')
+
+    assert.isTrue(statement.started)
+    assert.isFalse(statement.ended)
+
+    assert.deepEqual(statement.props, {
+      name: 's__mustache',
+      textLeft: '',
+      textRight: '',
+      jsArg: '',
+      raw: '{{{ 2 + 2 }} is 4',
+    })
+  })
+
+  test('set ended as false when mustache is not closed properly', (assert) => {
+    const statement = new MustacheStatement(1)
+    statement.feed('{{ 2 + 2 } is 4')
+
+    assert.isTrue(statement.started)
+    assert.isFalse(statement.ended)
+
+    assert.deepEqual(statement.props, {
+      name: 'mustache',
+      textLeft: '',
+      textRight: '',
+      jsArg: '',
+      raw: '{{ 2 + 2 } is 4',
     })
   })
 })

@@ -1,5 +1,11 @@
 # Edge lexer
 
+[![travis-image]][travis-url]
+[![appveyor-image]][appveyor-url]
+[![coveralls-image]][coveralls-url]
+[![npm-image]][npm-url]
+![](https://img.shields.io/badge/Uses-Typescript-294E80.svg?style=flat-square&colorA=ddd)
+
 Edge lexer detects tags from any markup language and converts them into tokens. Later these tokens can be used with a Javascript parser like `esprima` or `babylon` to complete a logical template engine ( this is what [edge-parser](https://github.com/poppinss/edge-parser) does).
 
 This guide is an outline of the lexer.
@@ -38,7 +44,7 @@ Following is the list of Nodes returned by the tokenizer.
 {
   type: 'block'
   lineno: number,
-  properties: Prop,
+  properties: BlockProp,
   children: []
 }
 ```
@@ -85,6 +91,18 @@ Following is the list of Nodes returned by the tokenizer.
 ## Properties
 The properties `Prop` is used to define meta data for a given Node. Nodes like `raw` and `newline`, doesn't need any metadata. 
 
+#### BlockProp
+The block prop is by the `Tag` node. The only difference from the regular `Prop` is the additional of `selfclosed` attribute.
+
+```js
+{
+  name: string
+  jsArg: string,
+  raw: string,
+  selfclosed: boolean
+}
+```
+
 #### Prop
 
 ```js
@@ -100,6 +118,7 @@ The properties `Prop` is used to define meta data for a given Node. Nodes like `
 | name | The name is the subtype for a given node. For example: `if` will be the name of the `@if` tag. |
 | jsArg | The `jsArg` is the Javascript expression to evaluate |
 | raw | The raw representation of a given expression. Used for debugging purposes. |
+| selfclosed | Whether or not the tag was `selfclosed` during usage. |
 
 For mustache nodes props, the `name` is the type of mustache expressions. The lexer supports 4 mustache expressions.
 
@@ -149,7 +168,8 @@ The output of the above text will be
     "properties": {
       "name": "if",
       "jsArg": "username",
-      "raw": "if(username)"
+      "raw": "if(username)",
+      "selfclosed": false
     },
     "lineno": 1,
     "children": [
@@ -393,3 +413,32 @@ In the same fashion, the mustache braces can be escaped using `@`.
 ```
 Hello @{{ username }}
 ```
+
+## Change log
+
+The change log can be found in the [CHANGELOG.md](https://github.com/poppinss/edge-lexer/CHANGELOG.md) file.
+
+## Contributing
+
+Everyone is welcome to contribute. Please go through the following guides, before getting started.
+
+1. [Contributing](https://adonisjs.com/contributing)
+2. [Code of conduct](https://adonisjs.com/code-of-conduct)
+
+
+## Authors & License
+[thetutlage](https://github.com/thetutlage) and [contributors](https://github.com/poppinss/edge-lexer/graphs/contributors).
+
+MIT License, see the included [MIT](LICENSE.md) file.
+
+[travis-image]: https://img.shields.io/travis/poppinss/edge-lexer/master.svg?style=flat-square&logo=travis
+[travis-url]: https://travis-ci.org/poppinss/edge-lexer "travis"
+
+[appveyor-image]: https://img.shields.io/appveyor/ci/thetutlage/edge-lexer/master.svg?style=flat-square&logo=appveyor
+[appveyor-url]: https://ci.appveyor.com/project/thetutlage/edge-lexer "appveyor"
+
+[coveralls-image]: https://img.shields.io/coveralls/poppinss/edge-lexer/master.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/github/poppinss/edge-lexer "coveralls"
+
+[npm-image]: https://img.shields.io/npm/v/edge-lexer.svg?style=flat-square&logo=npm
+[npm-url]: https://npmjs.org/package/edge-lexer "npm"

@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
 * edge-lexer
 *
@@ -9,9 +7,9 @@
 * file that was distributed with this source code.
 */
 
-const test = require('japa')
-const CharBucket = require('../build/CharBucket')
-const { WhiteSpaceModes } = require('../build/Contracts')
+import * as test from 'japa'
+import { CharBucket } from '../src/CharBucket'
+import { WhiteSpaceModes } from '../src/Contracts'
 
 test.group('CharBucket', () => {
   test('record all whitespaces when whitespace mode is all', (assert) => {

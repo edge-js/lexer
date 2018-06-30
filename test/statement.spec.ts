@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
 * edge-lexer
 *
@@ -9,15 +7,15 @@
 * file that was distributed with this source code.
 */
 
-const test = require('japa')
-const dedent = require('dedent')
-const TagStatement = require('../build/TagStatement')
+import * as test from 'japa'
+import * as dedent from 'dedent'
+import { TagStatement } from '../src/TagStatement'
 
-const tagDef  = {
+const tagDef = {
   seekable: true,
   selfclosed: false,
   escaped: false,
-  block: true
+  block: true,
 }
 
 test.group('Statement', () => {
@@ -33,7 +31,8 @@ test.group('Statement', () => {
     assert.deepEqual(statement.props, {
       name: 'if',
       jsArg: 'username',
-      raw: 'if(username)'
+      raw: 'if(username)',
+      selfclosed: false,
     })
   })
 
@@ -48,7 +47,8 @@ test.group('Statement', () => {
     assert.deepEqual(statement.props, {
       name: 'if',
       jsArg: '(2 + 2)',
-      raw: 'if((2 + 2))'
+      raw: 'if((2 + 2))',
+      selfclosed: false,
     })
   })
 
@@ -84,7 +84,8 @@ test.group('Statement', () => {
     assert.deepEqual(statement.props, {
       name: 'if',
       jsArg: '\n  2 + 2 === 4\n',
-      raw: template
+      raw: template,
+      selfclosed: false,
     })
   })
 
@@ -99,7 +100,8 @@ test.group('Statement', () => {
     assert.deepEqual(statement.props, {
       name: '',
       jsArg: '',
-      raw: 'if'
+      raw: 'if',
+      selfclosed: false,
     })
   })
 
@@ -115,7 +117,8 @@ test.group('Statement', () => {
     assert.deepEqual(statement.props, {
       name: 'if',
       jsArg: '',
-      raw: 'if('
+      raw: 'if(',
+      selfclosed: false,
     })
   })
 
@@ -136,7 +139,8 @@ test.group('Statement', () => {
     assert.deepEqual(statement.props, {
       name: 'else',
       jsArg: '',
-      raw: 'else'
+      raw: 'else',
+      selfclosed: false,
     })
   })
 
@@ -151,7 +155,8 @@ test.group('Statement', () => {
     assert.deepEqual(statement.props, {
       name: 'else',
       jsArg: '',
-      raw: '  else  '
+      raw: '  else  ',
+      selfclosed: false,
     })
   })
 
@@ -174,7 +179,24 @@ test.group('Statement', () => {
     assert.deepEqual(statement.props, {
       name: 'if',
       jsArg: `\n  users.find((user) => {\n    return user.username === 'virk'\n  })\n`,
-      raw: template
+      raw: template,
+      selfclosed: false,
+    })
+  })
+
+  test('set selfclosed to true for when bang is detected', (assert) => {
+    const statement = new TagStatement(1, Object.assign({}, tagDef, { selfclosed: true }))
+    statement.feed('!each(user in users)')
+
+    assert.equal(statement.ended, true)
+    assert.equal(statement.started, true)
+    assert.isNull(statement['internalProps'])
+
+    assert.deepEqual(statement.props, {
+      name: 'each',
+      jsArg: 'user in users',
+      raw: '!each(user in users)',
+      selfclosed: true,
     })
   })
 })
