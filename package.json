@@ -1,8 +1,9 @@
 {
   "name": "edge-lexer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Parses raw markup files to converts them to Tokens",
-  "main": "index.js",
+  "main": "build/src/Tokenizer/index.js",
+  "typings": "build/src/Tokenizer/index.d.ts",
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
@@ -18,7 +19,6 @@
     "lint": "tslint --project tsconfig.json"
   },
   "files": [
-    "index.js",
     "build/src",
     "README.md",
     "LICENSE.md"
