@@ -12,6 +12,25 @@ This guide is an outline of the lexer.
 
 ---
 
+## Usage
+```
+import { Tokenizer } from 'edge-lexer'
+
+const template = `Hello {{ username }}`
+const tags = {
+  if: {
+    block: true,
+    selfclosed: false,
+    seekable: true
+  }
+}
+
+const tokenizer = new Tokenizer(template, tags)
+tokenizer.parse()
+
+console.log(tokenizer.tokens)
+```
+
 ## Note
 The code used in examples is only subject to work, when using Edge template engine. The lexer job is to tokenize the whitelisted syntax.
 
