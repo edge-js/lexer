@@ -55,7 +55,8 @@ interface ITagDefination {
   block: boolean
   selfclosed: boolean
   escaped?: boolean
-  seekable: boolean
+  seekable: boolean,
+  new? ()
 }
 
 export { IProp as IProp }

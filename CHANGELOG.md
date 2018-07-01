@@ -1,3 +1,13 @@
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/poppinss/edge-lexer/compare/v1.0.3...v1.0.4) (2018-07-01)
+
+
+### Bug Fixes
+
+* **contracts:** make ITagDefination to work with objects and classes ([f6c7bd6](https://github.com/poppinss/edge-lexer/commit/f6c7bd6))
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/poppinss/edge-lexer/compare/v1.0.2...v1.0.3) (2018-07-01)
 

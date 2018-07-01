@@ -11,11 +11,10 @@ import * as test from 'japa'
 import * as dedent from 'dedent'
 import { TagStatement } from '../src/TagStatement'
 
-const tagDef = {
-  seekable: true,
-  selfclosed: false,
-  escaped: false,
-  block: true,
+const tagDef = class If {
+  public static block = true
+  public static selfclosed = false
+  public static seekable = true
 }
 
 test.group('Statement', () => {

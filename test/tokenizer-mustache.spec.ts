@@ -12,20 +12,20 @@ import * as dedent from 'dedent'
 import { Tokenizer } from '../src/Tokenizer'
 
 const tagsDef = {
-  if: {
-    block: true,
-    selfclosed: false,
-    seekable: true,
+  if: class If {
+    public static block = true
+    public static selfclosed = false
+    public static seekable = true
   },
-  else: {
-    block: false,
-    selfclosed: false,
-    seekable: false,
+  else: class Else {
+    public static block = false
+    public static selfclosed = false
+    public static seekable = false
   },
-  include: {
-    block: false,
-    selfclosed: false,
-    seekable: true,
+  include: class Include {
+    public static block = false
+    public static selfclosed = false
+    public static seekable = true
   },
 }
 
