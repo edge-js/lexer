@@ -193,10 +193,6 @@ The output of the above text will be
     "lineno": 1,
     "children": [
       {
-        "type": "newline",
-        "lineno": 1
-      },
-      {
         "type": "raw",
         "value": "<h2> Hello ",
         "lineno": 2
@@ -220,10 +216,6 @@ The output of the above text will be
         "lineno": 2
       }
     ]
-  },
-  {
-    "type": "newline",
-    "lineno": 3
   }
 ]
 ```

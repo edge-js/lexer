@@ -1,6 +1,6 @@
 // @ts-check
 
-const Tokenizer = require('..')
+const { Tokenizer } = require('..')
 const dedent = require('dedent')
 
 const exampleCode = dedent`
