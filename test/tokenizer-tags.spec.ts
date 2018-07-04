@@ -76,16 +76,7 @@ test.group('Tokenizer Tags', () => {
           raw: 'if(username)',
         },
         lineno: 3,
-        children: [
-          {
-            type: 'newline',
-            lineno: 3,
-          },
-        ],
-      },
-      {
-        type: 'newline',
-        lineno: 4,
+        children: [],
       },
     ])
   })
@@ -134,10 +125,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [
           {
-            type: 'newline',
-            lineno: 3,
-          },
-          {
             type: 'raw',
             value: '  Hello',
             lineno: 4,
@@ -147,10 +134,6 @@ test.group('Tokenizer Tags', () => {
             lineno: 4,
           },
         ],
-      },
-      {
-        type: 'newline',
-        lineno: 5,
       },
     ])
   })
@@ -201,10 +184,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [
           {
-            type: 'newline',
-            lineno: 3,
-          },
-          {
             type: 'block',
             lineno: 4,
             properties: {
@@ -214,10 +193,6 @@ test.group('Tokenizer Tags', () => {
               selfclosed: false,
             },
             children: [
-              {
-                type: 'newline',
-                lineno: 4,
-              },
               {
                 type: 'raw',
                 value: '    Hi',
@@ -229,15 +204,7 @@ test.group('Tokenizer Tags', () => {
               },
             ],
           },
-          {
-            type: 'newline',
-            lineno: 6,
-          },
         ],
-      },
-      {
-        type: 'newline',
-        lineno: 7,
       },
     ])
   })
@@ -288,10 +255,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [
           {
-            type: 'newline',
-            lineno: 5,
-          },
-          {
             type: 'raw',
             value: '  Hello',
             lineno: 6,
@@ -301,10 +264,6 @@ test.group('Tokenizer Tags', () => {
             lineno: 6,
           },
         ],
-      },
-      {
-        type: 'newline',
-        lineno: 7,
       },
     ])
   })
@@ -355,10 +314,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [
           {
-            type: 'newline',
-            lineno: 5,
-          },
-          {
             type: 'raw',
             value: '  Answer is 12',
             lineno: 6,
@@ -368,10 +323,6 @@ test.group('Tokenizer Tags', () => {
             lineno: 6,
           },
         ],
-      },
-      {
-        type: 'newline',
-        lineno: 7,
       },
     ])
   })
@@ -395,10 +346,6 @@ test.group('Tokenizer Tags', () => {
           selfclosed: false,
         },
         children: [],
-      },
-      {
-        type: 'newline',
-        lineno: 1,
       },
     ])
   })
@@ -429,10 +376,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [
           {
-            type: 'newline',
-            lineno: 1,
-          },
-          {
             type: 'raw',
             value: '  Hello',
             lineno: 2,
@@ -453,10 +396,6 @@ test.group('Tokenizer Tags', () => {
             children: [],
           },
           {
-            type: 'newline',
-            lineno: 3,
-          },
-          {
             type: 'raw',
             value: '  Hello guest',
             lineno: 4,
@@ -466,10 +405,6 @@ test.group('Tokenizer Tags', () => {
             lineno: 4,
           },
         ],
-      },
-      {
-        type: 'newline',
-        lineno: 5,
       },
     ])
   })
@@ -571,10 +506,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [],
       },
-      {
-        type: 'newline',
-        lineno: 1,
-      },
     ])
   })
 
@@ -623,10 +554,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [],
       },
-      {
-        type: 'newline',
-        lineno: 1,
-      },
     ])
   })
 
@@ -651,14 +578,7 @@ test.group('Tokenizer Tags', () => {
           jsArg: `!user`,
           selfclosed: false,
         },
-        children: [{
-          type: 'newline',
-          lineno: 1,
-        }],
-      },
-      {
-        type: 'newline',
-        lineno: 2,
+        children: [],
       },
     ])
   })

@@ -243,7 +243,6 @@ export class Tokenizer {
       this.consumeNode(this.getTagNode(props, startPosition))
     }
 
-    this.consumeNode(this.getBlankLineNode())
     this.blockStatement = null
   }
 
@@ -331,7 +330,6 @@ export class Tokenizer {
      */
     if (this.isClosingTag(text)) {
       this.consumeNode(this.openedTags.pop()!)
-      this.consumeNode(this.getBlankLineNode())
       return
     }
 
