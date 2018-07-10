@@ -1,3 +1,8 @@
+<a name="1.0.7"></a>
+## [1.0.7](https://github.com/poppinss/edge-lexer/compare/v1.0.6...v1.0.7) (2018-07-10)
+
+
+
 <a name="1.0.6"></a>
 ## [1.0.6](https://github.com/poppinss/edge-lexer/compare/v1.0.4...v1.0.6) (2018-07-10)
 
