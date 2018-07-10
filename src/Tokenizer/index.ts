@@ -11,6 +11,7 @@
 * file that was distributed with this source code.
 */
 
+import { EdgeError } from 'edge-error'
 import { TagStatement as BlockStatement } from '../TagStatement'
 import { MustacheStatement } from '../MustacheStatement'
 
@@ -36,6 +37,10 @@ const ESCAPE_REGEX = /^(\s*)@/
 /** @hidden */
 const TRIM_TAG_REGEX = /^@/
 
+type tokenizerOptions = {
+  filename: string,
+}
+
 /**
  * Tokenizer converts a bunch of text into an array of tokens. Later
  * these tokens can be used to build the transformed text.
@@ -50,7 +55,7 @@ export class Tokenizer {
   private line: number = 0
   private openedTags: IBlockNode[] = []
 
-  constructor (private template: string, private tagsDef: { [key: string]: ITagDefination }) {
+  constructor (private template: string, private tagsDef: { [key: string]: ITagDefination }, private options: tokenizerOptions) {
   }
 
   /**
@@ -90,8 +95,13 @@ export class Tokenizer {
      * Throw exception when there are opened tags
      */
     if (this.openedTags.length) {
-      const message = `Unclosed tag ${this.openedTags[this.openedTags.length - 1].properties.name}`
-      throw new Error(message)
+      const openedTag = this.openedTags[this.openedTags.length - 1]
+
+      throw new EdgeError(`Unclosed tag ${openedTag.properties.name}`, 'E_UNCLOSED_TAG', {
+        line: openedTag.lineno,
+        col: 0,
+        filename: this.options.filename,
+      })
     }
   }
 

@@ -43,7 +43,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -90,7 +90,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -149,7 +149,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -220,7 +220,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -279,7 +279,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -330,7 +330,7 @@ test.group('Tokenizer Tags', () => {
   test('parse inline tags', (assert) => {
     const template = dedent`@include('partials.user')`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -359,7 +359,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -414,7 +414,7 @@ test.group('Tokenizer Tags', () => {
     @foo('hello world')
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -437,7 +437,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -468,7 +468,7 @@ test.group('Tokenizer Tags', () => {
     const template = dedent`@if((2 + 2)
     @endif`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -489,7 +489,7 @@ test.group('Tokenizer Tags', () => {
   test('consume one liner inline tag', (assert) => {
     const template = `@include('header')`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -515,7 +515,7 @@ test.group('Tokenizer Tags', () => {
         Hello world
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     const fn = () => tokenizer.parse()
     assert.throw(fn, 'Unclosed tag if')
   })
@@ -527,7 +527,7 @@ test.group('Tokenizer Tags', () => {
       @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     const fn = () => tokenizer.parse()
     assert.throw(fn, 'Unclosed tag each')
   })
@@ -537,7 +537,7 @@ test.group('Tokenizer Tags', () => {
     @!each(user in users, include = 'user')
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -563,7 +563,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
