@@ -33,7 +33,7 @@ test.group('Tokenizer Mustache', () => {
   test('process mustache blocks', (assert) => {
     const template = 'Hello {{ username }}'
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -63,7 +63,7 @@ test.group('Tokenizer Mustache', () => {
   test('process mustache blocks with text around it', (assert) => {
     const template = 'Hello {{ username }}!'
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -102,7 +102,7 @@ test.group('Tokenizer Mustache', () => {
       }).join(', ')
     }}.`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -141,7 +141,7 @@ test.group('Tokenizer Mustache', () => {
       }).join(', ')
     }}}.`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -176,7 +176,7 @@ test.group('Tokenizer Mustache', () => {
   test('parse multiple mustache statements in a single line', (assert) => {
     const template = dedent`Hello {{ username }}, your age is {{ age }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -228,7 +228,7 @@ test.group('Tokenizer Mustache', () => {
     Bye
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -287,7 +287,7 @@ test.group('Tokenizer Mustache', () => {
   test('convert incomplete mustache statements to raw string', (assert) => {
     const template = 'Hello {{ username'
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -308,7 +308,7 @@ test.group('Tokenizer Mustache', () => {
   test('parse 3 mustache statements in a single line', (assert) => {
     const template = dedent`{{ username }}, {{ age }} and {{ state }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -362,7 +362,7 @@ test.group('Tokenizer Mustache', () => {
   test('work fine with escaped and regular mustache braces', (assert) => {
     const template = dedent`{{ username }}, @{{ age }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -404,7 +404,7 @@ test.group('Tokenizer Mustache', () => {
       users.map((user) => user.username)
     }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -444,7 +444,7 @@ test.group('Tokenizer Mustache', () => {
   test('parse multiple mustache statements when escaped and unescaped', (assert) => {
     const template = dedent`Hello @{{ username }}, your age is {{ age }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
@@ -489,7 +489,7 @@ test.group('Tokenizer Mustache', () => {
   test('use raw text when mustache is not closed properly', (assert) => {
     const template = dedent`Hello {{ username }.`
 
-    const tokenizer = new Tokenizer(template, tagsDef)
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
