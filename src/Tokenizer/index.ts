@@ -74,13 +74,16 @@ export class Tokenizer {
     }
 
     /**
-     * Process entire text, but there is an open statement, so we will
-     * process it as a raw node
+     * Done processing all the lines of the template and now we are left
+     * with a tag, which isn't properly wrapped inside `curly braces`.
+     * Maybe one or more curly braces are left opened.
      */
     if (this.blockStatement) {
-      this.consumeNode(this.getRawNode(`@${this.blockStatement.props.raw}`))
-      this.blockStatement = null
-      this.consumeNode(this.getBlankLineNode())
+      throw new EdgeError('Missing token )', 'E_MISSING_CLOSING_BRACE', {
+        line: this.blockStatement.startPosition,
+        col: 0,
+        filename: this.options.filename,
+      })
     }
 
     /**
@@ -88,15 +91,15 @@ export class Tokenizer {
      * process it as a raw node
      */
     if (this.mustacheStatement) {
-      const { raw } = this.mustacheStatement.props
-      this.mustacheStatement = null
-
-      this.consumeNode(this.getRawNode(raw))
-      this.consumeNode(this.getBlankLineNode())
+      throw new EdgeError('Missing token }', 'E_MISSING_CLOSING_BRACE', {
+        line: this.mustacheStatement.startPosition,
+        col: 0,
+        filename: this.options.filename,
+      })
     }
 
     /**
-     * Throw exception when there are opened tags
+     * Throw exception when there are opened tags, which were never closed.
      */
     if (this.openedTags.length) {
       const openedTag = this.openedTags[this.openedTags.length - 1]
@@ -322,7 +325,10 @@ export class Tokenizer {
     const tag = this.getTag(text)
 
     /**
-     * Text is a escaped tag
+     * Text is a escaped tag, which means we need to process it as a
+     * raw node.
+     *
+     * The escaping is done to allow tags like text but aren't tags actually.
      */
     if (tag && tag.escaped) {
       this.consumeNode(this.getRawNode(text.replace(ESCAPE_REGEX, '$1')))

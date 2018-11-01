@@ -465,26 +465,19 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('convert tag to raw string when statement is still seeking', (assert) => {
+  test('throw exception when tag is still seeking', (assert) => {
+    assert.plan(2)
+
     const template = dedent`@if((2 + 2)
     @endif`
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: NodeType.RAW,
-        value: '@if((2 + 2)\n@endif',
-        lineno: 2,
-      },
-      {
-        type: NodeType.NEWLINE,
-        lineno: 2,
-      },
-    ])
+    try {
+      tokenizer.parse()
+    } catch ({ message, line }) {
+      assert.equal(message, 'Missing token )')
+      assert.equal(line, 1)
+    }
   })
 
   test('consume one liner inline tag', (assert) => {

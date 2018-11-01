@@ -13,7 +13,8 @@ This guide is an outline of the lexer.
 ---
 
 ## Usage
-```
+
+```js
 import { Tokenizer } from 'edge-lexer'
 
 const template = `Hello {{ username }}`
@@ -25,9 +26,14 @@ const tags = {
   }
 }
 
-const tokenizer = new Tokenizer(template, tags)
-tokenizer.parse()
+// Filename is required to add it to error messages
+const options = {
+  filename: 'welcome.edge'
+}
 
+const tokenizer = new Tokenizer(template, tags, options)
+
+tokenizer.parse()
 console.log(tokenizer.tokens)
 ```
 

@@ -285,25 +285,17 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('convert incomplete mustache statements to raw string', (assert) => {
+  test('raise error if incomplete mustache statements', (assert) => {
+    assert.plan(2)
     const template = 'Hello {{ username'
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: NodeType.RAW,
-        lineno: 1,
-        value: 'Hello {{ username',
-      },
-      {
-        type: NodeType.NEWLINE,
-        lineno: 1,
-      },
-    ])
+    try {
+      tokenizer.parse()
+    } catch ({ message, line }) {
+      assert.equal(message, 'Missing token }')
+      assert.equal(line, 1)
+    }
   })
 
   test('parse 3 mustache statements in a single line', (assert) => {
@@ -487,25 +479,17 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('use raw text when mustache is not closed properly', (assert) => {
+  test('raise error if mustache is not properly closed', (assert) => {
+    assert.plan(2)
+
     const template = dedent`Hello {{ username }.`
-
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
-    tokenizer.parse()
 
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: NodeType.RAW,
-        lineno: 1,
-        value: 'Hello {{ username }.',
-      },
-      {
-        type: NodeType.NEWLINE,
-        lineno: 1,
-      },
-    ])
+    try {
+      tokenizer.parse()
+    } catch ({ message, line }) {
+      assert.equal(message, 'Missing token }')
+      assert.equal(line, 1)
+    }
   })
 })
