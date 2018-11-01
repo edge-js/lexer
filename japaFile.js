@@ -1,4 +1,6 @@
 require('ts-node/register')
+const { configure } = require('japa')
 
-const cli = require('japa/cli')
-cli.run('test/**/*.spec.ts')
+configure({
+  files: ['test/**/*.spec.ts']
+})

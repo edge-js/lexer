@@ -55,7 +55,11 @@ export class Tokenizer {
   private line: number = 0
   private openedTags: IBlockNode[] = []
 
-  constructor (private template: string, private tagsDef: { [key: string]: ITagDefination }, private options: tokenizerOptions) {
+  constructor (
+    private template: string,
+    private tagsDef: { [key: string]: ITagDefination },
+    private options: tokenizerOptions,
+  ) {
   }
 
   /**

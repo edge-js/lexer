@@ -10,6 +10,7 @@
 import * as test from 'japa'
 import * as dedent from 'dedent'
 import { Tokenizer } from '../src/Tokenizer'
+import { NodeType } from '../src/Contracts'
 
 const tagsDef = {
   if: class If {
@@ -40,12 +41,12 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -54,7 +55,7 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 1,
       },
     ])
@@ -70,12 +71,12 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -84,12 +85,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: '!',
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 1,
       },
     ])
@@ -109,12 +110,12 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: 'List of users are ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -123,12 +124,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 5,
         value: '.',
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 5,
       },
     ])
@@ -148,12 +149,12 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: 'List of users are ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 's__mustache',
@@ -162,12 +163,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 5,
         value: '.',
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 5,
       },
     ])
@@ -184,12 +185,12 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -198,12 +199,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: ', your age is ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -212,7 +213,7 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 1,
       },
     ])
@@ -236,12 +237,12 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -250,12 +251,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: ', your friends are ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -264,21 +265,21 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 5,
         value: '!',
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 5,
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 6,
         value: 'Bye',
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 6,
       },
     ])
@@ -294,12 +295,12 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: 'Hello {{ username',
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 1,
       },
     ])
@@ -316,7 +317,7 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -325,12 +326,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: ', ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -339,12 +340,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: ' and ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -353,7 +354,7 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 1,
       },
     ])
@@ -370,7 +371,7 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -379,12 +380,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: ', ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'e__mustache',
@@ -393,7 +394,7 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 1,
       },
     ])
@@ -412,7 +413,7 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -421,12 +422,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: ', ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'e__mustache',
@@ -435,7 +436,7 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 3,
       },
     ])
@@ -452,12 +453,12 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'e__mustache',
@@ -466,12 +467,12 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: ', your age is ',
       },
       {
-        type: 'mustache',
+        type: NodeType.MUSTACHE,
         lineno: 1,
         properties: {
           name: 'mustache',
@@ -480,7 +481,7 @@ test.group('Tokenizer Mustache', () => {
         },
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 1,
       },
     ])
@@ -497,12 +498,12 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'raw',
+        type: NodeType.RAW,
         lineno: 1,
         value: 'Hello {{ username }.',
       },
       {
-        type: 'newline',
+        type: NodeType.NEWLINE,
         lineno: 1,
       },
     ])
