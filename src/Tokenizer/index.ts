@@ -11,9 +11,9 @@
 * file that was distributed with this source code.
 */
 
-import { EdgeError } from 'edge-error'
 import { TagStatement as BlockStatement } from '../TagStatement'
 import { MustacheStatement } from '../MustacheStatement'
+import { unclosedParen, unclosedCurlyBrace, unclosedTag } from '../Exceptions'
 
 import {
   IBlockProp,
@@ -79,11 +79,7 @@ export class Tokenizer {
      * Maybe one or more curly braces are left opened.
      */
     if (this.blockStatement) {
-      throw new EdgeError('Missing token )', 'E_MISSING_CLOSING_BRACE', {
-        line: this.blockStatement.startPosition,
-        col: 0,
-        filename: this.options.filename,
-      })
+      throw unclosedParen({ line: this.blockStatement.startPosition, col: 0 }, this.options.filename)
     }
 
     /**
@@ -91,11 +87,7 @@ export class Tokenizer {
      * process it as a raw node
      */
     if (this.mustacheStatement) {
-      throw new EdgeError('Missing token }', 'E_MISSING_CLOSING_BRACE', {
-        line: this.mustacheStatement.startPosition,
-        col: 0,
-        filename: this.options.filename,
-      })
+      throw unclosedCurlyBrace({ line: this.mustacheStatement.startPosition, col: 0 }, this.options.filename)
     }
 
     /**
@@ -103,12 +95,7 @@ export class Tokenizer {
      */
     if (this.openedTags.length) {
       const openedTag = this.openedTags[this.openedTags.length - 1]
-
-      throw new EdgeError(`Unclosed tag ${openedTag.properties.name}`, 'E_UNCLOSED_TAG', {
-        line: openedTag.lineno,
-        col: 0,
-        filename: this.options.filename,
-      })
+      throw unclosedTag(openedTag.properties.name, { line: openedTag.lineno, col: 0 }, this.options.filename)
     }
   }
 
@@ -340,7 +327,7 @@ export class Tokenizer {
      * Text is a tag
      */
     if (tag) {
-      this.blockStatement = new BlockStatement(this.line, tag)
+      this.blockStatement = new BlockStatement(this.line, tag, this.options.filename)
       this.feedTextToBlockStatement(text.trim().replace(TRIM_TAG_REGEX, ''))
       return
     }

@@ -293,7 +293,7 @@ test.group('Tokenizer Mustache', () => {
     try {
       tokenizer.parse()
     } catch ({ message, line }) {
-      assert.equal(message, 'Missing token }')
+      assert.equal(message, 'Missing token "}"')
       assert.equal(line, 1)
     }
   })
@@ -488,7 +488,7 @@ test.group('Tokenizer Mustache', () => {
     try {
       tokenizer.parse()
     } catch ({ message, line }) {
-      assert.equal(message, 'Missing token }')
+      assert.equal(message, 'Missing token "}"')
       assert.equal(line, 1)
     }
   })

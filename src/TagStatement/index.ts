@@ -13,6 +13,7 @@
 
 import { IBlockProp, WhiteSpaceModes, ITagDefination } from '../Contracts'
 import { CharBucket } from '../CharBucket'
+import { cannotSeekStatement, unwrappedJSExp } from '../Exceptions'
 
 /** @hidden */
 const OPENING_BRACE = 40
@@ -61,7 +62,7 @@ export class TagStatement {
   private internalProps: null | { name: CharBucket, jsArg: CharBucket }
   private firstCall: boolean = true
 
-  constructor (public startPosition: number, public tagDef: ITagDefination) {
+  constructor (public startPosition: number, public tagDef: ITagDefination, private _fileName: string) {
     this.props = {
       name: '',
       jsArg: '',
@@ -89,7 +90,7 @@ export class TagStatement {
    */
   public feed (line: string): void {
     if (this.ended) {
-      throw new Error(`Unexpected token {${line}}. Write in a new line`)
+      throw cannotSeekStatement(line, { line: this.startPosition, col: 0 }, this._fileName)
     }
 
     /**
@@ -161,7 +162,7 @@ export class TagStatement {
    */
   private endStatement (char: string): void {
     if (!this.started) {
-      throw new Error(`Unexpected token ${char}. Wrap statement inside ()`)
+      throw unwrappedJSExp(char, { line: this.startPosition, col: 0 }, this._fileName)
     }
     this.ended = true
     this.setProp()
@@ -199,7 +200,7 @@ export class TagStatement {
    */
   private ensureNoMoreCharsToFeed (chars: string[]): void {
     if (chars.length) {
-      throw new Error(`Unexpected token {${chars.join('')}}. Write in a new line`)
+      throw cannotSeekStatement(chars.join(''), { line: this.startPosition, col: 0 }, this._fileName)
     }
   }
 
