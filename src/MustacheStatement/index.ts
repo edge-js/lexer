@@ -88,10 +88,6 @@ export class MustacheStatement {
    * before calling this method.
    */
   public feed (line: string): void {
-    if (this.ended) {
-      throw new Error(`Unexpected token {${line}}`)
-    }
-
     /**
      * If feed method is called consecutively, we need to append
      * new lines
