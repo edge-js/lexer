@@ -23,6 +23,7 @@ import {
   IMustacheProp,
   IMustacheNode,
   ITagDefination,
+  ILoc,
 } from '../Contracts'
 
 /** @hidden */
@@ -49,7 +50,7 @@ type tokenizerOptions = {
  * the tokens output.
  */
 export class Tokenizer {
-  public tokens: Array<INode | IBlockNode> = []
+  public tokens: Array<INode | IBlockNode | IMustacheNode> = []
   private blockStatement: null | BlockStatement = null
   private mustacheStatement: null | MustacheStatement = null
   private line: number = 0
@@ -79,7 +80,7 @@ export class Tokenizer {
      * Maybe one or more curly braces are left opened.
      */
     if (this.blockStatement) {
-      throw unclosedParen({ line: this.blockStatement.startPosition, col: 0 }, this.options.filename)
+      throw unclosedParen(this.blockStatement.loc.end, this.options.filename)
     }
 
     /**
@@ -87,7 +88,7 @@ export class Tokenizer {
      * process it as a raw node
      */
     if (this.mustacheStatement) {
-      throw unclosedCurlyBrace({ line: this.mustacheStatement.startPosition, col: 0 }, this.options.filename)
+      throw unclosedCurlyBrace(this.mustacheStatement.loc.end, this.options.filename)
     }
 
     /**
@@ -95,7 +96,7 @@ export class Tokenizer {
      */
     if (this.openedTags.length) {
       const openedTag = this.openedTags[this.openedTags.length - 1]
-      throw unclosedTag(openedTag.properties.name, { line: openedTag.lineno, col: 0 }, this.options.filename)
+      throw unclosedTag(openedTag.properties.name, openedTag.loc.start, this.options.filename)
     }
   }
 
@@ -137,11 +138,11 @@ export class Tokenizer {
   /**
    * Returns the node for a tag
    */
-  private getTagNode (properties: IBlockProp, lineno: number): IBlockNode {
+  private getTagNode (properties: IBlockProp, loc: ILoc): IBlockNode {
     return {
       type: NodeType.BLOCK,
       properties,
-      lineno,
+      loc,
       children: [],
     }
   }
@@ -149,11 +150,11 @@ export class Tokenizer {
   /**
    * Returns the node for a raw string
    */
-  private getRawNode (value: string): INode {
+  private getRawNode (value: string, line: number): INode {
     return {
       type: NodeType.RAW,
       value,
-      lineno: this.line,
+      line: line,
     }
   }
 
@@ -163,17 +164,17 @@ export class Tokenizer {
   private getBlankLineNode (): INode {
     return {
       type: NodeType.NEWLINE,
-      lineno: this.line,
+      line: this.line,
     }
   }
 
   /**
    * Returns the mustache node
    */
-  private getMustacheNode (properties: IMustacheProp, lineno: number): IMustacheNode {
+  private getMustacheNode (properties: IMustacheProp, loc: ILoc): IMustacheNode {
     return {
       type: NodeType.MUSTACHE,
-      lineno,
+      loc,
       properties: {
         name: properties.name!,
         jsArg: properties.jsArg,
@@ -215,11 +216,12 @@ export class Tokenizer {
    * Here we add the node to tokens or as children for
    * the recentOpenedTag (if one exists).
    */
-  private consumeNode (tag: INode | IBlockNode): void {
+  private consumeNode (tag: INode | IBlockNode | IMustacheNode): void {
     if (this.openedTags.length) {
-      this.openedTags[this.openedTags.length - 1].children.push(tag)
+      this.openedTags[this.openedTags.length - 1].children.push(tag as IBlockNode)
       return
     }
+
     this.tokens.push(tag)
   }
 
@@ -235,16 +237,16 @@ export class Tokenizer {
       return
     }
 
-    const { props, tagDef, startPosition } = this.blockStatement!
+    const { props, tagDef, loc } = this.blockStatement!
 
     /**
      * If tag is a block level, then we added it to the openedTags
      * array, otherwise we add it to the tokens.
      */
     if (tagDef.block && (!tagDef.selfclosed || !props.selfclosed)) {
-      this.openedTags.push(this.getTagNode(props, startPosition))
+      this.openedTags.push(this.getTagNode(props, loc))
     } else {
-      this.consumeNode(this.getTagNode(props, startPosition))
+      this.consumeNode(this.getTagNode(props, loc))
     }
 
     this.blockStatement = null
@@ -260,21 +262,20 @@ export class Tokenizer {
       return
     }
 
-    const { props, startPosition } = this.mustacheStatement!
+    const { props, loc } = this.mustacheStatement!
 
     /**
      * Process text left when exists
      */
     if (props.textLeft) {
-      const textNode = this.getRawNode(props.textLeft)
-      textNode.lineno = startPosition
+      const textNode = this.getRawNode(props.textLeft, loc.start.line)
       this.consumeNode(textNode)
     }
 
     /**
      * Then consume the actual mustache expression
      */
-    this.consumeNode(this.getMustacheNode(props, startPosition))
+    this.consumeNode(this.getMustacheNode(props, loc))
     this.mustacheStatement = null
 
     /**
@@ -282,7 +283,7 @@ export class Tokenizer {
      * it, otherwise add a new line token
      */
     if (props.textRight) {
-      this.processText(props.textRight)
+      this.processText(props.textRight, loc.end.col)
     } else {
       this.consumeNode(this.getBlankLineNode())
     }
@@ -292,7 +293,7 @@ export class Tokenizer {
    * Process a piece of text, by finding if text has reserved keywords,
    * otherwise process it as a raw node.
    */
-  private processText (text: string): void {
+  private processText (text: string, col: number = 0): void {
     /**
      * Block statement is seeking for more content
      */
@@ -318,7 +319,7 @@ export class Tokenizer {
      * The escaping is done to allow tags like text but aren't tags actually.
      */
     if (tag && tag.escaped) {
-      this.consumeNode(this.getRawNode(text.replace(ESCAPE_REGEX, '$1')))
+      this.consumeNode(this.getRawNode(text.replace(ESCAPE_REGEX, '$1'), this.line))
       this.consumeNode(this.getBlankLineNode())
       return
     }
@@ -327,7 +328,9 @@ export class Tokenizer {
      * Text is a tag
      */
     if (tag) {
-      this.blockStatement = new BlockStatement(this.line, tag, this.options.filename)
+      const whitespaces = text.match(/^\s+/)
+      col = whitespaces ? whitespaces[0].length : 0
+      this.blockStatement = new BlockStatement(this.line, col + 1, tag, this.options.filename)
       this.feedTextToBlockStatement(text.trim().replace(TRIM_TAG_REGEX, ''))
       return
     }
@@ -344,7 +347,7 @@ export class Tokenizer {
      * Text contains mustache expressions
      */
     if (MUSTACHE_REGEX.test(text)) {
-      this.mustacheStatement = new MustacheStatement(this.line)
+      this.mustacheStatement = new MustacheStatement(this.line, col)
       this.feedTextToMustacheStatement(text)
       return
     }
@@ -352,7 +355,7 @@ export class Tokenizer {
     /**
      * A plain raw node
      */
-    this.consumeNode(this.getRawNode(text))
+    this.consumeNode(this.getRawNode(text, this.line))
     this.consumeNode(this.getBlankLineNode())
   }
 }

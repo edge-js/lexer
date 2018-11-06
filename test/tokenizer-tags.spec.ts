@@ -53,20 +53,20 @@ test.group('Tokenizer Tags', () => {
       {
         type: NodeType.RAW,
         value: 'Hello',
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.RAW,
         value: '',
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.BLOCK,
@@ -76,7 +76,16 @@ test.group('Tokenizer Tags', () => {
           selfclosed: false,
           raw: 'if(username)',
         },
-        lineno: 3,
+        loc: {
+          start: {
+            line: 3,
+            col: 4,
+          },
+          end: {
+            line: 3,
+            col: 13,
+          },
+        },
         children: [],
       },
     ])
@@ -100,24 +109,33 @@ test.group('Tokenizer Tags', () => {
       {
         type: NodeType.RAW,
         value: 'Hello',
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.RAW,
         value: '',
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.BLOCK,
-        lineno: 3,
+        loc: {
+          start: {
+            line: 3,
+            col: 4,
+          },
+          end: {
+            line: 3,
+            col: 13,
+          },
+        },
         properties: {
           name: 'if',
           jsArg: 'username',
@@ -128,11 +146,11 @@ test.group('Tokenizer Tags', () => {
           {
             type: NodeType.RAW,
             value: '  Hello',
-            lineno: 4,
+            line: 4,
           },
           {
             type: NodeType.NEWLINE,
-            lineno: 4,
+            line: 4,
           },
         ],
       },
@@ -159,24 +177,33 @@ test.group('Tokenizer Tags', () => {
       {
         type: NodeType.RAW,
         value: 'Hello',
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.RAW,
         value: '',
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.BLOCK,
-        lineno: 3,
+        loc: {
+          start: {
+            line: 3,
+            col: 4,
+          },
+          end: {
+            line: 3,
+            col: 13,
+          },
+        },
         properties: {
           name: 'if',
           jsArg: 'username',
@@ -186,7 +213,16 @@ test.group('Tokenizer Tags', () => {
         children: [
           {
             type: NodeType.BLOCK,
-            lineno: 4,
+            loc: {
+              start: {
+                line: 4,
+                col: 6,
+              },
+              end: {
+                line: 4,
+                col: 26,
+              },
+            },
             properties: {
               name: 'if',
               jsArg: 'username === \'virk\'',
@@ -197,11 +233,11 @@ test.group('Tokenizer Tags', () => {
               {
                 type: NodeType.RAW,
                 value: '    Hi',
-                lineno: 5,
+                line: 5,
               },
               {
                 type: NodeType.NEWLINE,
-                lineno: 5,
+                line: 5,
               },
             ],
           },
@@ -230,24 +266,33 @@ test.group('Tokenizer Tags', () => {
       {
         type: NodeType.RAW,
         value: 'Hello',
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.RAW,
         value: '',
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.BLOCK,
-        lineno: 3,
+        loc: {
+          start: {
+            line: 3,
+            col: 4,
+          },
+          end: {
+            line: 5,
+            col: 1,
+          },
+        },
         properties: {
           name: 'if',
           jsArg: '\n  username\n',
@@ -258,11 +303,11 @@ test.group('Tokenizer Tags', () => {
           {
             type: NodeType.RAW,
             value: '  Hello',
-            lineno: 6,
+            line: 6,
           },
           {
             type: NodeType.NEWLINE,
-            lineno: 6,
+            line: 6,
           },
         ],
       },
@@ -289,24 +334,33 @@ test.group('Tokenizer Tags', () => {
       {
         type: NodeType.RAW,
         value: 'Hello',
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.RAW,
         value: '',
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.BLOCK,
-        lineno: 3,
+        loc: {
+          start: {
+            line: 3,
+            col: 4,
+          },
+          end: {
+            line: 5,
+            col: 1,
+          },
+        },
         properties: {
           name: 'if',
           jsArg: '(\n  2 + 2) * 3 === 12\n',
@@ -317,11 +371,11 @@ test.group('Tokenizer Tags', () => {
           {
             type: NodeType.RAW,
             value: '  Answer is 12',
-            lineno: 6,
+            line: 6,
           },
           {
             type: NodeType.NEWLINE,
-            lineno: 6,
+            line: 6,
           },
         ],
       },
@@ -339,7 +393,16 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: NodeType.BLOCK,
-        lineno: 1,
+        loc: {
+          start: {
+            line: 1,
+            col: 9,
+          },
+          end: {
+            line: 1,
+            col: 25,
+          },
+        },
         properties: {
           name: 'include',
           jsArg: '\'partials.user\'',
@@ -368,7 +431,16 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: NodeType.BLOCK,
-        lineno: 1,
+        loc: {
+          start: {
+            line: 1,
+            col: 4,
+          },
+          end: {
+            line: 1,
+            col: 13,
+          },
+        },
         properties: {
           name: 'if',
           jsArg: 'username',
@@ -379,15 +451,24 @@ test.group('Tokenizer Tags', () => {
           {
             type: NodeType.RAW,
             value: '  Hello',
-            lineno: 2,
+            line: 2,
           },
           {
             type: NodeType.NEWLINE,
-            lineno: 2,
+            line: 2,
           },
           {
             type: NodeType.BLOCK,
-            lineno: 3,
+            loc: {
+              start: {
+                line: 3,
+                col: 5,
+              },
+              end: {
+                line: 3,
+                col: 5,
+              },
+            },
             properties: {
               name: 'else',
               jsArg: '',
@@ -399,11 +480,11 @@ test.group('Tokenizer Tags', () => {
           {
             type: NodeType.RAW,
             value: '  Hello guest',
-            lineno: 4,
+            line: 4,
           },
           {
             type: NodeType.NEWLINE,
-            lineno: 4,
+            line: 4,
           },
         ],
       },
@@ -424,11 +505,11 @@ test.group('Tokenizer Tags', () => {
       {
         type: NodeType.RAW,
         value: '@foo(\'hello world\')',
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 1,
+        line: 1,
       },
     ])
   })
@@ -447,20 +528,20 @@ test.group('Tokenizer Tags', () => {
       {
         type: NodeType.RAW,
         value: '@if(username)',
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 1,
+        line: 1,
       },
       {
         type: NodeType.RAW,
         value: '@endif',
-        lineno: 2,
+        line: 2,
       },
       {
         type: NodeType.NEWLINE,
-        lineno: 2,
+        line: 2,
       },
     ])
   })
@@ -476,7 +557,7 @@ test.group('Tokenizer Tags', () => {
       tokenizer.parse()
     } catch ({ message, line }) {
       assert.equal(message, 'Missing token ")"')
-      assert.equal(line, 1)
+      assert.equal(line, 2)
     }
   })
 
@@ -491,7 +572,16 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: NodeType.BLOCK,
-        lineno: 1,
+        loc: {
+          start: {
+            line: 1,
+            col: 9,
+          },
+          end: {
+            line: 1,
+            col: 18,
+          },
+        },
         properties: {
           name: 'include',
           raw: template.replace('@', ''),
@@ -539,7 +629,16 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: NodeType.BLOCK,
-        lineno: 1,
+        loc: {
+          start: {
+            line: 1,
+            col: 7,
+          },
+          end: {
+            line: 1,
+            col: 39,
+          },
+        },
         properties: {
           name: 'each',
           raw: template.replace('@', ''),
@@ -565,7 +664,16 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: NodeType.BLOCK,
-        lineno: 1,
+        loc: {
+          start: {
+            line: 1,
+            col: 4,
+          },
+          end: {
+            line: 1,
+            col: 10,
+          },
+        },
         properties: {
           name: 'if',
           raw: 'if(!user)',
@@ -573,6 +681,467 @@ test.group('Tokenizer Tags', () => {
           selfclosed: false,
         },
         children: [],
+      },
+    ])
+  })
+})
+
+test.group('Tokenizer columns', () => {
+  test('track whitespaces before the opening parenthesis', (assert) => {
+    const template = dedent`
+    Hello
+
+    @if  (username)
+    @endif
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: NodeType.RAW,
+        value: 'Hello',
+        line: 1,
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 1,
+      },
+      {
+        type: NodeType.RAW,
+        value: '',
+        line: 2,
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 2,
+      },
+      {
+        type: NodeType.BLOCK,
+        properties: {
+          name: 'if',
+          jsArg: 'username',
+          selfclosed: false,
+          raw: 'if  (username)',
+        },
+        loc: {
+          start: {
+            line: 3,
+            col: 6,
+          },
+          end: {
+            line: 3,
+            col: 15,
+          },
+        },
+        children: [],
+      },
+    ])
+  })
+
+  test('do not track whitespaces before the closing parenthesis', (assert) => {
+    const template = dedent`
+    Hello
+
+    @if(username  )
+    @endif
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: NodeType.RAW,
+        value: 'Hello',
+        line: 1,
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 1,
+      },
+      {
+        type: NodeType.RAW,
+        value: '',
+        line: 2,
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 2,
+      },
+      {
+        type: NodeType.BLOCK,
+        properties: {
+          name: 'if',
+          jsArg: 'username  ',
+          selfclosed: false,
+          raw: 'if(username  )',
+        },
+        loc: {
+          start: {
+            line: 3,
+            col: 4,
+          },
+          end: {
+            line: 3,
+            col: 15,
+          },
+        },
+        children: [],
+      },
+    ])
+  })
+
+  test('track whitespaces before the starting of tag', (assert) => {
+    const template = dedent`
+    Hello
+
+      @if(username)
+      @endif
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: NodeType.RAW,
+        value: 'Hello',
+        line: 1,
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 1,
+      },
+      {
+        type: NodeType.RAW,
+        value: '',
+        line: 2,
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 2,
+      },
+      {
+        type: NodeType.BLOCK,
+        properties: {
+          name: 'if',
+          jsArg: 'username',
+          selfclosed: false,
+          raw: 'if(username)',
+        },
+        loc: {
+          start: {
+            line: 3,
+            col: 6,
+          },
+          end: {
+            line: 3,
+            col: 15,
+          },
+        },
+        children: [],
+      },
+    ])
+  })
+
+  test('track columns for multiline expression', (assert) => {
+    const template = dedent`
+    Hello
+
+    @if(
+      username && age
+    )
+    @endif
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: NodeType.RAW,
+        value: 'Hello',
+        line: 1,
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 1,
+      },
+      {
+        type: NodeType.RAW,
+        value: '',
+        line: 2,
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 2,
+      },
+      {
+        type: NodeType.BLOCK,
+        properties: {
+          name: 'if',
+          jsArg: '\n  username && age\n',
+          selfclosed: false,
+          raw: 'if(\n  username && age\n)',
+        },
+        loc: {
+          start: {
+            line: 3,
+            col: 4,
+          },
+          end: {
+            line: 5,
+            col: 1,
+          },
+        },
+        children: [],
+      },
+    ])
+  })
+
+  test('track columns for mustache statement', (assert) => {
+    const template = dedent`
+    Hello {{ username }}
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: NodeType.RAW,
+        value: 'Hello ',
+        line: 1,
+      },
+      {
+        type: NodeType.MUSTACHE,
+        properties: {
+          name: 'mustache',
+          jsArg: ' username ',
+          raw: 'Hello {{ username }}',
+        },
+        loc: {
+          start: {
+            line: 1,
+            col: 8,
+          },
+          end: {
+            line: 1,
+            col: 20,
+          },
+        },
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 1,
+      },
+    ])
+  })
+
+  test('track columns for multiple mustache statements', (assert) => {
+    const template = dedent`
+    Hello {{ username }}, your age is {{ age }}
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: NodeType.RAW,
+        value: 'Hello ',
+        line: 1,
+      },
+      {
+        type: NodeType.MUSTACHE,
+        properties: {
+          name: 'mustache',
+          jsArg: ' username ',
+          raw: 'Hello {{ username }}, your age is {{ age }}',
+        },
+        loc: {
+          start: {
+            line: 1,
+            col: 8,
+          },
+          end: {
+            line: 1,
+            col: 20,
+          },
+        },
+      },
+      {
+        type: NodeType.RAW,
+        value: ', your age is ',
+        line: 1,
+      },
+      {
+        type: NodeType.MUSTACHE,
+        properties: {
+          name: 'mustache',
+          jsArg: ' age ',
+          raw: ', your age is {{ age }}',
+        },
+        loc: {
+          start: {
+            line: 1,
+            col: 36,
+          },
+          end: {
+            line: 1,
+            col: 43,
+          },
+        },
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 1,
+      },
+    ])
+  })
+
+  test('track columns for multiline mustache statements', (assert) => {
+    const template = dedent`
+    Hello {{
+      username
+    }}, your age is {{ age }}
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: NodeType.RAW,
+        value: 'Hello ',
+        line: 1,
+      },
+      {
+        type: NodeType.MUSTACHE,
+        properties: {
+          name: 'mustache',
+          jsArg: '\n  username\n',
+          raw: 'Hello {{\n  username\n}}, your age is {{ age }}',
+        },
+        loc: {
+          start: {
+            line: 1,
+            col: 8,
+          },
+          end: {
+            line: 3,
+            col: 2,
+          },
+        },
+      },
+      {
+        type: NodeType.RAW,
+        value: ', your age is ',
+        line: 3,
+      },
+      {
+        type: NodeType.MUSTACHE,
+        properties: {
+          name: 'mustache',
+          jsArg: ' age ',
+          raw: ', your age is {{ age }}',
+        },
+        loc: {
+          start: {
+            line: 3,
+            col: 18,
+          },
+          end: {
+            line: 3,
+            col: 25,
+          },
+        },
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 3,
+      },
+    ])
+  })
+
+  test('track columns for multiline saf emustache statements', (assert) => {
+    const template = dedent`
+    Hello {{{
+      username
+    }}}, your age is {{ age }}
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: NodeType.RAW,
+        value: 'Hello ',
+        line: 1,
+      },
+      {
+        type: NodeType.MUSTACHE,
+        properties: {
+          name: 's__mustache',
+          jsArg: '\n  username\n',
+          raw: 'Hello {{{\n  username\n}}}, your age is {{ age }}',
+        },
+        loc: {
+          start: {
+            line: 1,
+            col: 9,
+          },
+          end: {
+            line: 3,
+            col: 3,
+          },
+        },
+      },
+      {
+        type: NodeType.RAW,
+        value: ', your age is ',
+        line: 3,
+      },
+      {
+        type: NodeType.MUSTACHE,
+        properties: {
+          name: 'mustache',
+          jsArg: ' age ',
+          raw: ', your age is {{ age }}',
+        },
+        loc: {
+          start: {
+            line: 3,
+            col: 19,
+          },
+          end: {
+            line: 3,
+            col: 26,
+          },
+        },
+      },
+      {
+        type: NodeType.NEWLINE,
+        line: 3,
       },
     ])
   })

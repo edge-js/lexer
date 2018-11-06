@@ -11,7 +11,7 @@
 * file that was distributed with this source code.
 */
 
-import { IBlockProp, WhiteSpaceModes, ITagDefination } from '../Contracts'
+import { IBlockProp, WhiteSpaceModes, ITagDefination, ILoc } from '../Contracts'
 import { CharBucket } from '../CharBucket'
 import { cannotSeekStatement, unwrappedJSExp } from '../Exceptions'
 
@@ -53,27 +53,57 @@ export class TagStatement {
   public ended: boolean = false
 
   /**
-   * Prop defines the meta data for a statement
+   * Location details of the statement
    */
-  public props: IBlockProp
+  public loc: ILoc = {
+    start: {
+      line: this._line,
+      col: this._col,
+    },
+    end: {
+      line: this._line,
+      col: this._col,
+    },
+  }
 
+  /**
+   * Statement props
+   */
+  public props: IBlockProp = {
+    name: '',
+    jsArg: '',
+    raw: '',
+    selfclosed: false,
+  }
+
+  /**
+   * The current prop to feed chars to. This property will
+   * be mutated as we progress
+   */
   private currentProp: string = 'name'
+
+  /**
+   * Tracking parenthesis within the tag parenthesis. In the
+   * end, this number must be zero, otherwise their is a
+   * syntax error
+   */
   private internalParens: number = 0
-  private internalProps: null | { name: CharBucket, jsArg: CharBucket }
+
+  /**
+   * Internal props to track state unless it's final
+   */
+  private internalProps: null | { name: CharBucket, jsArg: CharBucket } = {
+    name: new CharBucket(WhiteSpaceModes.NONE),
+    jsArg: new CharBucket(WhiteSpaceModes.ALL),
+  }
+
+  /**
+   * Tracking first call, since after that raw statements will have
+   * new lines
+   */
   private firstCall: boolean = true
 
-  constructor (public startPosition: number, public tagDef: ITagDefination, private _fileName: string) {
-    this.props = {
-      name: '',
-      jsArg: '',
-      raw: '',
-      selfclosed: false,
-    }
-
-    this.internalProps = {
-      name: new CharBucket(WhiteSpaceModes.NONE),
-      jsArg: new CharBucket(WhiteSpaceModes.ALL),
-    }
+  constructor (private _line: number, private _col: number, public tagDef: ITagDefination, private _fileName: string) {
   }
 
   /**
@@ -90,7 +120,7 @@ export class TagStatement {
    */
   public feed (line: string): void {
     if (this.ended) {
-      throw cannotSeekStatement(line, { line: this.startPosition, col: 0 }, this._fileName)
+      throw cannotSeekStatement(line, this.loc.end, this._fileName)
     }
 
     /**
@@ -100,6 +130,8 @@ export class TagStatement {
     if (!this.firstCall) {
       this.props.raw += `\n${line}`
       this.internalProps![this.currentProp].feed('\n')
+      this.loc.end.line++
+      this.loc.end.col = 0
     } else {
       this.props.raw += line
       this.firstCall = false
@@ -162,7 +194,7 @@ export class TagStatement {
    */
   private endStatement (char: string): void {
     if (!this.started) {
-      throw unwrappedJSExp(char, { line: this.startPosition, col: 0 }, this._fileName)
+      throw unwrappedJSExp(char, this.loc.end, this._fileName)
     }
     this.ended = true
     this.setProp()
@@ -200,7 +232,7 @@ export class TagStatement {
    */
   private ensureNoMoreCharsToFeed (chars: string[]): void {
     if (chars.length) {
-      throw cannotSeekStatement(chars.join(''), { line: this.startPosition, col: 0 }, this._fileName)
+      throw cannotSeekStatement(chars.join(''), this.loc.end, this._fileName)
     }
   }
 
@@ -220,6 +252,8 @@ export class TagStatement {
     this.ended = true
     this.started = true
     this.internalProps = null
+    this.loc.start.col += line.length
+    this.loc.end.col += line.length
   }
 
   /**
@@ -231,6 +265,13 @@ export class TagStatement {
     while (chars.length) {
       const char: string = chars.shift()!
       const charCode = char.charCodeAt(0)
+
+      if (!this.started) {
+        this.loc.start.col++
+        this.loc.end.col++
+      } else {
+        this.loc.end.col++
+      }
 
       if (this.isStartOfStatement(charCode)) {
         this.startStatement()

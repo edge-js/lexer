@@ -36,19 +36,34 @@ interface IMustacheProp {
   textRight: string
 }
 
+type ILoc = {
+  start: {
+    line: number,
+    col: number,
+  },
+  end: {
+    line: number,
+    col: number,
+  },
+}
+
 interface INode {
   type: NodeType
   value?: string
-  lineno: number
+  line: number
 }
 
-interface IBlockNode extends INode {
+interface IBlockNode {
+  type: NodeType
   properties: IBlockProp
+  loc: ILoc
   children: Array<INode | IBlockNode>
 }
 
-interface IMustacheNode extends INode {
+interface IMustacheNode {
+  type: NodeType
   properties: IProp
+  loc: ILoc
 }
 
 interface ITagDefination {
@@ -69,3 +84,4 @@ export { WhiteSpaceModes as WhiteSpaceModes }
 export { MustacheType as MustacheType }
 export { ITagDefination as ITagDefination }
 export { IBlockProp as IBlockProp }
+export { ILoc as ILoc }

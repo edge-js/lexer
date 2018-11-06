@@ -11,7 +11,7 @@
 * file that was distributed with this source code.
 */
 
-import { IMustacheProp, WhiteSpaceModes, MustacheType } from '../Contracts'
+import { IMustacheProp, WhiteSpaceModes, MustacheType, ILoc } from '../Contracts'
 import { CharBucket } from '../CharBucket'
 
 /** @hidden */
@@ -59,27 +59,56 @@ export class MustacheStatement {
    *
    * @type {IMustacheProp}
    */
-  public props: IMustacheProp
+  public props: IMustacheProp = {
+    name: MustacheType.MUSTACHE,
+    jsArg: '',
+    raw: '',
+    textLeft: '',
+    textRight: '',
+  }
 
+  /**
+   * Location details of the statement
+   */
+  public loc: ILoc = {
+    start: {
+      line: this._line,
+      col: this._col,
+    },
+    end: {
+      line: this._line,
+      col: this._col,
+    },
+  }
+
+  /**
+   * Tracking the first call to the feed method. This is done to
+   * add new lines to the raw output
+   */
   private firstCall: boolean = true
+
+  /**
+   * The current prop from where to start seeding
+   */
   private currentProp: string = 'textLeft'
+
+  /**
+   * Tracking mustache braces within the mustache tag. This is done
+   * to find if mustache is closed properly or not
+   */
   private internalBraces: number = 0
-  private internalProps: null | { jsArg: CharBucket, textLeft: CharBucket, textRight: CharBucket }
 
-  constructor (public startPosition: number) {
-    this.props = {
-      name: MustacheType.MUSTACHE,
-      jsArg: '',
-      raw: '',
-      textLeft: '',
-      textRight: '',
-    }
+  /**
+   * Seeding characters to the internal props, unless they are complete and
+   * then moved to props.
+   */
+  private internalProps: null | { jsArg: CharBucket, textLeft: CharBucket, textRight: CharBucket } = {
+    jsArg: new CharBucket(WhiteSpaceModes.ALL),
+    textLeft: new CharBucket(WhiteSpaceModes.ALL),
+    textRight: new CharBucket(WhiteSpaceModes.ALL),
+  }
 
-    this.internalProps = {
-      jsArg: new CharBucket(WhiteSpaceModes.ALL),
-      textLeft: new CharBucket(WhiteSpaceModes.ALL),
-      textRight: new CharBucket(WhiteSpaceModes.ALL),
-    }
+  constructor (private _line: number, private _col: number) {
   }
 
   /**
@@ -95,6 +124,8 @@ export class MustacheStatement {
     if (!this.firstCall) {
       this.props.raw += `\n${line}`
       this.internalProps![this.currentProp].feed('\n')
+      this.loc.end.line++
+      this.loc.end.col = 0
     } else {
       this.props.raw += line
       this.firstCall = false
@@ -235,11 +266,26 @@ export class MustacheStatement {
   }
 
   /**
+   * Updates the columns as we proceed with each character
+   */
+  private trackCol () {
+    if (this.currentProp === 'textLeft') {
+      this.loc.start.col++
+    }
+
+    if (this.currentProp !== 'textRight') {
+      this.loc.end.col++
+    }
+  }
+
+  /**
    * Process one char at a time
    */
   private processChar (chars: string[], char: string): void {
     let name: null | MustacheType = null
     const charCode = char.charCodeAt(0)
+
+    this.trackCol()
 
     /**
      * Only process name, when are not in inside mustache
@@ -257,6 +303,8 @@ export class MustacheStatement {
       this.props.name = name
       this.started = true
       this.setProp()
+      this.loc.start.col = this.props.name === MustacheType.SMUSTACHE ? this.loc.start.col + 2 : this.loc.start.col + 1
+      this.loc.end.col = this.props.name === MustacheType.SMUSTACHE ? this.loc.end.col + 2 : this.loc.end.col + 1
       this.currentProp = 'jsArg'
       return
     }
@@ -267,6 +315,7 @@ export class MustacheStatement {
      */
     if (this.started && !this.ended && this.isClosing(chars, charCode)) {
       this.setProp()
+      this.loc.end.col = this.props.name === MustacheType.SMUSTACHE ? this.loc.end.col + 2 : this.loc.end.col + 1
       this.currentProp = 'textRight'
       this.ended = true
       return
