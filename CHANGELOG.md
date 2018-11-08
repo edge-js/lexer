@@ -1,3 +1,13 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/edge-js/edge-lexer/compare/v2.0.0...v2.0.1) (2018-11-08)
+
+
+### Features
+
+* **contracts:** define IToken type ([e2edc4c](https://github.com/edge-js/edge-lexer/commit/e2edc4c))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/edge-js/edge-lexer/compare/1.0.8...2.0.0) (2018-11-08)
 
