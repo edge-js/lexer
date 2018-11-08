@@ -559,6 +559,54 @@ test.group('Tokenizer Tags', () => {
     }
   })
 
+  test('throw exception when opening brace is in a different line', (assert) => {
+    assert.plan(3)
+    const template = dedent`
+    @if
+    (
+      username
+    )
+    @endif
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    try {
+      tokenizer.parse()
+    } catch ({ message, line, col }) {
+      assert.equal(message, 'Missing token "("')
+      assert.equal(line, 1)
+      assert.equal(col, 3)
+    }
+  })
+
+  test('do not raise exception when tag is not seekable and has no parens', (assert) => {
+    const template = dedent`
+    @else
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+    assert.deepEqual(tokenizer.tokens, [{
+      type: TagTypes.TAG,
+      properties: {
+        name: 'else',
+        jsArg: '',
+        selfclosed: false,
+      },
+      loc: {
+        start: {
+          line: 1,
+          col: 5,
+        },
+        end: {
+          line: 1,
+          col: 5,
+        },
+      },
+      children: [],
+    }])
+  })
+
   test('consume one liner inline tag', (assert) => {
     const template = `@include('header')`
 

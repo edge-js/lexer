@@ -14,7 +14,7 @@
 import { getTag, getMustache } from '../Detector'
 import { Scanner } from '../Scanner'
 
-import { unclosedParen, unclosedTag, unclosedCurlyBrace, cannotSeekStatement } from '../Exceptions'
+import { unclosedParen, unclosedTag, unclosedCurlyBrace, cannotSeekStatement, unopenedParen } from '../Exceptions'
 
 import {
   ITagToken,
@@ -119,6 +119,10 @@ export class Tokenizer {
    * Handles the opening of the tag.
    */
   private _handleTagOpening (line: string, tag: IRuntimeTag) {
+    if (tag.seekable && !tag.hasBrace) {
+      throw unopenedParen({ line: tag.line, col: tag.col }, this.options.filename)
+    }
+
     /**
      * When tag is not seekable, then their is no need to create
      * a scanner instance, just consume it right away.

@@ -29,6 +29,14 @@ export function unclosedParen (pos: { line: number, col: number }, filename: str
   })
 }
 
+export function unopenedParen (pos: { line: number, col: number }, filename: string): EdgeError {
+  return new EdgeError(`Missing token "("`, 'E_UNOPENED_PAREN', {
+    line: pos.line,
+    col: pos.col,
+    filename: filename,
+  })
+}
+
 export function unclosedCurlyBrace (pos: { line: number, col: number }, filename: string): EdgeError {
   return new EdgeError(`Missing token "}"`, 'E_UNCLOSED_CURLY_BRACE', {
     line: pos.line,
