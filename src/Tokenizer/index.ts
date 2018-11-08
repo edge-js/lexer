@@ -26,6 +26,7 @@ import {
   IRuntimeMustache,
   TagTypes,
   MustacheTypes,
+  IToken,
 } from '../Contracts'
 
 type tokenizerOptions = {
@@ -40,7 +41,7 @@ type tokenizerOptions = {
  * the tokens output.
  */
 export class Tokenizer {
-  public tokens: Array<IRawToken | INewLineToken | ITagToken | IMustacheToken> = []
+  public tokens: IToken[] = []
 
   private blockStatement: null | { scanner: Scanner, tag: IRuntimeTag } = null
 

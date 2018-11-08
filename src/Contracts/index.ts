@@ -93,8 +93,10 @@ export type ITagToken = {
   type: TagTypes,
   properties: ITagProp,
   loc: ILoc,
-  children: Array<IRawToken | INewLineToken | ITagToken | IMustacheToken>,
+  children: IToken[],
 }
+
+export type IToken = IRawToken | INewLineToken | ITagToken | IMustacheToken
 
 /**
  * The runtime tag node to know the shape of a tag
