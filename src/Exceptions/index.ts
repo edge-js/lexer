@@ -21,14 +21,6 @@ export function cannotSeekStatement (chars: string, pos: { line: number, col: nu
   })
 }
 
-export function unwrappedJSExp (chars: string, pos: { line: number, col: number }, filename: string): EdgeError {
-  return new EdgeError(`Unexpected token "${chars}"`, 'E_UNWRAPPED_JS_EXPRESSION', {
-    line: pos.line,
-    col: pos.col,
-    filename: filename,
-  })
-}
-
 export function unclosedParen (pos: { line: number, col: number }, filename: string): EdgeError {
   return new EdgeError(`Missing token ")"`, 'E_UNCLOSED_PAREN', {
     line: pos.line,

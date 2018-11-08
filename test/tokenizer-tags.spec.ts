@@ -9,28 +9,24 @@
 
 import * as test from 'japa'
 import * as dedent from 'dedent'
-import { Tokenizer } from '../src/Tokenizer'
-import { NodeType } from '../src/Contracts'
+import { Tokenizer } from '../src/Tokenizer/new'
+import { TagTypes, MustacheTypes } from '../src/Contracts'
 
 const tagsDef = {
   if: class If {
     public static block = true
-    public static selfclosed = false
     public static seekable = true
   },
   else: class Else {
     public static block = false
-    public static selfclosed = false
     public static seekable = false
   },
   include: class Include {
     public static block = false
-    public static selfclosed = false
     public static seekable = true
   },
   each: class Each {
     public static block = true
-    public static selfclosed = true
     public static seekable = true
   },
 }
@@ -48,33 +44,31 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello',
         line: 1,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 1,
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '',
         line: 2,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 2,
       },
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         properties: {
           name: 'if',
           jsArg: 'username',
           selfclosed: false,
-          raw: 'if(username)',
         },
         loc: {
           start: {
@@ -104,28 +98,28 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
+
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello',
         line: 1,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 1,
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '',
         line: 2,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 2,
       },
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         loc: {
           start: {
             line: 3,
@@ -139,17 +133,16 @@ test.group('Tokenizer Tags', () => {
         properties: {
           name: 'if',
           jsArg: 'username',
-          raw: 'if(username)',
           selfclosed: false,
         },
         children: [
           {
-            type: NodeType.RAW,
-            value: '  Hello',
-            line: 4,
+            type: 'newline',
+            line: 3,
           },
           {
-            type: NodeType.NEWLINE,
+            type: 'raw',
+            value: '  Hello',
             line: 4,
           },
         ],
@@ -172,28 +165,27 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello',
         line: 1,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 1,
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '',
         line: 2,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 2,
       },
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         loc: {
           start: {
             line: 3,
@@ -207,12 +199,15 @@ test.group('Tokenizer Tags', () => {
         properties: {
           name: 'if',
           jsArg: 'username',
-          raw: 'if(username)',
           selfclosed: false,
         },
         children: [
           {
-            type: NodeType.BLOCK,
+            type: 'newline',
+            line: 3,
+          },
+          {
+            type: TagTypes.TAG,
             loc: {
               start: {
                 line: 4,
@@ -226,17 +221,16 @@ test.group('Tokenizer Tags', () => {
             properties: {
               name: 'if',
               jsArg: 'username === \'virk\'',
-              raw: 'if(username === \'virk\')',
               selfclosed: false,
             },
             children: [
               {
-                type: NodeType.RAW,
-                value: '    Hi',
-                line: 5,
+                type: 'newline',
+                line: 4,
               },
               {
-                type: NodeType.NEWLINE,
+                type: 'raw',
+                value: '    Hi',
                 line: 5,
               },
             ],
@@ -261,28 +255,27 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello',
         line: 1,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 1,
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '',
         line: 2,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 2,
       },
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         loc: {
           start: {
             line: 3,
@@ -296,17 +289,16 @@ test.group('Tokenizer Tags', () => {
         properties: {
           name: 'if',
           jsArg: '\n  username\n',
-          raw: 'if(\n  username\n)',
           selfclosed: false,
         },
         children: [
           {
-            type: NodeType.RAW,
-            value: '  Hello',
-            line: 6,
+            type: 'newline',
+            line: 5,
           },
           {
-            type: NodeType.NEWLINE,
+            type: 'raw',
+            value: '  Hello',
             line: 6,
           },
         ],
@@ -329,28 +321,27 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello',
         line: 1,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 1,
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '',
         line: 2,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 2,
       },
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         loc: {
           start: {
             line: 3,
@@ -364,17 +355,16 @@ test.group('Tokenizer Tags', () => {
         properties: {
           name: 'if',
           jsArg: '(\n  2 + 2) * 3 === 12\n',
-          raw: 'if((\n  2 + 2) * 3 === 12\n)',
           selfclosed: false,
         },
         children: [
           {
-            type: NodeType.RAW,
-            value: '  Answer is 12',
-            line: 6,
+            type: 'newline',
+            line: 5,
           },
           {
-            type: NodeType.NEWLINE,
+            type: 'raw',
+            value: '  Answer is 12',
             line: 6,
           },
         ],
@@ -389,10 +379,9 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         loc: {
           start: {
             line: 1,
@@ -406,7 +395,6 @@ test.group('Tokenizer Tags', () => {
         properties: {
           name: 'include',
           jsArg: '\'partials.user\'',
-          raw: 'include(\'partials.user\')',
           selfclosed: false,
         },
         children: [],
@@ -427,10 +415,9 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         loc: {
           start: {
             line: 1,
@@ -444,21 +431,24 @@ test.group('Tokenizer Tags', () => {
         properties: {
           name: 'if',
           jsArg: 'username',
-          raw: 'if(username)',
           selfclosed: false,
         },
         children: [
           {
-            type: NodeType.RAW,
+            type: 'newline',
+            line: 1,
+          },
+          {
+            type: 'raw',
             value: '  Hello',
             line: 2,
           },
           {
-            type: NodeType.NEWLINE,
+            type: 'newline',
             line: 2,
           },
           {
-            type: NodeType.BLOCK,
+            type: TagTypes.TAG,
             loc: {
               start: {
                 line: 3,
@@ -472,18 +462,17 @@ test.group('Tokenizer Tags', () => {
             properties: {
               name: 'else',
               jsArg: '',
-              raw: 'else',
               selfclosed: false,
             },
             children: [],
           },
           {
-            type: NodeType.RAW,
-            value: '  Hello guest',
-            line: 4,
+            type: 'newline',
+            line: 3,
           },
           {
-            type: NodeType.NEWLINE,
+            type: 'raw',
+            value: '  Hello guest',
             line: 4,
           },
         ],
@@ -500,15 +489,10 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '@foo(\'hello world\')',
-        line: 1,
-      },
-      {
-        type: NodeType.NEWLINE,
         line: 1,
       },
     ])
@@ -523,25 +507,25 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
-        value: '@if(username)',
-        line: 1,
-      },
-      {
-        type: NodeType.NEWLINE,
-        line: 1,
-      },
-      {
-        type: NodeType.RAW,
-        value: '@endif',
-        line: 2,
-      },
-      {
-        type: NodeType.NEWLINE,
-        line: 2,
+        type: TagTypes.ETAG,
+        properties: {
+          name: 'if',
+          jsArg: 'username',
+          selfclosed: false,
+        },
+        loc: {
+          start: {
+            line: 1,
+            col: 5,
+          },
+          end: {
+            line: 1,
+            col: 14,
+          },
+        },
+        children: [],
       },
     ])
   })
@@ -557,7 +541,21 @@ test.group('Tokenizer Tags', () => {
       tokenizer.parse()
     } catch ({ message, line }) {
       assert.equal(message, 'Missing token ")"')
-      assert.equal(line, 2)
+      assert.equal(line, 1)
+    }
+  })
+
+  test('throw exception when there is inline content in the tag opening statement', (assert) => {
+    assert.plan(3)
+    const template = dedent`@include('foo') hello world`
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    try {
+      tokenizer.parse()
+    } catch ({ message, line, col }) {
+      assert.equal(message, 'Unexpected token " hello world"')
+      assert.equal(line, 1)
+      assert.equal(col, 15)
     }
   })
 
@@ -568,10 +566,9 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         loc: {
           start: {
             line: 1,
@@ -584,7 +581,6 @@ test.group('Tokenizer Tags', () => {
         },
         properties: {
           name: 'include',
-          raw: template.replace('@', ''),
           jsArg: '\'header\'',
           selfclosed: false,
         },
@@ -625,10 +621,9 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         loc: {
           start: {
             line: 1,
@@ -641,7 +636,6 @@ test.group('Tokenizer Tags', () => {
         },
         properties: {
           name: 'each',
-          raw: template.replace('@', ''),
           jsArg: `user in users, include = 'user'`,
           selfclosed: true,
         },
@@ -660,10 +654,9 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         loc: {
           start: {
             line: 1,
@@ -676,7 +669,6 @@ test.group('Tokenizer Tags', () => {
         },
         properties: {
           name: 'if',
-          raw: 'if(!user)',
           jsArg: `!user`,
           selfclosed: false,
         },
@@ -699,33 +691,31 @@ test.group('Tokenizer columns', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello',
         line: 1,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 1,
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '',
         line: 2,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 2,
       },
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         properties: {
           name: 'if',
           jsArg: 'username',
           selfclosed: false,
-          raw: 'if  (username)',
         },
         loc: {
           start: {
@@ -754,33 +744,31 @@ test.group('Tokenizer columns', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello',
         line: 1,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 1,
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '',
         line: 2,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 2,
       },
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         properties: {
           name: 'if',
           jsArg: 'username  ',
           selfclosed: false,
-          raw: 'if(username  )',
         },
         loc: {
           start: {
@@ -809,33 +797,31 @@ test.group('Tokenizer columns', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello',
         line: 1,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 1,
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '',
         line: 2,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 2,
       },
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         properties: {
           name: 'if',
           jsArg: 'username',
           selfclosed: false,
-          raw: 'if(username)',
         },
         loc: {
           start: {
@@ -866,33 +852,31 @@ test.group('Tokenizer columns', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello',
         line: 1,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 1,
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: '',
         line: 2,
       },
       {
-        type: NodeType.NEWLINE,
+        type: 'newline',
         line: 2,
       },
       {
-        type: NodeType.BLOCK,
+        type: TagTypes.TAG,
         properties: {
           name: 'if',
           jsArg: '\n  username && age\n',
           selfclosed: false,
-          raw: 'if(\n  username && age\n)',
         },
         loc: {
           start: {
@@ -918,19 +902,16 @@ test.group('Tokenizer columns', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello ',
         line: 1,
       },
       {
-        type: NodeType.MUSTACHE,
+        type: MustacheTypes.MUSTACHE,
         properties: {
-          name: 'mustache',
           jsArg: ' username ',
-          raw: 'Hello {{ username }}',
         },
         loc: {
           start: {
@@ -942,10 +923,6 @@ test.group('Tokenizer columns', () => {
             col: 20,
           },
         },
-      },
-      {
-        type: NodeType.NEWLINE,
-        line: 1,
       },
     ])
   })
@@ -958,20 +935,17 @@ test.group('Tokenizer columns', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['blockStatement'])
     assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello ',
         line: 1,
       },
       {
-        type: NodeType.MUSTACHE,
+        type: MustacheTypes.MUSTACHE,
         properties: {
-          name: 'mustache',
           jsArg: ' username ',
-          raw: 'Hello {{ username }}, your age is {{ age }}',
         },
         loc: {
           start: {
@@ -985,16 +959,14 @@ test.group('Tokenizer columns', () => {
         },
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: ', your age is ',
         line: 1,
       },
       {
-        type: NodeType.MUSTACHE,
+        type: MustacheTypes.MUSTACHE,
         properties: {
-          name: 'mustache',
           jsArg: ' age ',
-          raw: ', your age is {{ age }}',
         },
         loc: {
           start: {
@@ -1006,10 +978,6 @@ test.group('Tokenizer columns', () => {
             col: 43,
           },
         },
-      },
-      {
-        type: NodeType.NEWLINE,
-        line: 1,
       },
     ])
   })
@@ -1025,19 +993,16 @@ test.group('Tokenizer columns', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello ',
         line: 1,
       },
       {
-        type: NodeType.MUSTACHE,
+        type: MustacheTypes.MUSTACHE,
         properties: {
-          name: 'mustache',
           jsArg: '\n  username\n',
-          raw: 'Hello {{\n  username\n}}, your age is {{ age }}',
         },
         loc: {
           start: {
@@ -1051,16 +1016,14 @@ test.group('Tokenizer columns', () => {
         },
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: ', your age is ',
         line: 3,
       },
       {
-        type: NodeType.MUSTACHE,
+        type: MustacheTypes.MUSTACHE,
         properties: {
-          name: 'mustache',
           jsArg: ' age ',
-          raw: ', your age is {{ age }}',
         },
         loc: {
           start: {
@@ -1072,10 +1035,6 @@ test.group('Tokenizer columns', () => {
             col: 25,
           },
         },
-      },
-      {
-        type: NodeType.NEWLINE,
-        line: 3,
       },
     ])
   })
@@ -1091,19 +1050,16 @@ test.group('Tokenizer columns', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: 'Hello ',
         line: 1,
       },
       {
-        type: NodeType.MUSTACHE,
+        type: MustacheTypes.SMUSTACHE,
         properties: {
-          name: 's__mustache',
           jsArg: '\n  username\n',
-          raw: 'Hello {{{\n  username\n}}}, your age is {{ age }}',
         },
         loc: {
           start: {
@@ -1117,16 +1073,14 @@ test.group('Tokenizer columns', () => {
         },
       },
       {
-        type: NodeType.RAW,
+        type: 'raw',
         value: ', your age is ',
         line: 3,
       },
       {
-        type: NodeType.MUSTACHE,
+        type: MustacheTypes.MUSTACHE,
         properties: {
-          name: 'mustache',
           jsArg: ' age ',
-          raw: ', your age is {{ age }}',
         },
         loc: {
           start: {
@@ -1138,10 +1092,6 @@ test.group('Tokenizer columns', () => {
             col: 26,
           },
         },
-      },
-      {
-        type: NodeType.NEWLINE,
-        line: 3,
       },
     ])
   })

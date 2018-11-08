@@ -6,22 +6,18 @@ const template = `
 This is a dummy template string to run some performance checks against
 the tokenizer and see if there is room for improvements or not?
 
-Let's start with some {{ variables }} and some multiline operations {{
-  users.map((user) => {
-    return user.username
-  }).join(',')
-}}
+Here we will focus on tags only
 
-What if we have some tags too?
-
-@if(users.length)
+@if(username)
   @each(user in users)
-    <li> {{ user.username }} </li>
+    @if(user.age)
+      {{ user.age }}
+    @endif
   @endeach
 @endif
 `
 
-suite.add('Tokenizer', function () {
+suite.add('Tokenizer tags', function () {
   const tokenizer = new Tokenizer(template, {
     if: {
       seekable: true,
@@ -34,6 +30,7 @@ suite.add('Tokenizer', function () {
       block: true,
     }
   }, { filename: 'welcome.edge' })
+
   tokenizer.parse()
 })
 .on('cycle', function(event) {

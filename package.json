@@ -50,8 +50,7 @@
     "yorkie": "^2.0.0"
   },
   "dependencies": {
-    "edge-error": "^1.0.0",
-    "is-whitespace-character": "^1.0.2"
+    "edge-error": "^1.0.0"
   },
   "config": {
     "commitizen": {
