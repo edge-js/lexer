@@ -8,21 +8,29 @@
 [![npm-image]][npm-url]
 ![](https://img.shields.io/badge/Uses-Typescript-294E80.svg?style=flat-square&colorA=ddd)
 
+- ✅ Zero dependencies (Actually one dependency that is also to standardize edge errors).
+- ✅ Just uses one regex statement. That also tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
+- ✅ Allows multiline expressions
+- ✅ Collects line and columns for accurate stack traces.
+- ✅ Detects for unclosed tags.
+- ✅ Detects for unwrapped expressions and raises appropriate errors.
+
 Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax). 
 
 This module is a blend of a `lexer` and an `AST generator`, since Edge doesn't need a pure [lexer](https://en.wikipedia.org/wiki/Lexical_analysis) that scans for each character. Edge markup is written within other markup languages like **HTML** or **Markdown** and walking over each character is waste of resources.
 
-Instead, this module starts with some REGEX patterns to detect the [Edge whitelisted syntax](https://github.com/edge-js/syntax) and then starts the lexical analysis within the detected markup.
+Instead, this module starts by detecting for the [Edge whitelisted syntax](https://github.com/edge-js/syntax) and then starts the lexical analysis within the detected markup.
 
 ---
 
 ## Performance
 
-Following measures are taken to keep the analysis performant
+Following measures are taken to keep the analysis performant.
 
 1. Only analyse markup that is detected as Edge whitelisted syntax.
 2. Only analyse `tags`, that are passed to the tokenizer. Which means even if the syntax for tags is whitelisted, the tokeniser will analyse them if they are used by your app.
 3. Do not analyse Javascript expression and leave that for [edge-parser](https://github.com/edge-js/parser).
+4. Only uses one Regular expression.
 
 
 ---
@@ -36,8 +44,7 @@ const template = `Hello {{ username }}`
 const tags = {
   if: {
     block: true,
-    selfclosed: false,
-    seekable: true
+    seekable: true,
   }
 }
 
@@ -54,75 +61,172 @@ console.log(tokenizer.tokens)
 
 ---
 
-## Features
-1. Allows multiline expressions.
-2. Whitespaces and newlines are retained.
-3. Detects for unclosed tags.
-4. Detects for unwrapped expressions and raises appropriate errors.
-
 ## Terms used
 This guide makes use of the following terms to identify core pieces of the tokenizer.
 
-| Term | Node Type | Description |
+| Term | Token Type | Description |
 |------|-----------|------------ |
-| Tag | block | Tags are used to define logical blocks in the template engine. For example `if tag` or `include tag`. |
-| Mustache | mustache | Javascript expression wrapped in curly braces. `{{ }}` |
+| Tag | tag | Tags are used to define logical blocks in the template engine. For example `if tag` or `include tag`. |
+| Escaped Tag | e__tag | Escaped tag, Edge will not evaluate it at rutime. |
+| Mustache | mustache | Javascript expression wrapped in curly braces. `{{ }}`|
+| Safe Mustache | s__mustache | Safe mustache, that doesn't escape the output `{{{ }}}`|
+| Escaped Mustache | e__mustache | Mustache tag that is escaped |
+| Escaped Safe Mustache | es__mustache | Safe Mustache tag that is escaped |
 | Raw | raw | A raw string, which has no meaning for the template engine |
 | NewLine | newline | Newline |
 | Comment | comment | Edge specific comment block. This will be ripped off in the output.
 
 ---
 
-## Nodes
+## Tokens
 Following is the list of Nodes returned by the tokenizer.
 
-#### Block Node
+#### Tag Token
 
 ```js
 {
-  type: 'block'
-  lineno: number,
+  type: 'tag'
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
   properties: BlockProp,
   children: []
 }
 ```
 
-#### Raw Node
+#### Escaped Tag Token
+
+```diff
+{
+- type: 'tag',
++ type: 'e__tag',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: BlockProp,
+  children: []
+}
+```
+
+#### Raw Token
 
 ```js
 {
   type: 'raw',
-  lineno: number,
+  line: number,
   value: string
 }
 ```
 
-#### Comment Node
+#### Comment Token
 
 ```js
 {
   type: 'comment',
-  lineno: number,
+  line: number,
   value: string
 }
 ```
 
-#### Mustache Node
-
-```js
-{
-  type: 'mustache',
-  lineno: number,
-  properties: Prop
-}
-```
-
-#### NewLine Node
+#### NewLine Token
 
 ```js
 {
   type: 'newline',
-  lineno: number
+  line: number
+}
+```
+
+#### Mustache Token
+
+```js
+{
+  type: 'mustache',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: Prop
+}
+```
+
+#### Safe Mustache Token
+
+```diff
+{
+- type: 'mustache',
++ type: 's__mustache',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: Prop
+}
+```
+
+#### Escaped Mustache Token
+
+```diff
+{
+- type: 'mustache',
++ type: 'e__mustache',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: Prop
+}
+```
+
+#### Escaped Safe Mustache Token
+
+```diff
+{
+- type: 'mustache',
++ type: 'es__mustache',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: Prop
 }
 ```
 
@@ -130,10 +234,11 @@ Following is the list of Nodes returned by the tokenizer.
 | Key | Value | Description |
 |-----|------|-------------------|
 | type | string | The type of node determines the behavior of node |
-| lineno | number | The lineno in the source file
-| properties | Prop | Meta data for the node. See [Properties](#properties) to more info.
-| value | string | If node is a raw node, then value is the string in the source file
-| children | array | Array of recursive nodes. Only exists, when `type === 'block'`.
+| loc | object | `loc` is only present for tags and mustache tokens |
+| line | number | `line` is not present  for tags and mustache tokens |
+| properties | Prop | Meta data for the node. See [Properties](#properties) to more info |
+| value | string | If token is a raw or comment token, then value is the string in the source file |
+| children | array | Array of recursive nodes. Only exists, when token is a tag |
 
 ---
 
@@ -147,7 +252,6 @@ The block prop is used by the `Block` node. The only difference from the regular
 {
   name: string
   jsArg: string,
-  raw: string,
   selfclosed: boolean
 }
 ```
@@ -156,17 +260,13 @@ The block prop is used by the `Block` node. The only difference from the regular
 
 ```js
 {
-  name: string
   jsArg: string,
-  raw: string
 }
 ```
 
 | Key | Description |
 |-------|------------|
-| name | The name is the subtype for a given node. For example: `if` will be the name of the `@if` tag. |
 | jsArg | The `jsArg` is the Javascript expression to evaluate |
-| raw | The raw representation of a given expression. Used for debugging purposes. |
 | selfclosed | Whether or not the tag was `selfclosed` during usage. |
 
 
@@ -231,40 +331,55 @@ error.code
 
 The output of the above text will be
 
-```js
+```json
 [
   {
-    "type": "block",
+    "type": "tag",
     "properties": {
       "name": "if",
       "jsArg": "username",
-      "raw": "if(username)",
       "selfclosed": false
     },
-    "lineno": 1,
+    "loc": {
+      "start": {
+        "line": 1,
+        "col": 4
+      },
+      "end": {
+        "line": 1,
+        "col": 13
+      }
+    },
     "children": [
+      {
+        "type": "newline",
+        "line": 1
+      },
       {
         "type": "raw",
         "value": "<h2> Hello ",
-        "lineno": 2
+        "line": 2
       },
       {
         "type": "mustache",
-        "lineno": 2,
         "properties": {
-          "name": "mustache",
-          "jsArg": " username ",
-          "raw": "<h2> Hello {{ username }} </h2>"
+          "jsArg": " username "
+        },
+        "loc": {
+          "start": {
+            "line": 2,
+            "col": 13
+          },
+          "end": {
+            "line": 2,
+            "col": 25
+          }
         }
       },
       {
         "type": "raw",
         "value": " </h2>",
-        "lineno": 2
-      },
-      {
-        "type": "newline",
-        "lineno": 2
+        "line": 2
       }
     ]
   }
