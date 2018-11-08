@@ -412,5 +412,5 @@ MIT License, see the included [MIT](LICENSE.md) file.
 [coveralls-image]: https://img.shields.io/coveralls/edge-js/lexer/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/edge-js/lexer "coveralls"
 
-[npm-image]: https://img.shields.io/npm/v/lexer.svg?style=flat-square&logo=npm
-[npm-url]: https://npmjs.org/package/lexer "npm"
+[npm-image]: https://img.shields.io/npm/v/edge-lexer.svg?style=flat-square&logo=npm
+[npm-url]: https://npmjs.org/package/edge-lexer "npm"
