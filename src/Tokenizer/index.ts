@@ -11,31 +11,22 @@
 * file that was distributed with this source code.
 */
 
-import { EdgeError } from 'edge-error'
-import { TagStatement as BlockStatement } from '../TagStatement'
-import { MustacheStatement } from '../MustacheStatement'
+import { getTag, getMustache } from '../Detector'
+import { Scanner } from '../Scanner'
+
+import { unclosedParen, unclosedTag, unclosedCurlyBrace, cannotSeekStatement, unopenedParen } from '../Exceptions'
 
 import {
-  IBlockProp,
-  INode,
-  IBlockNode,
-  NodeType,
-  IMustacheProp,
-  IMustacheNode,
-  ITagDefination,
+  ITagToken,
+  IMustacheToken,
+  ITags,
+  IRawToken,
+  INewLineToken,
+  IRuntimeTag,
+  IRuntimeMustache,
+  TagTypes,
+  MustacheTypes,
 } from '../Contracts'
-
-/** @hidden */
-const TAG_REGEX = /^(@{1,2})(!)?(\w+)/
-
-/** @hidden */
-const MUSTACHE_REGEX = /{{2}/
-
-/** @hidden */
-const ESCAPE_REGEX = /^(\s*)@/
-
-/** @hidden */
-const TRIM_TAG_REGEX = /^@/
 
 type tokenizerOptions = {
   filename: string,
@@ -49,150 +40,283 @@ type tokenizerOptions = {
  * the tokens output.
  */
 export class Tokenizer {
-  public tokens: Array<INode | IBlockNode> = []
-  private blockStatement: null | BlockStatement = null
-  private mustacheStatement: null | MustacheStatement = null
+  public tokens: Array<IRawToken | INewLineToken | ITagToken | IMustacheToken> = []
+
+  private blockStatement: null | { scanner: Scanner, tag: IRuntimeTag } = null
+
+  private mustacheStatement: null | { scanner: Scanner, mustache: IRuntimeMustache } = null
+
   private line: number = 0
-  private openedTags: IBlockNode[] = []
 
-  constructor (private template: string, private tagsDef: { [key: string]: ITagDefination }, private options: tokenizerOptions) {
+  private openedTags: ITagToken[] = []
+
+  constructor (private template: string, private tagsDef: ITags, private options: tokenizerOptions) {
   }
 
   /**
-   * Parses the AST
+   * Returns the raw token
    */
-  public parse (): void {
-    const lines = this.template.split('\n')
-
-    while (lines.length) {
-      this.line++
-      this.processText(lines.shift()!)
-    }
-
-    /**
-     * Process entire text, but there is an open statement, so we will
-     * process it as a raw node
-     */
-    if (this.blockStatement) {
-      this.consumeNode(this.getRawNode(`@${this.blockStatement.props.raw}`))
-      this.blockStatement = null
-      this.consumeNode(this.getBlankLineNode())
-    }
-
-    /**
-     * Process entire text, but there is an open statement, so we will
-     * process it as a raw node
-     */
-    if (this.mustacheStatement) {
-      const { raw } = this.mustacheStatement.props
-      this.mustacheStatement = null
-
-      this.consumeNode(this.getRawNode(raw))
-      this.consumeNode(this.getBlankLineNode())
-    }
-
-    /**
-     * Throw exception when there are opened tags
-     */
-    if (this.openedTags.length) {
-      const openedTag = this.openedTags[this.openedTags.length - 1]
-
-      throw new EdgeError(`Unclosed tag ${openedTag.properties.name}`, 'E_UNCLOSED_TAG', {
-        line: openedTag.lineno,
-        col: 0,
-        filename: this.options.filename,
-      })
-    }
-  }
-
-  /**
-   * Returns the tag defination when line matches the regex
-   * of a tag.
-   */
-  private getTag (line: string): null | ITagDefination {
-    const match = TAG_REGEX.exec(line.trim())
-    if (!match) {
-      return null
-    }
-
-    const tagName = match[3]
-
-    /**
-     * Makes sure the tag exists in the tags defination
-     */
-    if (!this.tagsDef[tagName]) {
-      return null
-    }
-
-    /**
-     * Tag is escaped
-     */
-    if (match[1] === '@@') {
-      return {
-        escaped: true,
-        block: false,
-        selfclosed: false,
-        seekable: false,
-      }
-    }
-
-    const defination = this.tagsDef[tagName]
-    return Object.assign({ selfclosed: !!match[2] }, defination)
-  }
-
-  /**
-   * Returns the node for a tag
-   */
-  private getTagNode (properties: IBlockProp, lineno: number): IBlockNode {
+  private _getRawNode (text): IRawToken {
     return {
-      type: NodeType.BLOCK,
-      properties,
-      lineno,
+      type: 'raw',
+      value: text,
+      line: this.line,
+    }
+  }
+
+  /**
+   * Returns the new line token
+   */
+  private _getNewLineNode (): INewLineToken {
+    return {
+      type: 'newline',
+      line: this.line - 1,
+    }
+  }
+
+  /**
+   * Returns the ITag token for a runtime tag. The `jsArg` and ending
+   * loc is computed using the scanner and must be passed to this
+   * method.
+   */
+  private _getTagNode (tag: IRuntimeTag, jsArg: string, loc): ITagToken {
+    return {
+      type: tag.escaped ? TagTypes.ETAG : TagTypes.TAG,
+      properties: {
+        name: tag.name,
+        jsArg: jsArg,
+        selfclosed: tag.selfclosed,
+      },
+      loc: {
+        start: {
+          line: tag.line,
+          col: tag.col,
+        },
+        end: loc,
+      },
       children: [],
     }
   }
 
   /**
-   * Returns the node for a raw string
+   * Consume the runtime tag node.
+   *
+   * If tag is `block`, then we push it to the list of
+   * opened tags and wait for the closing statement to
+   * appear.
+   *
+   * Otherwise, we move it to the tokens array directly.
    */
-  private getRawNode (value: string): INode {
-    return {
-      type: NodeType.RAW,
-      value,
-      lineno: this.line,
+  private _consumeTag (tag: IRuntimeTag, jsArg: string, loc) {
+    if (tag.block && !tag.selfclosed) {
+      this.openedTags.push(this._getTagNode(tag, jsArg, loc))
+    } else {
+      this._consumeNode(this._getTagNode(tag, jsArg, loc))
     }
   }
 
   /**
-   * Returns the node for a newline
+   * Handles the opening of the tag.
    */
-  private getBlankLineNode (): INode {
-    return {
-      type: NodeType.NEWLINE,
-      lineno: this.line,
+  private _handleTagOpening (line: string, tag: IRuntimeTag) {
+    if (tag.seekable && !tag.hasBrace) {
+      throw unopenedParen({ line: tag.line, col: tag.col }, this.options.filename)
     }
+
+    /**
+     * When tag is not seekable, then their is no need to create
+     * a scanner instance, just consume it right away.
+     */
+    if (!tag.seekable) {
+      this._consumeTag(tag, '', { line: tag.line, col: tag.col })
+      return
+    }
+
+    /**
+     * Advance the `col`, since we do not want to start from the
+     * starting brace `(`.
+     */
+    tag.col += 1
+
+    /**
+     * Create a new block statement with the scanner to find
+     * the closing brace ')'
+     */
+    this.blockStatement = {
+      tag: tag,
+      scanner: new Scanner(')', ['(', ')'], this.line, tag.col),
+    }
+
+    /**
+     * Pass all remaining content to the scanner
+     */
+    this._feedCharsToCurrentTag(line.slice(tag.col))
   }
 
   /**
-   * Returns the mustache node
+   * Scans the string using the scanner and waits for the
+   * closing brace ')' to appear
    */
-  private getMustacheNode (properties: IMustacheProp, lineno: number): IMustacheNode {
+  private _feedCharsToCurrentTag (content: string) {
+    const { tag, scanner } = this.blockStatement!
+
+    scanner.scan(content)
+
+    /**
+     * If scanner is not closed, then we need to keep on
+     * feeding more content
+     */
+    if (!scanner.closed) {
+      return
+    }
+
+    /**
+     * Consume the tag once we have found the closing brace and set
+     * block statement to null
+     */
+    this._consumeTag(tag, scanner.match, scanner.loc)
+
+    /**
+     * Raise error, if there is inline content after the closing brace ')'
+     * `@if(username) hello {{ username }}` is invalid
+     */
+    if (scanner.leftOver.trim()) {
+      throw cannotSeekStatement(scanner.leftOver, scanner.loc, this.options.filename)
+    }
+
+    this.blockStatement = null
+  }
+
+  /**
+   * Returns the mustache type by checking for `safe` and `escaped`
+   * properties.
+   */
+  private _getMustacheType (mustache: IRuntimeMustache): MustacheTypes {
+    if (mustache.safe) {
+      return mustache.escaped ? MustacheTypes.ESMUSTACHE : MustacheTypes.SMUSTACHE
+    }
+
+    return mustache.escaped ? MustacheTypes.EMUSTACHE : MustacheTypes.MUSTACHE
+  }
+
+  /**
+   * Returns the mustache token using the runtime mustache node. The `jsArg` and
+   * ending `loc` is fetched using the scanner.
+   */
+  private _getMustacheNode (mustache: IRuntimeMustache, jsArg: string, loc): IMustacheToken {
     return {
-      type: NodeType.MUSTACHE,
-      lineno,
+      type: this._getMustacheType(mustache),
       properties: {
-        name: properties.name!,
-        jsArg: properties.jsArg,
-        raw: properties.raw,
+        jsArg: jsArg,
+      },
+      loc: {
+        start: {
+          line: mustache.line,
+          col: mustache.col,
+        },
+        end: loc,
       },
     }
   }
 
   /**
-   * Returns a boolean, when line content is a closing
-   * tag
+   * Handles the line which has mustache opening braces.
    */
-  private isClosingTag (line: string): boolean {
+  private _handleMustacheOpening (line: string, mustache: IRuntimeMustache) {
+    const pattern = mustache.safe ? '}}}' : '}}'
+    const textLeftIndex = mustache.escaped ? mustache.realCol - 1 : mustache.realCol
+
+    /**
+     * Pull everything that is on the left of the mustache
+     * statement and use it as a raw node
+     */
+    if (textLeftIndex > 0) {
+      this._consumeNode(this._getRawNode(line.slice(0, textLeftIndex)))
+    }
+
+    /**
+     * Skip the curly braces when reading the expression inside
+     * it. We are actually skipping opening curly braces
+     * `{{`, however, their length will be same as the
+     * closing one's/
+     */
+    mustache.col += pattern.length
+    mustache.realCol += pattern.length
+
+    /**
+     * Create a new mustache statement with a scanner to scan for
+     * closing mustache braces. Note the closing `pattern` is
+     * different for safe and normal mustache.
+     */
+    this.mustacheStatement = {
+      mustache,
+      scanner: new Scanner(pattern, ['{', '}'], mustache.line, mustache.col),
+    }
+
+    /**
+     * Feed text to the mustache statement and wait for the closing braces
+     */
+    this._feedCharsToCurrentMustache(line.slice(mustache.realCol))
+  }
+
+  /**
+   * Feed chars to the mustache statement, which isn't closed yet.
+   */
+  private _feedCharsToCurrentMustache (content: string): void {
+    const { mustache, scanner } = this.mustacheStatement!
+    scanner.scan(content)
+
+    /**
+     * If scanner is not closed, then return early, since their
+     * not much we can do here.
+     */
+    if (!scanner.closed) {
+      return
+    }
+
+    /**
+     * Consume the node as soon as we have found the closing brace
+     */
+    this._consumeNode(this._getMustacheNode(mustache, scanner.match, scanner.loc))
+
+    /**
+     * If their is leftOver text after the mustache closing brace, then re-scan
+     * it for more mustache statements. Example:
+     *
+     * I following statement, `, and {{ age }}` is the left over.
+     * ```
+     * {{ username }}, and {{ age }}
+     * ```
+     *
+     * This block is same the generic new line handler method. However, their is
+     * no need to check for tags and comments, so we ditch that method and
+     * process it here by duplicating code (which is fine).
+     */
+    if (scanner.leftOver.trim()) {
+      const anotherMustache = getMustache(scanner.leftOver, scanner.loc.line, scanner.loc.col)
+
+      if (anotherMustache) {
+        this._handleMustacheOpening(scanner.leftOver, anotherMustache)
+        return
+      }
+
+      this._consumeNode(this._getRawNode(scanner.leftOver))
+    }
+
+    /**
+     * Set mustache statement to null
+     */
+    this.mustacheStatement = null
+  }
+
+  /**
+   * Returns a boolean telling if the content of the line is the
+   * closing tag for the most recently opened tag.
+   *
+   * The opening and closing has to be in a order, otherwise the
+   * compiler will get mad.
+   */
+  private _isClosingTag (line: string): boolean {
     if (!this.openedTags.length) {
       return false
     }
@@ -202,160 +326,137 @@ export class Tokenizer {
   }
 
   /**
-   * Returns a boolean, telling if a given statement is seeking
-   * for more content or not
+   * Consume any type of token by moving it to the correct list. If there are
+   * opened tags, then the token becomes part of the tag children. Otherwise
+   * moved as top level token.
    */
-  private isSeeking (statement: null | BlockStatement | MustacheStatement): boolean {
-    return !!(statement && statement.seeking)
-  }
-
-  /**
-   * Returns a boolean, telling if a given statement has ended or
-   * not.
-   */
-  private isSeeked (statement: BlockStatement | MustacheStatement): boolean {
-    return statement && !statement.seeking
-  }
-
-  /**
-   * Here we add the node to tokens or as children for
-   * the recentOpenedTag (if one exists).
-   */
-  private consumeNode (tag: INode | IBlockNode): void {
+  private _consumeNode (tag: ITagToken | IRawToken | INewLineToken | IMustacheToken): void {
     if (this.openedTags.length) {
       this.openedTags[this.openedTags.length - 1].children.push(tag)
       return
     }
+
     this.tokens.push(tag)
   }
 
   /**
-   * Feeds the text to the currently opened block statement.
-   * Make sure that `seeking` is true on the block
-   * statement, before calling this method.
+   * Pushes a new line to the list. This method avoids
+   * new lines at position 0.
    */
-  private feedTextToBlockStatement (text: string): void {
-    this.blockStatement!.feed(text)
-
-    if (!this.isSeeked(this.blockStatement!)) {
+  private _pushNewLine () {
+    if (this.line === 1) {
       return
     }
 
-    const { props, tagDef, startPosition } = this.blockStatement!
-
-    /**
-     * If tag is a block level, then we added it to the openedTags
-     * array, otherwise we add it to the tokens.
-     */
-    if (tagDef.block && (!tagDef.selfclosed || !props.selfclosed)) {
-      this.openedTags.push(this.getTagNode(props, startPosition))
-    } else {
-      this.consumeNode(this.getTagNode(props, startPosition))
-    }
-
-    this.blockStatement = null
+    this._consumeNode(this._getNewLineNode())
   }
 
   /**
-   * Feeds text to the currently opened mustache statement. Make sure
-   * to check `seeking` is true, before calling this method.
+   * Process the current line based upon what it is. What it is?
+   * That's the job of this method to find out.
    */
-  private feedTextToMustacheStatement (text: string): void {
-    this.mustacheStatement!.feed(text)
-    if (!this.isSeeked(this.mustacheStatement!)) {
-      return
-    }
-
-    const { props, startPosition } = this.mustacheStatement!
-
+  private _processText (line: string): void {
     /**
-     * Process text left when exists
+     * There is an open block statement, so feed line to it
      */
-    if (props.textLeft) {
-      const textNode = this.getRawNode(props.textLeft)
-      textNode.lineno = startPosition
-      this.consumeNode(textNode)
-    }
-
-    /**
-     * Then consume the actual mustache expression
-     */
-    this.consumeNode(this.getMustacheNode(props, startPosition))
-    this.mustacheStatement = null
-
-    /**
-     * Finally, there is no content to the right, then process
-     * it, otherwise add a new line token
-     */
-    if (props.textRight) {
-      this.processText(props.textRight)
-    } else {
-      this.consumeNode(this.getBlankLineNode())
-    }
-  }
-
-  /**
-   * Process a piece of text, by finding if text has reserved keywords,
-   * otherwise process it as a raw node.
-   */
-  private processText (text: string): void {
-    /**
-     * Block statement is seeking for more content
-     */
-    if (this.isSeeking(this.blockStatement)) {
-      this.feedTextToBlockStatement(text)
+    if (this.blockStatement) {
+      this._feedCharsToCurrentTag('\n')
+      this._feedCharsToCurrentTag(line)
       return
     }
 
     /**
-     * Mustache statement is seeking for more content
+     * There is an open mustache statement, so feed line to it
      */
-    if (this.isSeeking(this.mustacheStatement)) {
-      this.feedTextToMustacheStatement(text)
-      return
-    }
-
-    const tag = this.getTag(text)
-
-    /**
-     * Text is a escaped tag
-     */
-    if (tag && tag.escaped) {
-      this.consumeNode(this.getRawNode(text.replace(ESCAPE_REGEX, '$1')))
-      this.consumeNode(this.getBlankLineNode())
+    if (this.mustacheStatement) {
+      this._feedCharsToCurrentMustache('\n')
+      this._feedCharsToCurrentMustache(line)
       return
     }
 
     /**
-     * Text is a tag
+     * The line is an closing statement for a previously opened
+     * block level tag
      */
+    if (this._isClosingTag(line)) {
+      this._consumeNode(this.openedTags.pop()!)
+      return
+    }
+
+    /**
+     * Everything from here pushes a new line to the stack before
+     * moving forward
+     */
+    this._pushNewLine()
+
+    /**
+     * Check if the current line is a tag or not. If yes, then handle
+     * it appropriately
+     */
+    const tag = getTag(line, this.line, 0, this.tagsDef)
     if (tag) {
-      this.blockStatement = new BlockStatement(this.line, tag)
-      this.feedTextToBlockStatement(text.trim().replace(TRIM_TAG_REGEX, ''))
+      this._handleTagOpening(line, tag)
       return
     }
 
     /**
-     * Text is a closing block tag
+     * Check if the current line contains a mustache statement or not. If yes,
+     * then handle it appropriately.
      */
-    if (this.isClosingTag(text)) {
-      this.consumeNode(this.openedTags.pop()!)
+    const mustache = getMustache(line, this.line, 0)
+    if (mustache) {
+      this._handleMustacheOpening(line, mustache)
       return
     }
 
     /**
-     * Text contains mustache expressions
+     * Otherwise it is a raw line
      */
-    if (MUSTACHE_REGEX.test(text)) {
-      this.mustacheStatement = new MustacheStatement(this.line)
-      this.feedTextToMustacheStatement(text)
-      return
+    this._consumeNode(this._getRawNode(line))
+  }
+
+  private _checkForErrors () {
+    /**
+     * We are done scanning the content and there is an open blockStatement
+     * seeking for new content. Which means we are missing a closing
+     * brace `)`.
+     */
+    if (this.blockStatement) {
+      const { tag } = this.blockStatement
+      throw unclosedParen({ line: tag.line, col: tag.col }, this.options.filename)
     }
 
     /**
-     * A plain raw node
+     * We are done scanning the content and there is an open mustache statement
+     * seeking for new content. Which means we are missing closing braces `}}`.
      */
-    this.consumeNode(this.getRawNode(text))
-    this.consumeNode(this.getBlankLineNode())
+    if (this.mustacheStatement) {
+      const { mustache } = this.mustacheStatement
+      throw unclosedCurlyBrace({ line: mustache.line, col: mustache.col }, this.options.filename)
+    }
+
+    /**
+     * A tag was opened, but forgot to close it
+     */
+    if (this.openedTags.length) {
+      const openedTag = this.openedTags[this.openedTags.length - 1]
+      throw unclosedTag(openedTag.properties.name, openedTag.loc.start, this.options.filename)
+    }
+  }
+
+  /**
+   * Parse the template and generate an AST out of it
+   */
+  public parse (): void {
+    const lines = this.template.split('\n')
+    const linesLength = lines.length
+
+    while (this.line < linesLength) {
+      const line = lines[this.line]
+      this.line++
+      this._processText(line)
+    }
+
+    this._checkForErrors()
   }
 }

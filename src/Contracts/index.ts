@@ -2,70 +2,125 @@
  * @module Lexer
  */
 
-enum NodeType {
-  BLOCK = 'block',
-  RAW = 'raw',
-  NEWLINE = 'newline',
-  MUSTACHE = 'mustache',
-}
-
-enum MustacheType {
+/**
+ * Just mustache types to avoid writing them over
+ * and over again
+ */
+export enum MustacheTypes {
   SMUSTACHE = 's__mustache',
   ESMUSTACHE = 'es__mustache',
   MUSTACHE = 'mustache',
   EMUSTACHE = 'e__mustache',
 }
 
-enum WhiteSpaceModes { NONE, ALL }
+/**
+ * The type of node types. Each token
+ * will have one of these types
+ */
+export enum TagTypes {
+  TAG = 'tag',
+  ETAG = 'e__tag',
+}
 
-interface IProp {
+/**
+ * The properties node for a node node
+ */
+export type ITagProp = {
   name: string
   jsArg: string,
-  raw: string
+  selfclosed: boolean,
 }
 
-interface IBlockProp extends IProp {
-  selfclosed: boolean
-}
-
-interface IMustacheProp {
-  name: MustacheType
+/**
+ * Mustache properties node
+ */
+export type IMustacheProp = {
   jsArg: string,
-  raw: string
-  textLeft: string
-  textRight: string
 }
 
-interface INode {
-  type: NodeType
-  value?: string
-  lineno: number
+/**
+ * Location node for tags and mustaches
+ */
+export type ILoc = {
+  start: {
+    line: number,
+    col: number,
+  },
+  end: {
+    line: number,
+    col: number,
+  },
 }
 
-interface IBlockNode extends INode {
-  properties: IBlockProp
-  children: Array<INode | IBlockNode>
-}
-
-interface IMustacheNode extends INode {
-  properties: IProp
-}
-
-interface ITagDefination {
-  block: boolean
-  selfclosed: boolean
-  escaped?: boolean
+/**
+ * Tag defination for multiple tags
+ */
+export type ITagDefination = {
+  block: boolean,
   seekable: boolean,
-  new? ()
 }
 
-export { IProp as IProp }
-export { INode as INode }
-export { IBlockNode as IBlockNode }
-export { IMustacheNode as IMustacheNode }
-export { NodeType as NodeType }
-export { IMustacheProp as IMustacheProp }
-export { WhiteSpaceModes as WhiteSpaceModes }
-export { MustacheType as MustacheType }
-export { ITagDefination as ITagDefination }
-export { IBlockProp as IBlockProp }
+/**
+ * Raw line token
+ */
+export type IRawToken = {
+  type: 'raw',
+  value: string,
+  line: number,
+}
+
+/**
+ * New line token
+ */
+export type INewLineToken = {
+  type: 'newline',
+  line: number,
+}
+
+/**
+ * Mustache token
+ */
+export type IMustacheToken = {
+  type: MustacheTypes,
+  properties: IMustacheProp,
+  loc: ILoc,
+}
+
+/**
+ * Tag token
+ */
+export type ITagToken = {
+  type: TagTypes,
+  properties: ITagProp,
+  loc: ILoc,
+  children: Array<IRawToken | INewLineToken | ITagToken | IMustacheToken>,
+}
+
+/**
+ * The runtime tag node to know the shape of a tag
+ */
+export type IRuntimeTag = {
+  name: string,
+  selfclosed: boolean,
+  col: number,
+  line: number,
+  block: boolean,
+  seekable: boolean,
+  escaped: boolean,
+  hasBrace: boolean,
+}
+
+/**
+ * Runtime mustache node to know the shape of the mustache
+ */
+export type IRuntimeMustache = {
+  escaped: boolean,
+  safe: boolean,
+  line: number,
+  col: number,
+  realCol: number,
+}
+
+export type ITags = {
+  [name: string]: ITagDefination,
+}

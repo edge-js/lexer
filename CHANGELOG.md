@@ -1,3 +1,29 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/edge-js/edge-lexer/compare/1.0.8...2.0.0) (2018-11-08)
+
+
+### Features
+
+* rewrite for performance ([82e9752](https://github.com/edge-js/edge-lexer/commit/82e9752))
+* track col numbers for better debugging experience ([5778f77](https://github.com/edge-js/edge-lexer/commit/5778f77))
+
+
+
+<a name="1.0.8"></a>
+## [1.0.8](https://github.com/poppinss/edge-lexer/compare/v1.0.7...v1.0.8) (2018-11-03)
+
+
+### Bug Fixes
+
+* **tokenizer:** raise error when invalid block or mustache statements ([86718e9](https://github.com/poppinss/edge-lexer/commit/86718e9))
+
+
+### Features
+
+* **errors:** make errors consistent ([663a618](https://github.com/poppinss/edge-lexer/commit/663a618))
+
+
+
 <a name="1.0.7"></a>
 ## [1.0.7](https://github.com/poppinss/edge-lexer/compare/v1.0.6...v1.0.7) (2018-07-10)
 

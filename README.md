@@ -1,123 +1,257 @@
 # Edge lexer
 
+> Generating high level tokens from Edge whitelisted markup
+
 [![travis-image]][travis-url]
 [![appveyor-image]][appveyor-url]
 [![coveralls-image]][coveralls-url]
 [![npm-image]][npm-url]
 ![](https://img.shields.io/badge/Uses-Typescript-294E80.svg?style=flat-square&colorA=ddd)
 
-Edge lexer detects tags from any markup language and converts them into tokens. Later these tokens can be used with a Javascript parser like `esprima` or `babylon` to complete a logical template engine ( this is what [edge-parser](https://github.com/poppinss/edge-parser) does).
+- ✅ Zero dependencies (Actually one dependency that is also to standardize edge errors).
+- ✅ Just uses one regex statement. That also tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
+- ✅ Allows multiline expressions
+- ✅ Collects line and columns for accurate stack traces.
+- ✅ Detects for unclosed tags.
+- ✅ Detects for unwrapped expressions and raises appropriate errors.
 
-This guide is an outline of the lexer.
+Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax). 
+
+This module is a blend of a `lexer` and an `AST generator`, since Edge doesn't need a pure [lexer](https://en.wikipedia.org/wiki/Lexical_analysis) that scans for each character. Edge markup is written within other markup languages like **HTML** or **Markdown** and walking over each character is waste of resources.
+
+Instead, this module starts by detecting for the [Edge whitelisted syntax](https://github.com/edge-js/syntax) and then starts the lexical analysis within the detected markup.
+
+---
+
+## Performance
+
+Following measures are taken to keep the analysis performant.
+
+1. Only analyse markup that is detected as Edge whitelisted syntax.
+2. Only analyse `tags`, that are passed to the tokenizer. Which means even if the syntax for tags is whitelisted, the tokeniser will analyse them if they are used by your app.
+3. Do not analyse Javascript expression and leave that for [edge-parser](https://github.com/edge-js/parser).
+4. Only uses one Regular expression.
+
 
 ---
 
 ## Usage
-```
+
+```js
 import { Tokenizer } from 'edge-lexer'
 
 const template = `Hello {{ username }}`
 const tags = {
   if: {
     block: true,
-    selfclosed: false,
-    seekable: true
+    seekable: true,
   }
 }
 
-const tokenizer = new Tokenizer(template, tags)
-tokenizer.parse()
+// Filename is required to add it to error messages
+const options = {
+  filename: 'welcome.edge'
+}
 
+const tokenizer = new Tokenizer(template, tags, options)
+
+tokenizer.parse()
 console.log(tokenizer.tokens)
 ```
 
-## Note
-The code used in examples is only subject to work, when using Edge template engine. The lexer job is to tokenize the whitelisted syntax.
-
-The real functionality is added by the template engine by using the tokens created from this package 
-
 ---
-
-## Features
-1. Allows multiline expressions.
-2. Whitespaces and newlines are retained.
-3. Works with any markup or plain text files.
-4. Syntax is close to Javascript.
 
 ## Terms used
 This guide makes use of the following terms to identify core pieces of the tokenizer.
 
-| Term | Node Type | Description |
+| Term | Token Type | Description |
 |------|-----------|------------ |
-| Tag | block | Tags are used to define logical blocks in the template engine. For example `if tag` or `include tag`. |
-| Mustache | mustache | Javascript expression wrapped around curly braces. `{{ }}` |
+| Tag | tag | Tags are used to define logical blocks in the template engine. For example `if tag` or `include tag`. |
+| Escaped Tag | e__tag | Escaped tag, Edge will not evaluate it at rutime. |
+| Mustache | mustache | Javascript expression wrapped in curly braces. `{{ }}`|
+| Safe Mustache | s__mustache | Safe mustache, that doesn't escape the output `{{{ }}}`|
+| Escaped Mustache | e__mustache | Mustache tag that is escaped |
+| Escaped Safe Mustache | es__mustache | Safe Mustache tag that is escaped |
 | Raw | raw | A raw string, which has no meaning for the template engine |
 | NewLine | newline | Newline |
+| Comment | comment | Edge specific comment block. This will be ripped off in the output.
 
-## Nodes
+---
+
+## Tokens
 Following is the list of Nodes returned by the tokenizer.
 
-#### Block Node
+#### Tag Token
 
 ```js
 {
-  type: 'block'
-  lineno: number,
+  type: 'tag'
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
   properties: BlockProp,
   children: []
 }
 ```
 
-#### Raw Node
+#### Escaped Tag Token
+
+```diff
+{
+- type: 'tag',
++ type: 'e__tag',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: BlockProp,
+  children: []
+}
+```
+
+#### Raw Token
 
 ```js
 {
   type: 'raw',
-  lineno: number,
+  line: number,
   value: string
 }
 ```
 
-#### Mustache Node
+#### Comment Token
 
 ```js
 {
-  type: 'mustache',
-  lineno: number,
-  properties: Prop
+  type: 'comment',
+  line: number,
+  value: string
 }
 ```
 
-#### NewLine Node
+#### NewLine Token
 
 ```js
 {
   type: 'newline',
-  lineno: number
+  line: number
 }
 ```
 
-`Block Node` is the only node, which contains recursive child nodes.
+#### Mustache Token
+
+```js
+{
+  type: 'mustache',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: Prop
+}
+```
+
+#### Safe Mustache Token
+
+```diff
+{
+- type: 'mustache',
++ type: 's__mustache',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: Prop
+}
+```
+
+#### Escaped Mustache Token
+
+```diff
+{
+- type: 'mustache',
++ type: 'e__mustache',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: Prop
+}
+```
+
+#### Escaped Safe Mustache Token
+
+```diff
+{
+- type: 'mustache',
++ type: 'es__mustache',
+  loc: {
+    start: {
+      line: 1,
+      col: 4
+    },
+    end: {
+      line: 1,
+      col: 13
+    }
+  },
+  properties: Prop
+}
+```
+
 
 | Key | Value | Description |
 |-----|------|-------------------|
 | type | string | The type of node determines the behavior of node |
-| lineno | number | The lineno in the source file
-| properties | Prop | Meta data for the node. See [Properties](#properties) to more info.
-| value | string | If node is a raw node, then value is the string in the source file
-| children | array | Array of recursive nodes.
+| loc | object | `loc` is only present for tags and mustache tokens |
+| line | number | `line` is not present  for tags and mustache tokens |
+| properties | Prop | Meta data for the node. See [Properties](#properties) to more info |
+| value | string | If token is a raw or comment token, then value is the string in the source file |
+| children | array | Array of recursive nodes. Only exists, when token is a tag |
+
+---
 
 ## Properties
-The properties `Prop` is used to define meta data for a given Node. Nodes like `raw` and `newline`, doesn't need any metadata. 
+The properties `Prop` is used to define meta data for a given Node. Nodes like `raw`, `comment` and `newline`, doesn't need any metadata. 
 
 #### BlockProp
-The block prop is by the `Tag` node. The only difference from the regular `Prop` is the additional of `selfclosed` attribute.
+The block prop is used by the `Block` node. The only difference from the regular `Prop` is the addition of `selfclosed` attribute.
 
 ```js
 {
   name: string
   jsArg: string,
-  raw: string,
   selfclosed: boolean
 }
 ```
@@ -126,18 +260,19 @@ The block prop is by the `Tag` node. The only difference from the regular `Prop`
 
 ```js
 {
-  name: string
   jsArg: string,
-  raw: string
 }
 ```
 
 | Key | Description |
 |-------|------------|
-| name | The name is the subtype for a given node. For example: `if` will be the name of the `@if` tag. |
 | jsArg | The `jsArg` is the Javascript expression to evaluate |
-| raw | The raw representation of a given expression. Used for debugging purposes. |
 | selfclosed | Whether or not the tag was `selfclosed` during usage. |
+
+
+---
+
+## Mustache expressions
 
 For mustache nodes props, the `name` is the type of mustache expressions. The lexer supports 4 mustache expressions.
 
@@ -169,8 +304,24 @@ The following expression output is considered HTML safe.
 @{{{ '<p> Not touched </p>' }}}
 ```
 
+---
+
+## Errors
+
+Errors raised by the `lexer` are always an instance of [edge-error](https://github.com/edge-js/error) and will contain following properties.
+
+```js
+error.message
+error.line
+error.col
+error.filename
+error.code
+```
+
+
+---
+
 ## Example
-Before reading more about the syntax and their output, let's check the following example.
 
 ```html
 @if(username)
@@ -180,254 +331,64 @@ Before reading more about the syntax and their output, let's check the following
 
 The output of the above text will be
 
-```js
+```json
 [
   {
-    "type": "block",
+    "type": "tag",
     "properties": {
       "name": "if",
       "jsArg": "username",
-      "raw": "if(username)",
       "selfclosed": false
     },
-    "lineno": 1,
+    "loc": {
+      "start": {
+        "line": 1,
+        "col": 4
+      },
+      "end": {
+        "line": 1,
+        "col": 13
+      }
+    },
     "children": [
+      {
+        "type": "newline",
+        "line": 1
+      },
       {
         "type": "raw",
         "value": "<h2> Hello ",
-        "lineno": 2
+        "line": 2
       },
       {
         "type": "mustache",
-        "lineno": 2,
         "properties": {
-          "name": "mustache",
-          "jsArg": " username ",
-          "raw": "<h2> Hello {{ username }} </h2>"
+          "jsArg": " username "
+        },
+        "loc": {
+          "start": {
+            "line": 2,
+            "col": 13
+          },
+          "end": {
+            "line": 2,
+            "col": 25
+          }
         }
       },
       {
         "type": "raw",
         "value": " </h2>",
-        "lineno": 2
-      },
-      {
-        "type": "newline",
-        "lineno": 2
+        "line": 2
       }
     ]
   }
 ]
 ```
 
-## Supported Syntax
-
-To make Edge an enjoyable template engine, we have kept the syntax very close the original Javascript syntax.
-
-The following expressions are allowed.
-
-## Tags (block)
-
-1. Every block level tag starts with `@` symbol followed by the tagName.
-2. It is important to close a block level using `@end<tagName>`
-3. `@` and `tagName` cannot have spaces between them.
-
-**VALID**
-
-```
-@if(username)
-@endif
-```
-
-**VALID**
-
-```
-@if(
-  username
-)
-@endif
-```
-
-**VALID**
-
-```
-@if(
-  (
-    2 + 2
-  )
-  ===
-  4
-)
-```
-
-**VALID**
-
-```
-@if
-(
- username
-)
-```
-
-**INVALID**
-
-The opening of the tag must be in it's own line and so do the closing one
-
-```
-@if(username) Hello @endif
-```
-
-**INVALID**
-
-```
-@if(
-  username
-) <p> Hello </p>
-@endif
-```
-
-## Tags (inline)
-The inline tags doesn't contain any childs and hence requires no `@end` statement.
-
-**VALID**
-
-```
-@include('header')
-```
-
-**VALID**
-
-```
-@include(
-  'header'
-)
-```
-
-**VALID**
-
-```
-@include
-(
-  'header'
-)
-```
-
-## Tags (block-self closed)
-
-At times block level tags can work fine without any body inside them. To keep the syntax concise, you can **self-close** a block level tag.
-
-**NORMAL**
-
-```
-@component('title')
-  <h1> Hello world </h1>
-@endcomponent
-```
-
-**SELF CLOSED**
-
-```
-@!component('title', title = '<h1> Hello world </h1>')
-```
-
-## Mustache
-The mustache braces `{{` are used to define inline Javascript expressions. The lexer allows
-
-1. Multiline expressions.
-2. A valid Javascript expression, that yields to a value.
-3. The HTML output from mustache will be escaped, so make sure to use `{{{ '<p>' Hello world </p> }}}` for rendering HTML nodes.
-
-**VALID**
-
-```
-{{ username }}
-```
-
-**VALID**
-
-```
-{{
- username
-}}
-```
-
-**VALID**
-
-```
-Your friends are {{
-  users.map((user) => {
-    return user.username
-  }).join(',')
-}}
-```
-
-**VALID**
-
-```
-{{{ '<p>' Hello world </p> }}}
-```
-
-**INVALID**
-
-The starting curly brace, must be in one line.
-
-```
-{
-{
-  username
-}
-}
-```
-
-## Escaping
-
-The backslash `\` has a special meaning in Javascript, that's why we make use of `@` to escape Edge statements.
-
-> There is no need to escape the `@end` statements, since they are tightly mapped with the start statements. So if a start statement doesn't exists, the end statement will be considered as a raw node.
-
-**ESCAPED**
-
-```
-@@if(username)
-@endif
-```
-
-yields
-
-```json
-[
-  {
-    "type": "raw",
-    "value": "@if(username)",
-    "lineno": 1
-  },
-  {
-    "type": "newline",
-    "lineno": 1
-  },
-  {
-    "type": "raw",
-    "value": "@endif",
-    "lineno": 2
-  },
-  {
-    "type": "newline",
-    "lineno": 2
-  }
-]
-```
-
-In the same fashion, the mustache braces can be escaped using `@`.
-
-**ESCAPED**
-
-```
-Hello @{{ username }}
-```
-
 ## Change log
 
-The change log can be found in the [CHANGELOG.md](https://github.com/poppinss/edge-lexer/CHANGELOG.md) file.
+The change log can be found in the [CHANGELOG.md](CHANGELOG.md) file.
 
 ## Contributing
 
@@ -438,18 +399,18 @@ Everyone is welcome to contribute. Please go through the following guides, befor
 
 
 ## Authors & License
-[thetutlage](https://github.com/thetutlage) and [contributors](https://github.com/poppinss/edge-lexer/graphs/contributors).
+[thetutlage](https://github.com/thetutlage) and [contributors](https://github.com/edge-js/lexer/graphs/contributors).
 
 MIT License, see the included [MIT](LICENSE.md) file.
 
-[travis-image]: https://img.shields.io/travis/poppinss/edge-lexer/master.svg?style=flat-square&logo=travis
-[travis-url]: https://travis-ci.org/poppinss/edge-lexer "travis"
+[travis-image]: https://img.shields.io/travis/edge-js/lexer/master.svg?style=flat-square&logo=travis
+[travis-url]: https://travis-ci.org/edge-js/lexer "travis"
 
-[appveyor-image]: https://img.shields.io/appveyor/ci/thetutlage/edge-lexer/master.svg?style=flat-square&logo=appveyor
-[appveyor-url]: https://ci.appveyor.com/project/thetutlage/edge-lexer "appveyor"
+[appveyor-image]: https://img.shields.io/appveyor/ci/thetutlage/lexer/master.svg?style=flat-square&logo=appveyor
+[appveyor-url]: https://ci.appveyor.com/project/thetutlage/lexer "appveyor"
 
-[coveralls-image]: https://img.shields.io/coveralls/poppinss/edge-lexer/master.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/github/poppinss/edge-lexer "coveralls"
+[coveralls-image]: https://img.shields.io/coveralls/edge-js/lexer/master.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/github/edge-js/lexer "coveralls"
 
 [npm-image]: https://img.shields.io/npm/v/edge-lexer.svg?style=flat-square&logo=npm
 [npm-url]: https://npmjs.org/package/edge-lexer "npm"

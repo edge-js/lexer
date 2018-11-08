@@ -10,6 +10,7 @@
 import * as test from 'japa'
 import * as dedent from 'dedent'
 import { Tokenizer } from '../src/Tokenizer'
+import { MustacheTypes } from '../src/Contracts'
 
 const tagsDef = {
   if: class If {
@@ -41,21 +42,24 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' username ',
-          raw: template,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 8,
+          },
+          end: {
+            line: 1,
+            col: 20,
+          },
         },
-      },
-      {
-        type: 'newline',
-        lineno: 1,
+        properties: {
+          jsArg: ' username ',
+        },
       },
     ])
   })
@@ -71,26 +75,29 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 8,
+          },
+          end: {
+            line: 1,
+            col: 20,
+          },
+        },
         properties: {
-          name: 'mustache',
           jsArg: ' username ',
-          raw: template,
         },
       },
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: '!',
-      },
-      {
-        type: 'newline',
-        lineno: 1,
       },
     ])
   })
@@ -110,26 +117,29 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: 'List of users are ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 20,
+          },
+          end: {
+            line: 5,
+            col: 2,
+          },
+        },
         properties: {
-          name: 'mustache',
           jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
-          raw: template,
         },
       },
       {
         type: 'raw',
-        lineno: 5,
+        line: 5,
         value: '.',
-      },
-      {
-        type: 'newline',
-        lineno: 5,
       },
     ])
   })
@@ -149,26 +159,71 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: 'List of users are ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.SMUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 21,
+          },
+          end: {
+            line: 5,
+            col: 3,
+          },
+        },
         properties: {
-          name: 's__mustache',
           jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
-          raw: template,
         },
       },
       {
         type: 'raw',
-        lineno: 5,
+        line: 5,
         value: '.',
       },
+    ])
+  })
+
+  test('Allow safe escaped mustache', (assert) => {
+    const template = dedent`List of users are @{{{
+      users.map((user) => {
+        return user.username
+      }).join(', ')
+    }}}.`
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer['blockStatement'])
+    assert.isNull(tokenizer['mustacheStatement'])
+    assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        lineno: 5,
+        type: 'raw',
+        line: 1,
+        value: 'List of users are ',
+      },
+      {
+        type: MustacheTypes.ESMUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 22,
+          },
+          end: {
+            line: 5,
+            col: 3,
+          },
+        },
+        properties: {
+          jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
+        },
+      },
+      {
+        type: 'raw',
+        line: 5,
+        value: '.',
       },
     ])
   })
@@ -185,35 +240,45 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 8,
+          },
+          end: {
+            line: 1,
+            col: 20,
+          },
+        },
         properties: {
-          name: 'mustache',
           jsArg: ' username ',
-          raw: template,
         },
       },
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: ', your age is ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' age ',
-          raw: ', your age is {{ age }}',
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 36,
+          },
+          end: {
+            line: 1,
+            col: 43,
+          },
         },
-      },
-      {
-        type: 'newline',
-        lineno: 1,
+        properties: {
+          jsArg: ' age ',
+        },
       },
     ])
   })
@@ -237,72 +302,74 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 8,
+          },
+          end: {
+            line: 1,
+            col: 20,
+          },
+        },
         properties: {
-          name: 'mustache',
           jsArg: ' username ',
-          raw: 'Hello {{ username }}, your friends are {{',
         },
       },
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: ', your friends are ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 41,
+          },
+          end: {
+            line: 5,
+            col: 2,
+          },
+        },
         properties: {
-          name: 'mustache',
           jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
-          raw: template.replace('Hello {{ username }}', '').replace('\nBye', ''),
         },
       },
       {
         type: 'raw',
-        lineno: 5,
+        line: 5,
         value: '!',
       },
       {
         type: 'newline',
-        lineno: 5,
+        line: 5,
       },
       {
         type: 'raw',
-        lineno: 6,
+        line: 6,
         value: 'Bye',
-      },
-      {
-        type: 'newline',
-        lineno: 6,
       },
     ])
   })
 
-  test('convert incomplete mustache statements to raw string', (assert) => {
+  test('raise error if incomplete mustache statements', (assert) => {
+    assert.plan(2)
     const template = 'Hello {{ username'
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
-    tokenizer.parse()
-
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'raw',
-        lineno: 1,
-        value: 'Hello {{ username',
-      },
-      {
-        type: 'newline',
-        lineno: 1,
-      },
-    ])
+    try {
+      tokenizer.parse()
+    } catch ({ message, line }) {
+      assert.equal(message, 'Missing token "}"')
+      assert.equal(line, 1)
+    }
   })
 
   test('parse 3 mustache statements in a single line', (assert) => {
@@ -316,45 +383,62 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 2,
+          },
+          end: {
+            line: 1,
+            col: 14,
+          },
+        },
         properties: {
-          name: 'mustache',
           jsArg: ' username ',
-          raw: '{{ username }}, {{ age }} and {{ state }}',
         },
       },
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: ', ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 18,
+          },
+          end: {
+            line: 1,
+            col: 25,
+          },
+        },
         properties: {
-          name: 'mustache',
           jsArg: ' age ',
-          raw: ', {{ age }} and {{ state }}',
         },
       },
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: ' and ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' state ',
-          raw: ' and {{ state }}',
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 32,
+          },
+          end: {
+            line: 1,
+            col: 41,
+          },
         },
-      },
-      {
-        type: 'newline',
-        lineno: 1,
+        properties: {
+          jsArg: ' state ',
+        },
       },
     ])
   })
@@ -370,31 +454,41 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 2,
+          },
+          end: {
+            line: 1,
+            col: 14,
+          },
+        },
         properties: {
-          name: 'mustache',
           jsArg: ' username ',
-          raw: '{{ username }}, @{{ age }}',
         },
       },
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: ', ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'e__mustache',
-          jsArg: ' age ',
-          raw: ', @{{ age }}',
+        type: MustacheTypes.EMUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 19,
+          },
+          end: {
+            line: 1,
+            col: 26,
+          },
         },
-      },
-      {
-        type: 'newline',
-        lineno: 1,
+        properties: {
+          jsArg: ' age ',
+        },
       },
     ])
   })
@@ -412,31 +506,41 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 2,
+          },
+          end: {
+            line: 1,
+            col: 14,
+          },
+        },
         properties: {
-          name: 'mustache',
           jsArg: ' username ',
-          raw: '{{ username }}, @{{',
         },
       },
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: ', ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'e__mustache',
-          jsArg: '\n  users.map((user) => user.username)\n',
-          raw: ', @{{\n  users.map((user) => user.username)\n}}',
+        type: MustacheTypes.EMUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 19,
+          },
+          end: {
+            line: 3,
+            col: 2,
+          },
         },
-      },
-      {
-        type: 'newline',
-        lineno: 3,
+        properties: {
+          jsArg: '\n  users.map((user) => user.username)\n',
+        },
       },
     ])
   })
@@ -453,58 +557,60 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: 'Hello ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
+        type: MustacheTypes.EMUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 9,
+          },
+          end: {
+            line: 1,
+            col: 21,
+          },
+        },
         properties: {
-          name: 'e__mustache',
           jsArg: ' username ',
-          raw: template,
         },
       },
       {
         type: 'raw',
-        lineno: 1,
+        line: 1,
         value: ', your age is ',
       },
       {
-        type: 'mustache',
-        lineno: 1,
-        properties: {
-          name: 'mustache',
-          jsArg: ' age ',
-          raw: ', your age is {{ age }}',
+        type: MustacheTypes.MUSTACHE,
+        loc: {
+          start: {
+            line: 1,
+            col: 37,
+          },
+          end: {
+            line: 1,
+            col: 44,
+          },
         },
-      },
-      {
-        type: 'newline',
-        lineno: 1,
+        properties: {
+          jsArg: ' age ',
+        },
       },
     ])
   })
 
-  test('use raw text when mustache is not closed properly', (assert) => {
+  test('raise error if mustache is not properly closed', (assert) => {
+    assert.plan(2)
+
     const template = dedent`Hello {{ username }.`
-
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
-    tokenizer.parse()
 
-    assert.isNull(tokenizer['blockStatement'])
-    assert.isNull(tokenizer['mustacheStatement'])
-
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'raw',
-        lineno: 1,
-        value: 'Hello {{ username }.',
-      },
-      {
-        type: 'newline',
-        lineno: 1,
-      },
-    ])
+    try {
+      tokenizer.parse()
+    } catch ({ message, line }) {
+      assert.equal(message, 'Missing token "}"')
+      assert.equal(line, 1)
+    }
   })
 })

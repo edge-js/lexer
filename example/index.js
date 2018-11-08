@@ -12,7 +12,6 @@ const tagsDef = {
   if: {
     block: true,
     seekable: true,
-    selfclosed: false
   }
 }
 
