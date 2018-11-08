@@ -9,7 +9,7 @@
 
 import * as test from 'japa'
 import * as dedent from 'dedent'
-import { Tokenizer } from '../src/Tokenizer/new'
+import { Tokenizer } from '../src/Tokenizer'
 import { MustacheTypes } from '../src/Contracts'
 
 const tagsDef = {

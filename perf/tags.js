@@ -1,4 +1,4 @@
-const Tokenizer = require('../build/src/Tokenizer/new').Tokenizer
+const Tokenizer = require('../build/src/Tokenizer').Tokenizer
 const Benchmark = require('benchmark')
 const suite = new Benchmark.Suite()
 
