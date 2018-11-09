@@ -352,10 +352,6 @@ The output of the above text will be
     },
     "children": [
       {
-        "type": "newline",
-        "line": 1
-      },
-      {
         "type": "raw",
         "value": "<h2> Hello ",
         "line": 2

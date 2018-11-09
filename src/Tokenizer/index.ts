@@ -333,6 +333,16 @@ export class Tokenizer {
    */
   private _consumeNode (tag: ITagToken | IRawToken | INewLineToken | IMustacheToken): void {
     if (this.openedTags.length) {
+      const latestTag = this.openedTags[this.openedTags.length - 1]
+
+      /**
+       * Do not add new line which comes right after the tag statement. Tag
+       * lines must not take any space.
+       */
+      if (tag.type === 'newline' && !latestTag.children.length) {
+        return
+      }
+
       this.openedTags[this.openedTags.length - 1].children.push(tag)
       return
     }

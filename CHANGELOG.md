@@ -1,3 +1,13 @@
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/edge-js/edge-lexer/compare/v2.0.1...v2.0.2) (2018-11-09)
+
+
+### Bug Fixes
+
+* **tokenizer:** do not add newline as first child for the tag ([69677e8](https://github.com/edge-js/edge-lexer/commit/69677e8))
+
+
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/edge-js/edge-lexer/compare/v2.0.0...v2.0.1) (2018-11-08)
 
