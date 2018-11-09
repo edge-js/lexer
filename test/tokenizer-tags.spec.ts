@@ -137,10 +137,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [
           {
-            type: 'newline',
-            line: 3,
-          },
-          {
             type: 'raw',
             value: '  Hello',
             line: 4,
@@ -203,10 +199,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [
           {
-            type: 'newline',
-            line: 3,
-          },
-          {
             type: TagTypes.TAG,
             loc: {
               start: {
@@ -224,10 +216,6 @@ test.group('Tokenizer Tags', () => {
               selfclosed: false,
             },
             children: [
-              {
-                type: 'newline',
-                line: 4,
-              },
               {
                 type: 'raw',
                 value: '    Hi',
@@ -293,10 +281,6 @@ test.group('Tokenizer Tags', () => {
         },
         children: [
           {
-            type: 'newline',
-            line: 5,
-          },
-          {
             type: 'raw',
             value: '  Hello',
             line: 6,
@@ -358,10 +342,6 @@ test.group('Tokenizer Tags', () => {
           selfclosed: false,
         },
         children: [
-          {
-            type: 'newline',
-            line: 5,
-          },
           {
             type: 'raw',
             value: '  Answer is 12',
@@ -434,10 +414,6 @@ test.group('Tokenizer Tags', () => {
           selfclosed: false,
         },
         children: [
-          {
-            type: 'newline',
-            line: 1,
-          },
           {
             type: 'raw',
             value: '  Hello',
