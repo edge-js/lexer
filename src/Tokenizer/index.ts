@@ -51,6 +51,8 @@ export class Tokenizer {
 
   private openedTags: ITagToken[] = []
 
+  private _skipNewLine: boolean = false
+
   constructor (private template: string, private tagsDef: ITags, private options: tokenizerOptions) {
   }
 
@@ -333,16 +335,6 @@ export class Tokenizer {
    */
   private _consumeNode (tag: ITagToken | IRawToken | INewLineToken | IMustacheToken): void {
     if (this.openedTags.length) {
-      const latestTag = this.openedTags[this.openedTags.length - 1]
-
-      /**
-       * Do not add new line which comes right after the tag statement. Tag
-       * lines must not take any space.
-       */
-      if (tag.type === 'newline' && !latestTag.children.length) {
-        return
-      }
-
       this.openedTags[this.openedTags.length - 1].children.push(tag)
       return
     }
@@ -398,7 +390,9 @@ export class Tokenizer {
      * Everything from here pushes a new line to the stack before
      * moving forward
      */
-    this._pushNewLine()
+    if (!this._skipNewLine) {
+      this._pushNewLine()
+    }
 
     /**
      * Check if the current line is a tag or not. If yes, then handle
@@ -407,8 +401,11 @@ export class Tokenizer {
     const tag = getTag(line, this.line, 0, this.tagsDef)
     if (tag) {
       this._handleTagOpening(line, tag)
+      this._skipNewLine = true
       return
     }
+
+    this._skipNewLine = false
 
     /**
      * Check if the current line contains a mustache statement or not. If yes,

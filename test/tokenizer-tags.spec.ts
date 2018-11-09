@@ -443,10 +443,6 @@ test.group('Tokenizer Tags', () => {
             children: [],
           },
           {
-            type: 'newline',
-            line: 3,
-          },
-          {
             type: 'raw',
             value: '  Hello guest',
             line: 4,
