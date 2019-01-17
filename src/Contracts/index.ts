@@ -25,7 +25,7 @@ export enum TagTypes {
 /**
  * The properties node for a node node
  */
-export type ITagProp = {
+export type TagProp = {
   name: string
   jsArg: string,
   selfclosed: boolean,
@@ -34,14 +34,14 @@ export type ITagProp = {
 /**
  * Mustache properties node
  */
-export type IMustacheProp = {
+export type MustacheProp = {
   jsArg: string,
 }
 
 /**
  * Location node for tags and mustaches
  */
-export type ILoc = {
+export type LexerLoc = {
   start: {
     line: number,
     col: number,
@@ -55,7 +55,7 @@ export type ILoc = {
 /**
  * Tag defination for multiple tags
  */
-export type ITagDefination = {
+export type TagDefination = {
   block: boolean,
   seekable: boolean,
 }
@@ -63,7 +63,7 @@ export type ITagDefination = {
 /**
  * Raw line token
  */
-export type IRawToken = {
+export type RawToken = {
   type: 'raw',
   value: string,
   line: number,
@@ -72,7 +72,7 @@ export type IRawToken = {
 /**
  * New line token
  */
-export type INewLineToken = {
+export type NewLineToken = {
   type: 'newline',
   line: number,
 }
@@ -80,28 +80,28 @@ export type INewLineToken = {
 /**
  * Mustache token
  */
-export type IMustacheToken = {
+export type MustacheToken = {
   type: MustacheTypes,
-  properties: IMustacheProp,
-  loc: ILoc,
+  properties: MustacheProp,
+  loc: LexerLoc,
 }
 
 /**
  * Tag token
  */
-export type ITagToken = {
+export type TagToken = {
   type: TagTypes,
-  properties: ITagProp,
-  loc: ILoc,
-  children: IToken[],
+  properties: TagProp,
+  loc: LexerLoc,
+  children: Token[],
 }
 
-export type IToken = IRawToken | INewLineToken | ITagToken | IMustacheToken
+export type Token = RawToken | NewLineToken | TagToken | MustacheToken
 
 /**
  * The runtime tag node to know the shape of a tag
  */
-export type IRuntimeTag = {
+export type RuntimeTag = {
   name: string,
   selfclosed: boolean,
   col: number,
@@ -115,7 +115,7 @@ export type IRuntimeTag = {
 /**
  * Runtime mustache node to know the shape of the mustache
  */
-export type IRuntimeMustache = {
+export type RuntimeMustache = {
   escaped: boolean,
   safe: boolean,
   line: number,
@@ -123,6 +123,6 @@ export type IRuntimeMustache = {
   realCol: number,
 }
 
-export type ITags = {
-  [name: string]: ITagDefination,
+export type Tags = {
+  [name: string]: TagDefination,
 }

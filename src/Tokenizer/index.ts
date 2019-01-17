@@ -17,16 +17,16 @@ import { Scanner } from '../Scanner'
 import { unclosedParen, unclosedTag, unclosedCurlyBrace, cannotSeekStatement, unopenedParen } from '../Exceptions'
 
 import {
-  ITagToken,
-  IMustacheToken,
-  ITags,
-  IRawToken,
-  INewLineToken,
-  IRuntimeTag,
-  IRuntimeMustache,
+  TagToken,
+  MustacheToken,
+  Tags,
+  RawToken,
+  NewLineToken,
+  RuntimeTag,
+  RuntimeMustache,
   TagTypes,
   MustacheTypes,
-  IToken,
+  Token,
 } from '../Contracts'
 
 type tokenizerOptions = {
@@ -41,25 +41,25 @@ type tokenizerOptions = {
  * the tokens output.
  */
 export class Tokenizer {
-  public tokens: IToken[] = []
+  public tokens: Token[] = []
 
-  private blockStatement: null | { scanner: Scanner, tag: IRuntimeTag } = null
+  private blockStatement: null | { scanner: Scanner, tag: RuntimeTag } = null
 
-  private mustacheStatement: null | { scanner: Scanner, mustache: IRuntimeMustache } = null
+  private mustacheStatement: null | { scanner: Scanner, mustache: RuntimeMustache } = null
 
   private line: number = 0
 
-  private openedTags: ITagToken[] = []
+  private openedTags: TagToken[] = []
 
   private _skipNewLine: boolean = false
 
-  constructor (private template: string, private tagsDef: ITags, private options: tokenizerOptions) {
+  constructor (private template: string, private tagsDef: Tags, private options: tokenizerOptions) {
   }
 
   /**
    * Returns the raw token
    */
-  private _getRawNode (text): IRawToken {
+  private _getRawNode (text): RawToken {
     return {
       type: 'raw',
       value: text,
@@ -70,7 +70,7 @@ export class Tokenizer {
   /**
    * Returns the new line token
    */
-  private _getNewLineNode (): INewLineToken {
+  private _getNewLineNode (): NewLineToken {
     return {
       type: 'newline',
       line: this.line - 1,
@@ -82,7 +82,7 @@ export class Tokenizer {
    * loc is computed using the scanner and must be passed to this
    * method.
    */
-  private _getTagNode (tag: IRuntimeTag, jsArg: string, loc): ITagToken {
+  private _getTagNode (tag: RuntimeTag, jsArg: string, loc): TagToken {
     return {
       type: tag.escaped ? TagTypes.ETAG : TagTypes.TAG,
       properties: {
@@ -110,7 +110,7 @@ export class Tokenizer {
    *
    * Otherwise, we move it to the tokens array directly.
    */
-  private _consumeTag (tag: IRuntimeTag, jsArg: string, loc) {
+  private _consumeTag (tag: RuntimeTag, jsArg: string, loc) {
     if (tag.block && !tag.selfclosed) {
       this.openedTags.push(this._getTagNode(tag, jsArg, loc))
     } else {
@@ -121,7 +121,7 @@ export class Tokenizer {
   /**
    * Handles the opening of the tag.
    */
-  private _handleTagOpening (line: string, tag: IRuntimeTag) {
+  private _handleTagOpening (line: string, tag: RuntimeTag) {
     if (tag.seekable && !tag.hasBrace) {
       throw unopenedParen({ line: tag.line, col: tag.col }, this.options.filename)
     }
@@ -194,7 +194,7 @@ export class Tokenizer {
    * Returns the mustache type by checking for `safe` and `escaped`
    * properties.
    */
-  private _getMustacheType (mustache: IRuntimeMustache): MustacheTypes {
+  private _getMustacheType (mustache: RuntimeMustache): MustacheTypes {
     if (mustache.safe) {
       return mustache.escaped ? MustacheTypes.ESMUSTACHE : MustacheTypes.SMUSTACHE
     }
@@ -206,7 +206,7 @@ export class Tokenizer {
    * Returns the mustache token using the runtime mustache node. The `jsArg` and
    * ending `loc` is fetched using the scanner.
    */
-  private _getMustacheNode (mustache: IRuntimeMustache, jsArg: string, loc): IMustacheToken {
+  private _getMustacheNode (mustache: RuntimeMustache, jsArg: string, loc): MustacheToken {
     return {
       type: this._getMustacheType(mustache),
       properties: {
@@ -225,7 +225,7 @@ export class Tokenizer {
   /**
    * Handles the line which has mustache opening braces.
    */
-  private _handleMustacheOpening (line: string, mustache: IRuntimeMustache) {
+  private _handleMustacheOpening (line: string, mustache: RuntimeMustache) {
     const pattern = mustache.safe ? '}}}' : '}}'
     const textLeftIndex = mustache.escaped ? mustache.realCol - 1 : mustache.realCol
 
@@ -333,7 +333,7 @@ export class Tokenizer {
    * opened tags, then the token becomes part of the tag children. Otherwise
    * moved as top level token.
    */
-  private _consumeNode (tag: ITagToken | IRawToken | INewLineToken | IMustacheToken): void {
+  private _consumeNode (tag: Token): void {
     if (this.openedTags.length) {
       this.openedTags[this.openedTags.length - 1].children.push(tag)
       return

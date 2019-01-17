@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
 */
 
-import { IRuntimeTag, IRuntimeMustache, ITags } from '../Contracts'
+import { RuntimeTag, RuntimeMustache, Tags } from '../Contracts'
 
 /**
  * The only regex we need in the entire lexer. Also tested
@@ -22,7 +22,7 @@ const TAG_REGEX = /^(\s*)(@{1,2})(!)?(\w+)(\s{0,2})/
 /**
  * Returns runtime tag node if tag is detected and is a registered tag
  */
-export function getTag (content: string, line: number, col: number, tags: ITags): IRuntimeTag | null {
+export function getTag (content: string, line: number, col: number, tags: Tags): RuntimeTag | null {
   const match = TAG_REGEX.exec(content)
 
   /**
@@ -77,7 +77,7 @@ export function getTag (content: string, line: number, col: number, tags: ITags)
 /**
  * Returns the runtime mustache node if mustache is detected
  */
-export function getMustache (content: string, line: number, col: number): IRuntimeMustache | null {
+export function getMustache (content: string, line: number, col: number): RuntimeMustache | null {
   const mustacheIndex = content.indexOf('{{')
 
   if (mustacheIndex === -1) {
