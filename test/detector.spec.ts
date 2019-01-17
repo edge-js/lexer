@@ -20,16 +20,16 @@ test.group('Detector (tag)', () => {
   })
 
   test('return tag node when does starts with @', (assert) => {
-    const tags = { hello: { seekable: false, block: false } }
+    const tags = { hello: { seekable: true, block: false } }
 
-    assert.deepEqual(getTag('@hello', 1, 0, tags), {
+    assert.deepEqual(getTag('@hello()', 1, 0, tags), {
       name: 'hello',
       escaped: false,
       selfclosed: false,
       line: 1,
       col: 6,
-      hasBrace: false,
-      seekable: false,
+      hasBrace: true,
+      seekable: true,
       block: false,
     })
   })
@@ -198,6 +198,16 @@ test.group('Detector (mustache)', () => {
   test('return mustache details when mustache is escaped', (assert) => {
     assert.deepEqual(getMustache('Hello @{{{ username }}}', 1, 0), {
       col: 7,
+      line: 1,
+      realCol: 7,
+      escaped: true,
+      safe: true,
+    })
+  })
+
+  test('return correct col when mustache is in between the content', (assert) => {
+    assert.deepEqual(getMustache('Hello @{{{ username }}}', 1, 8), {
+      col: 15,
       line: 1,
       realCol: 7,
       escaped: true,
