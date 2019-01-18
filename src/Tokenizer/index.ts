@@ -14,7 +14,13 @@
 import { getTag, getMustache } from '../Detector'
 import { Scanner } from '../Scanner'
 
-import { unclosedParen, unclosedTag, unclosedCurlyBrace, cannotSeekStatement, unopenedParen } from '../Exceptions'
+import {
+  unclosedParen,
+  unclosedTag,
+  unclosedCurlyBrace,
+  cannotSeekStatement,
+  unopenedParen,
+} from '../Exceptions'
 
 import {
   TagToken,
@@ -29,6 +35,10 @@ import {
   Token,
 } from '../Contracts'
 
+/**
+ * Tokenizer options accepted by the tokenizer
+ * constructor
+ */
 type tokenizerOptions = {
   filename: string,
 }
@@ -78,7 +88,7 @@ export class Tokenizer {
   }
 
   /**
-   * Returns the ITag token for a runtime tag. The `jsArg` and ending
+   * Returns the TagToken for a runtime tag. The `jsArg` and ending
    * loc is computed using the scanner and must be passed to this
    * method.
    */

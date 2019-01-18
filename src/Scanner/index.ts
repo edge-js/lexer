@@ -109,7 +109,7 @@ export class Scanner {
       }
 
       /**
-       * Increments the tolare counts when char is the
+       * Increments the tolarate counts when char is the
        * tolerate lhs character
        */
       if (char === this._tolerateLhs) {
