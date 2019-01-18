@@ -15,6 +15,35 @@
 - ✅ Detects for unclosed tags.
 - ✅ Detects for unwrapped expressions and raises appropriate errors.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of contents
+
+- [Performance](#performance)
+- [Usage](#usage)
+- [Terms used](#terms-used)
+- [Tokens](#tokens)
+    - [Tag Token](#tag-token)
+    - [Escaped Tag Token](#escaped-tag-token)
+    - [Raw Token](#raw-token)
+    - [Comment Token](#comment-token)
+    - [NewLine Token](#newline-token)
+    - [Mustache Token](#mustache-token)
+    - [Safe Mustache Token](#safe-mustache-token)
+    - [Escaped Mustache Token](#escaped-mustache-token)
+    - [Escaped Safe Mustache Token](#escaped-safe-mustache-token)
+- [Properties](#properties)
+    - [BlockProp](#blockprop)
+    - [Prop](#prop)
+- [Mustache expressions](#mustache-expressions)
+- [Errors](#errors)
+- [Example](#example)
+- [Change log](#change-log)
+- [Contributing](#contributing)
+- [Authors & License](#authors--license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax). 
 
 This module is a blend of a `lexer` and an `AST generator`, since Edge doesn't need a pure [lexer](https://en.wikipedia.org/wiki/Lexical_analysis) that scans for each character. Edge markup is written within other markup languages like **HTML** or **Markdown** and walking over each character is waste of resources.
