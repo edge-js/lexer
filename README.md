@@ -8,12 +8,16 @@
 [![npm-image]][npm-url]
 ![](https://img.shields.io/badge/Uses-Typescript-294E80.svg?style=flat-square&colorA=ddd)
 
-- ✅ Zero dependencies (Actually one dependency that is also to standardize edge errors).
-- ✅ Just uses one regex statement. That also tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
-- ✅ Allows multiline expressions
-- ✅ Collects line and columns for accurate stack traces.
-- ✅ Detects for unclosed tags.
-- ✅ Detects for unwrapped expressions and raises appropriate errors.
+<br />
+<br />
+
+## Highlights
+- Zero dependencies (Actually one dependency that is also to standardize edge errors).
+- Just uses one regex statement. That also tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
+- Allows multiline expressions
+- Collects line and columns for accurate stack traces.
+- Detects for unclosed tags.
+- Detects for unwrapped expressions and raises appropriate errors.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
