@@ -11,18 +11,17 @@
 <br />
 <br />
 
-## Highlights
-- Zero dependencies (Actually one dependency that is also to standardize edge errors).
-- Just uses one regex statement. That also tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
-- Allows multiline expressions
-- Collects line and columns for accurate stack traces.
-- Detects for unclosed tags.
-- Detects for unwrapped expressions and raises appropriate errors.
+Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax). 
+
+This module is a blend of a `lexer` and an `AST generator`, since Edge doesn't need a pure [lexer](https://en.wikipedia.org/wiki/Lexical_analysis) that scans for each character. Edge markup is written within other markup languages like **HTML** or **Markdown** and walking over each character is waste of resources.
+
+Instead, this module starts by detecting for the [Edge whitelisted syntax](https://github.com/edge-js/syntax) and then starts the lexical analysis within the detected markup.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of contents
 
+- [Highlights](#highlights)
 - [Performance](#performance)
 - [Usage](#usage)
 - [Terms used](#terms-used)
@@ -48,11 +47,13 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax). 
-
-This module is a blend of a `lexer` and an `AST generator`, since Edge doesn't need a pure [lexer](https://en.wikipedia.org/wiki/Lexical_analysis) that scans for each character. Edge markup is written within other markup languages like **HTML** or **Markdown** and walking over each character is waste of resources.
-
-Instead, this module starts by detecting for the [Edge whitelisted syntax](https://github.com/edge-js/syntax) and then starts the lexical analysis within the detected markup.
+## Highlights
+- Zero dependencies (Actually one dependency that is also to standardize edge errors).
+- Just uses one regex statement. That also tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
+- Allows multiline expressions
+- Collects line and columns for accurate stack traces.
+- Detects for unclosed tags.
+- Detects for unwrapped expressions and raises appropriate errors.
 
 ---
 
