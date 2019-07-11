@@ -3,7 +3,9 @@
   "version": "2.0.4",
   "description": "Parses raw markup files to converts them to Edge tokens",
   "main": "build/src/Tokenizer/index.js",
-  "typings": "build/src/Tokenizer/index.d.ts",
+  "files": [
+    "build/src"
+  ],
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
@@ -17,11 +19,6 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "tslint --project tsconfig.json"
   },
-  "files": [
-    "build/src",
-    "README.md",
-    "LICENSE.md"
-  ],
   "keywords": [
     "edge",
     "template",
@@ -30,28 +27,28 @@
   "author": "virk",
   "license": "MIT",
   "devDependencies": {
-    "@adonisjs/mrm-preset": "^1.0.16",
-    "@types/node": "^10.12.18",
+    "@adonisjs/mrm-preset": "^2.0.3",
+    "@types/node": "^12.6.2",
     "benchmark": "^2.1.4",
-    "commitizen": "^3.0.5",
-    "coveralls": "^3.0.2",
+    "commitizen": "^3.1.1",
+    "coveralls": "^3.0.4",
     "cz-conventional-changelog": "^2.1.0",
     "dedent": "^0.7.0",
-    "del-cli": "^1.1.0",
+    "del-cli": "^2.0.0",
     "doctoc": "^1.4.0",
-    "japa": "^2.0.7",
+    "husky": "^3.0.0",
+    "japa": "^2.0.10",
     "japa-cli": "^1.0.1",
-    "mrm": "^1.2.1",
-    "nyc": "^13.1.0",
+    "mrm": "^1.2.2",
+    "nyc": "^14.1.1",
     "pkg-ok": "^2.3.1",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.12.1",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
     "tslint-eslint-rules": "^5.4.0",
-    "typescript": "^3.2.2",
-    "yorkie": "^2.0.0"
+    "typescript": "^3.5.3"
   },
   "dependencies": {
-    "edge-error": "^1.0.1"
+    "edge-error": "^1.0.2"
   },
   "config": {
     "commitizen": {
@@ -69,5 +66,11 @@
   "gitHooks": {
     "commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js",
     "pre-commit": "doctoc README.md --title='## Table of contents' && git add README.md"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "doctoc README.md --title='## Table of contents' && git add README.md",
+      "commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
+    }
   }
 }
