@@ -1,6 +1,6 @@
 > **[edge-lexer](../README.md)**
 
-[Globals](../globals.md) / [lexer](../modules/lexer.md) / [MustacheTypes](lexer.mustachetypes.md) /
+[Globals](../README.md) / [lexer](../modules/lexer.md) / [MustacheTypes](lexer.mustachetypes.md) /
 
 # Enumeration: MustacheTypes
 

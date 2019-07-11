@@ -1,6 +1,6 @@
 > **[edge-lexer](../README.md)**
 
-[Globals](../globals.md) / [lexer](lexer.md) /
+[Globals](../README.md) / [lexer](lexer.md) /
 
 # External module: lexer
 

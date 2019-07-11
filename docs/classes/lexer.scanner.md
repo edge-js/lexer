@@ -1,6 +1,6 @@
 > **[edge-lexer](../README.md)**
 
-[Globals](../globals.md) / [lexer](../modules/lexer.md) / [Scanner](lexer.scanner.md) /
+[Globals](../README.md) / [lexer](../modules/lexer.md) / [Scanner](lexer.scanner.md) /
 
 # Class: Scanner
 

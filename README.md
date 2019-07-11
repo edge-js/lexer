@@ -92,7 +92,7 @@ This guide makes use of the following terms to identify core pieces of the token
 | Term | Token Type | Description |
 |------|-----------|------------ |
 | Tag | tag | Tags are used to define logical blocks in the template engine. For example `if tag` or `include tag`. |
-| Escaped Tag | e__tag | Escaped tag, Edge will not evaluate it at rutime. |
+| Escaped Tag | e__tag | Escaped tag, Edge will not evaluate it at runtime. |
 | Mustache | mustache | Javascript expression wrapped in curly braces. `{{ }}`|
 | Safe Mustache | s__mustache | Safe mustache, that doesn't escape the output `{{{ }}}`|
 | Escaped Mustache | e__mustache | Mustache tag that is escaped |

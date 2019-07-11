@@ -1,6 +1,6 @@
 > **[edge-lexer](../README.md)**
 
-[Globals](../globals.md) / [lexer](../modules/lexer.md) / [Tokenizer](lexer.tokenizer.md) /
+[Globals](../README.md) / [lexer](../modules/lexer.md) / [Tokenizer](lexer.tokenizer.md) /
 
 # Class: Tokenizer
 

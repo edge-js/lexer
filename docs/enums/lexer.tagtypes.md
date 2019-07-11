@@ -1,6 +1,6 @@
 > **[edge-lexer](../README.md)**
 
-[Globals](../globals.md) / [lexer](../modules/lexer.md) / [TagTypes](lexer.tagtypes.md) /
+[Globals](../README.md) / [lexer](../modules/lexer.md) / [TagTypes](lexer.tagtypes.md) /
 
 # Enumeration: TagTypes
 
