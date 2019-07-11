@@ -1,10 +1,18 @@
 /**
- * @module Lexer
+ * @module lexer
  */
 
 /**
- * Just mustache types to avoid writing them over
- * and over again
+ * edge-lexer
+ *
+ * (c) Harminder Virk <virk@adonisjs.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/**
+ * Types for mustache statements
  */
 export enum MustacheTypes {
   SMUSTACHE = 's__mustache',
@@ -23,7 +31,7 @@ export enum TagTypes {
 }
 
 /**
- * The properties node for a node node
+ * Properties node for a tag
  */
 export type TagProp = {
   name: string
@@ -32,14 +40,14 @@ export type TagProp = {
 }
 
 /**
- * Mustache properties node
+ * Properties for a mustache block
  */
 export type MustacheProp = {
   jsArg: string,
 }
 
 /**
- * Location node for tags and mustaches
+ * Location node for tags and mustache braces
  */
 export type LexerLoc = {
   start: {
@@ -53,9 +61,10 @@ export type LexerLoc = {
 }
 
 /**
- * Tag defination for multiple tags
+ * The properties required by the lexer on a tag
+ * definition
  */
-export type TagDefination = {
+export type TagDefinition = {
   block: boolean,
   seekable: boolean,
 }
@@ -127,5 +136,5 @@ export type RuntimeMustache = {
  * Tags registered with the lexer to be scanned
  */
 export type Tags = {
-  [name: string]: TagDefination,
+  [name: string]: TagDefinition,
 }
