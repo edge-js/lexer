@@ -10,14 +10,15 @@
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
     "test": "nyc node japaFile.js",
-    "build": "npm run compile",
+    "build": "npm run compile && typedoc --theme markdown --excludePrivate --mdHideSources && git add docs",
     "commit": "git-cz",
-    "prepublishOnly": "npm run build",
     "test:win": "node ./node_modules/japa-cli/index.js",
     "clean": "del build",
     "compile": "npm run lint && npm run clean && tsc",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "tslint --project tsconfig.json"
+    "lint": "tslint --project tsconfig.json",
+    "release": "np",
+    "version": "npm run build"
   },
   "keywords": [
     "edge",
@@ -40,11 +41,13 @@
     "japa": "^2.0.10",
     "japa-cli": "^1.0.1",
     "mrm": "^1.2.2",
+    "np": "^5.0.3",
     "nyc": "^14.1.1",
-    "pkg-ok": "^2.3.1",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
     "tslint-eslint-rules": "^5.4.0",
+    "typedoc": "^0.14.2",
+    "typedoc-plugin-external-module-name": "^2.1.0",
     "typescript": "^3.5.3"
   },
   "dependencies": {
@@ -72,5 +75,9 @@
       "pre-commit": "doctoc README.md --title='## Table of contents' && git add README.md",
       "commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
     }
+  },
+  "np": {
+    "contents": ".",
+    "anyBranch": false
   }
 }
