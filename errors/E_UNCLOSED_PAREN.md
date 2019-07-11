@@ -7,8 +7,7 @@ This exception is raised when the number of `opened` and `closed` parentheses *(
 @if((2 + 2) * (3)
 ```
 
-The following is a valid expression
-
+The following are valid expressions
 
 #### Valid
 

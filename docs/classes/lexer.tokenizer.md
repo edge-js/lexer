@@ -32,7 +32,7 @@ the tokens output.
 
 ###  constructor
 
-\+ **new Tokenizer**(`_template`: string, `_tagsDef`: [Tags](../modules/lexer.md#tags), `_options`: `tokenizerOptions`): *[Tokenizer](lexer.tokenizer.md)*
+\+ **new Tokenizer**(`_template`: string, `_tagsDef`: [Tags](../modules/lexer.md#tags), `_options`: object): *[Tokenizer](lexer.tokenizer.md)*
 
 **Parameters:**
 
@@ -40,7 +40,7 @@ Name | Type |
 ------ | ------ |
 `_template` | string |
 `_tagsDef` | [Tags](../modules/lexer.md#tags) |
-`_options` | `tokenizerOptions` |
+`_options` | object |
 
 **Returns:** *[Tokenizer](lexer.tokenizer.md)*
 

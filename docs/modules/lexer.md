@@ -19,14 +19,14 @@
 #### Type aliases
 
 * [LexerLoc](lexer.md#lexerloc)
-* [MustacheProp](lexer.md#mustacheprop)
+* [LexerTagDefinition](lexer.md#lexertagdefinition)
+* [MustacheProps](lexer.md#mustacheprops)
 * [MustacheToken](lexer.md#mustachetoken)
 * [NewLineToken](lexer.md#newlinetoken)
 * [RawToken](lexer.md#rawtoken)
 * [RuntimeMustache](lexer.md#runtimemustache)
 * [RuntimeTag](lexer.md#runtimetag)
-* [TagDefinition](lexer.md#tagdefinition)
-* [TagProp](lexer.md#tagprop)
+* [TagProps](lexer.md#tagprops)
 * [TagToken](lexer.md#tagtoken)
 * [Tags](lexer.md#tags)
 * [Token](lexer.md#token)
@@ -53,9 +53,20 @@ Location node for tags and mustache braces
 
 ___
 
-###  MustacheProp
+###  LexerTagDefinition
 
-Ƭ **MustacheProp**: *object*
+Ƭ **LexerTagDefinition**: *object*
+
+The properties required by the lexer on a tag
+definition
+
+#### Type declaration:
+
+___
+
+###  MustacheProps
+
+Ƭ **MustacheProps**: *object*
 
 Properties for a mustache block
 
@@ -113,20 +124,9 @@ The runtime tag node to know the shape of a tag
 
 ___
 
-###  TagDefinition
+###  TagProps
 
-Ƭ **TagDefinition**: *object*
-
-The properties required by the lexer on a tag
-definition
-
-#### Type declaration:
-
-___
-
-###  TagProp
-
-Ƭ **TagProp**: *object*
+Ƭ **TagProps**: *object*
 
 Properties node for a tag
 
@@ -152,7 +152,7 @@ Tags registered with the lexer to be scanned
 
 #### Type declaration:
 
-● \[▪ **name**: *string*\]: [TagDefinition](lexer.md#tagdefinition)
+● \[▪ **name**: *string*\]: [LexerTagDefinition](lexer.md#lexertagdefinition)
 
 ___
 

@@ -33,8 +33,8 @@ export enum TagTypes {
 /**
  * Properties node for a tag
  */
-export type TagProp = {
-  name: string
+export type TagProps = {
+  name: string,
   jsArg: string,
   selfclosed: boolean,
 }
@@ -42,7 +42,7 @@ export type TagProp = {
 /**
  * Properties for a mustache block
  */
-export type MustacheProp = {
+export type MustacheProps = {
   jsArg: string,
 }
 
@@ -64,7 +64,7 @@ export type LexerLoc = {
  * The properties required by the lexer on a tag
  * definition
  */
-export type TagDefinition = {
+export type LexerTagDefinition = {
   block: boolean,
   seekable: boolean,
 }
@@ -91,7 +91,7 @@ export type NewLineToken = {
  */
 export type MustacheToken = {
   type: MustacheTypes,
-  properties: MustacheProp,
+  properties: MustacheProps,
   loc: LexerLoc,
 }
 
@@ -100,7 +100,7 @@ export type MustacheToken = {
  */
 export type TagToken = {
   type: TagTypes,
-  properties: TagProp,
+  properties: TagProps,
   loc: LexerLoc,
   children: Token[],
 }
@@ -136,5 +136,5 @@ export type RuntimeMustache = {
  * Tags registered with the lexer to be scanned
  */
 export type Tags = {
-  [name: string]: TagDefinition,
+  [name: string]: LexerTagDefinition,
 }

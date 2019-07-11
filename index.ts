@@ -18,5 +18,10 @@ export {
   MustacheToken,
   NewLineToken,
   RawToken,
-  TagDefinition,
+  Token,
+  LexerTagDefinition,
+  MustacheTypes,
+  TagTypes,
+  TagProps,
+  MustacheProps,
 } from './src/Contracts/index'

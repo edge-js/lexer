@@ -76,17 +76,24 @@ Name | Type |
 
 • **closed**: *boolean* = false
 
+Tracking if the scanner has been closed
+
 ___
 
 ###  leftOver
 
 • **leftOver**: *string* = ""
 
+The content in the same line but after the closing
+of the pattern
+
 ___
 
 ###  match
 
 • **match**: *string* = ""
+
+The matched content within the pattern
 
 ## Methods
 

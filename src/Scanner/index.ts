@@ -43,16 +43,33 @@ export class Scanner {
   private _tolerateRhs: string = ''
   private _patternLength = this._pattern.length
 
+  /**
+   * Tracking if the scanner has been closed
+   */
   public closed: boolean = false
 
+  /**
+   * The matched content within the pattern
+   */
   public match: string = ''
+
+  /**
+   * The content in the same line but after the closing
+   * of the pattern
+   */
   public leftOver: string = ''
+
   public loc = {
     line: this._line,
     col: this._col,
   }
 
-  constructor (private _pattern: string, _toleratePair: [string, string], private _line: number, private _col: number) {
+  constructor (
+    private _pattern: string,
+    _toleratePair: [string, string],
+    private _line: number,
+    private _col: number,
+  ) {
     this._tolerateLhs = _toleratePair[0]
     this._tolerateRhs = _toleratePair[1]
   }

@@ -12,8 +12,7 @@ This exception is raised when the number of `opened` and `closed` mustache mis-m
 ```
 
 
-The following is a valid expression
-
+The following are valid expressions
 
 #### Valid
 

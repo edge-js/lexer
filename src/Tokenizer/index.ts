@@ -33,15 +33,8 @@ import {
   TagTypes,
   MustacheTypes,
   Token,
+  LexerLoc,
 } from '../Contracts'
-
-/**
- * Tokenizer options accepted by the tokenizer
- * constructor
- */
-type tokenizerOptions = {
-  filename: string,
-}
 
 /**
  * Tokenizer converts a bunch of text into an array of tokens. Later
@@ -53,13 +46,35 @@ type tokenizerOptions = {
 export class Tokenizer {
   public tokens: Token[] = []
 
+  /**
+   * Holds the current tag statement, until it is closed
+   */
   private _tagStatement: null | { scanner: Scanner, tag: RuntimeTag } = null
+
+  /**
+   * Holds the current tag statement, until it is closed
+   */
   private _mustacheStatement: null | { scanner: Scanner, mustache: RuntimeMustache } = null
+
+  /**
+   * Current line number
+   */
   private _line: number = 0
+
+  /**
+   * An array of opened block level tags
+   */
   private _openedTags: TagToken[] = []
+
+  /**
+   * We skip newlines after the opening/closing tags
+   */
   private _skipNewLine: boolean = false
 
-  constructor (private _template: string, private _tagsDef: Tags, private _options: tokenizerOptions) {
+  constructor (
+    private _template: string,
+    private _tagsDef: Tags,
+    private _options: { filename: string }) {
   }
 
   /**
@@ -88,7 +103,7 @@ export class Tokenizer {
    * loc is computed using the scanner and must be passed to this
    * method.
    */
-  private _getTagNode (tag: RuntimeTag, jsArg: string, loc): TagToken {
+  private _getTagNode (tag: RuntimeTag, jsArg: string, closingLoc: LexerLoc['end']): TagToken {
     return {
       type: tag.escaped ? TagTypes.ETAG : TagTypes.TAG,
       properties: {
@@ -101,7 +116,7 @@ export class Tokenizer {
           line: tag.line,
           col: tag.col,
         },
-        end: loc,
+        end: closingLoc,
       },
       children: [],
     }
@@ -212,7 +227,11 @@ export class Tokenizer {
    * Returns the mustache token using the runtime mustache node. The `jsArg` and
    * ending `loc` is fetched using the scanner.
    */
-  private _getMustacheNode (mustache: RuntimeMustache, jsArg: string, loc): MustacheToken {
+  private _getMustacheNode (
+    mustache: RuntimeMustache,
+    jsArg: string,
+    closingLoc: LexerLoc['end'],
+  ): MustacheToken {
     return {
       type: this._getMustacheType(mustache),
       properties: {
@@ -223,7 +242,7 @@ export class Tokenizer {
           line: mustache.line,
           col: mustache.col,
         },
-        end: loc,
+        end: closingLoc,
       },
     }
   }
