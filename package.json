@@ -80,5 +80,13 @@
   "np": {
     "contents": ".",
     "anyBranch": false
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edge-js/lexer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/edge-js/lexer/issues"
+  },
+  "homepage": "https://github.com/edge-js/lexer#readme"
 }
