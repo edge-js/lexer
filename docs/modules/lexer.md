@@ -16,10 +16,13 @@
 * [Scanner](../classes/lexer.scanner.md)
 * [Tokenizer](../classes/lexer.tokenizer.md)
 
+#### Interfaces
+
+* [LexerTagDefinitionContract](../interfaces/lexer.lexertagdefinitioncontract.md)
+
 #### Type aliases
 
 * [LexerLoc](lexer.md#lexerloc)
-* [LexerTagDefinition](lexer.md#lexertagdefinition)
 * [MustacheProps](lexer.md#mustacheprops)
 * [MustacheToken](lexer.md#mustachetoken)
 * [NewLineToken](lexer.md#newlinetoken)
@@ -48,17 +51,6 @@
 Ƭ **LexerLoc**: *object*
 
 Location node for tags and mustache braces
-
-#### Type declaration:
-
-___
-
-###  LexerTagDefinition
-
-Ƭ **LexerTagDefinition**: *object*
-
-The properties required by the lexer on a tag
-definition
 
 #### Type declaration:
 
@@ -152,7 +144,7 @@ Tags registered with the lexer to be scanned
 
 #### Type declaration:
 
-● \[▪ **name**: *string*\]: [LexerTagDefinition](lexer.md#lexertagdefinition)
+● \[▪ **name**: *string*\]: [LexerTagDefinitionContract](../interfaces/lexer.lexertagdefinitioncontract.md)
 
 ___
 

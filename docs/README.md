@@ -6,4 +6,5 @@
 
 #### External modules
 
+* ["fixtures/index"](modules/_fixtures_index_.md)
 * [lexer](modules/lexer.md)

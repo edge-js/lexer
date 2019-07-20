@@ -448,6 +448,10 @@ export class Tokenizer {
     this._consumeNode(this._getRawNode(line))
   }
 
+  /**
+   * Checks for errors after the tokenizer completes it's work, so that we
+   * can find broken statements or unclosed tags.
+   */
   private _checkForErrors () {
     /**
      * We are done scanning the content and there is an open tagStatement

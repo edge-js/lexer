@@ -19,7 +19,7 @@ export {
   NewLineToken,
   RawToken,
   Token,
-  LexerTagDefinition,
+  LexerTagDefinitionContract,
   MustacheTypes,
   TagTypes,
   TagProps,

@@ -64,7 +64,7 @@ export type LexerLoc = {
  * The properties required by the lexer on a tag
  * definition
  */
-export type LexerTagDefinition = {
+export interface LexerTagDefinitionContract {
   block: boolean,
   seekable: boolean,
 }
@@ -136,5 +136,5 @@ export type RuntimeMustache = {
  * Tags registered with the lexer to be scanned
  */
 export type Tags = {
-  [name: string]: LexerTagDefinition,
+  [name: string]: LexerTagDefinitionContract,
 }
