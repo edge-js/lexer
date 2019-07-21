@@ -485,7 +485,7 @@ export class Tokenizer {
    * Parse the template and generate an AST out of it
    */
   public parse (): void {
-    const lines = this._template.split('\n')
+    const lines = this._template.split(/\r\n|\r|\n/g)
     const linesLength = lines.length
 
     while (this._line < linesLength) {
