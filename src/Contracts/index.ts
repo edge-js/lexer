@@ -132,9 +132,6 @@ export type RuntimeMustache = {
   realCol: number,
 }
 
-/**
- * Tags registered with the lexer to be scanned
- */
-export type Tags = {
+export interface Tags {
   [name: string]: LexerTagDefinitionContract,
 }

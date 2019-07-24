@@ -29,7 +29,11 @@ import { EdgeError } from 'edge-error'
  * @endif
  * ```
  */
-export function cannotSeekStatement (chars: string, pos: { line: number, col: number }, filename: string): EdgeError {
+export function cannotSeekStatement (
+  chars: string,
+  pos: { line: number, col: number },
+  filename: string,
+): EdgeError {
   return new EdgeError(`Unexpected token "${chars}"`, 'E_CANNOT_SEEK_STATEMENT', {
     line: pos.line,
     col: pos.col,
@@ -116,7 +120,11 @@ export function unclosedCurlyBrace (pos: { line: number, col: number }, filename
  * @endif
  * ```
  */
-export function unclosedTag (tag: string, pos: { line: number, col: number }, filename: string): EdgeError {
+export function unclosedTag (
+  tag: string,
+  pos: { line: number, col: number },
+  filename: string,
+): EdgeError {
   return new EdgeError(`Unclosed tag ${tag}`, 'E_UNCLOSED_TAG', {
     line: pos.line,
     col: pos.col,
