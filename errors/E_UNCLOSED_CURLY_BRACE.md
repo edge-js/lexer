@@ -1,6 +1,6 @@
 # E_UNCLOSED_CURLY_BRACE
 
-This exception is raised when the number of `opened` and `closed` mustache mis-matches.
+This exception is raised when the number of `opened` and `closed` mustache braces mis-matches.
 
 #### Invalid
 ```edge
@@ -12,7 +12,7 @@ This exception is raised when the number of `opened` and `closed` mustache mis-m
 ```
 
 
-The following are valid expressions
+Following are the valid expressions
 
 #### Valid
 

@@ -14,7 +14,7 @@ This exception is raised when you write raw text in the same line as the tag.
 @endif
 ```
 
-The following is a valid expression
+Following is a valid expression
 
 #### Valid
 ```edge

@@ -8,7 +8,7 @@ This exception is raised when a block level like `@if`, `@else` was opened but n
   <li> {{ user.username }} </li>
 ```
 
-The following is a valid expression
+Following is a valid expression
 
 #### Valid
 

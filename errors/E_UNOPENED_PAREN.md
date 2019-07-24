@@ -1,4 +1,4 @@
-# E_UNWRAPPED_JS_EXPRESSION
+# E_UNOPENED_PAREN
 
 This exception is raised when Javascript expression for tags is not wrapped inside opening and closing braces.
 
@@ -8,7 +8,7 @@ This exception is raised when Javascript expression for tags is not wrapped insi
 @endif
 ```
 
-The following is a valid expression
+Following is the valid expression
 
 #### Valid
 
