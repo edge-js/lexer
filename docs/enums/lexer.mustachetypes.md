@@ -6,9 +6,9 @@
 
 Types for mustache statements
 
-### Index
+## Index
 
-#### Enumeration members
+### Enumeration members
 
 * [EMUSTACHE](lexer.mustachetypes.md#emustache)
 * [ESMUSTACHE](lexer.mustachetypes.md#esmustache)

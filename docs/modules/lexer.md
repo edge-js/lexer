@@ -4,23 +4,24 @@
 
 # External module: lexer
 
-### Index
+## Index
 
-#### Enumerations
+### Enumerations
 
 * [MustacheTypes](../enums/lexer.mustachetypes.md)
 * [TagTypes](../enums/lexer.tagtypes.md)
 
-#### Classes
+### Classes
 
 * [Scanner](../classes/lexer.scanner.md)
 * [Tokenizer](../classes/lexer.tokenizer.md)
 
-#### Interfaces
+### Interfaces
 
 * [LexerTagDefinitionContract](../interfaces/lexer.lexertagdefinitioncontract.md)
+* [Tags](../interfaces/lexer.tags.md)
 
-#### Type aliases
+### Type aliases
 
 * [LexerLoc](lexer.md#lexerloc)
 * [MustacheProps](lexer.md#mustacheprops)
@@ -31,10 +32,9 @@
 * [RuntimeTag](lexer.md#runtimetag)
 * [TagProps](lexer.md#tagprops)
 * [TagToken](lexer.md#tagtoken)
-* [Tags](lexer.md#tags)
 * [Token](lexer.md#token)
 
-#### Functions
+### Functions
 
 * [cannotSeekStatement](lexer.md#cannotseekstatement)
 * [getMustache](lexer.md#getmustache)
@@ -136,18 +136,6 @@ Tag token
 
 ___
 
-###  Tags
-
-Ƭ **Tags**: *object*
-
-Tags registered with the lexer to be scanned
-
-#### Type declaration:
-
-● \[▪ **name**: *string*\]: [LexerTagDefinitionContract](../interfaces/lexer.lexertagdefinitioncontract.md)
-
-___
-
 ###  Token
 
 Ƭ **Token**: *[RawToken](lexer.md#rawtoken) | [NewLineToken](lexer.md#newlinetoken) | [TagToken](lexer.md#tagtoken) | [MustacheToken](lexer.md#mustachetoken)*
@@ -205,7 +193,7 @@ ___
 
 ###  getTag
 
-▸ **getTag**(`content`: string, `line`: number, `col`: number, `tags`: [Tags](lexer.md#tags)): *[RuntimeTag](lexer.md#runtimetag) | null*
+▸ **getTag**(`content`: string, `line`: number, `col`: number, `tags`: [Tags](../interfaces/lexer.tags.md)): *[RuntimeTag](lexer.md#runtimetag) | null*
 
 Returns runtime tag node if tag is detected and is a registered tag
 
@@ -216,7 +204,7 @@ Name | Type |
 `content` | string |
 `line` | number |
 `col` | number |
-`tags` | [Tags](lexer.md#tags) |
+`tags` | [Tags](../interfaces/lexer.tags.md) |
 
 **Returns:** *[RuntimeTag](lexer.md#runtimetag) | null*
 

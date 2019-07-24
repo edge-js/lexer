@@ -33,23 +33,23 @@ first match.
 
 * **Scanner**
 
-### Index
+## Index
 
-#### Constructors
+### Constructors
 
 * [constructor](lexer.scanner.md#constructor)
 
-#### Properties
+### Properties
 
 * [closed](lexer.scanner.md#closed)
 * [leftOver](lexer.scanner.md#leftover)
 * [match](lexer.scanner.md#match)
 
-#### Methods
+### Methods
 
 * [scan](lexer.scanner.md#scan)
 
-#### Object literals
+### Object literals
 
 * [loc](lexer.scanner.md#loc)
 

@@ -7,9 +7,9 @@
 The type of node types. Each token
 will have one of these types
 
-### Index
+## Index
 
-#### Enumeration members
+### Enumeration members
 
 * [ETAG](lexer.tagtypes.md#etag)
 * [TAG](lexer.tagtypes.md#tag)

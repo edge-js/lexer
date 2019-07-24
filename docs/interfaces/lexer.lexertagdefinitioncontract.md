@@ -11,9 +11,9 @@ definition
 
 * **LexerTagDefinitionContract**
 
-### Index
+## Index
 
-#### Properties
+### Properties
 
 * [block](lexer.lexertagdefinitioncontract.md#block)
 * [seekable](lexer.lexertagdefinitioncontract.md#seekable)

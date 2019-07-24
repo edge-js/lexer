@@ -2,9 +2,8 @@
 
 [Globals](README.md) /
 
-### Index
+## Index
 
-#### External modules
+### External modules
 
-* ["fixtures/index"](modules/_fixtures_index_.md)
 * [lexer](modules/lexer.md)

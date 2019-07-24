@@ -14,17 +14,17 @@ the tokens output.
 
 * **Tokenizer**
 
-### Index
+## Index
 
-#### Constructors
+### Constructors
 
 * [constructor](lexer.tokenizer.md#constructor)
 
-#### Properties
+### Properties
 
 * [tokens](lexer.tokenizer.md#tokens)
 
-#### Methods
+### Methods
 
 * [parse](lexer.tokenizer.md#parse)
 
@@ -32,14 +32,14 @@ the tokens output.
 
 ###  constructor
 
-\+ **new Tokenizer**(`_template`: string, `_tagsDef`: [Tags](../modules/lexer.md#tags), `_options`: object): *[Tokenizer](lexer.tokenizer.md)*
+\+ **new Tokenizer**(`_template`: string, `_tagsDef`: [Tags](../interfaces/lexer.tags.md), `_options`: object): *[Tokenizer](lexer.tokenizer.md)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `_template` | string |
-`_tagsDef` | [Tags](../modules/lexer.md#tags) |
+`_tagsDef` | [Tags](../interfaces/lexer.tags.md) |
 `_options` | object |
 
 **Returns:** *[Tokenizer](lexer.tokenizer.md)*
