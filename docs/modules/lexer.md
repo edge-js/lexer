@@ -1,8 +1,7 @@
-> **[edge-lexer](../README.md)**
-
-[Globals](../README.md) / [lexer](lexer.md) /
+[edge-lexer](../README.md) › [lexer](lexer.md)
 
 # External module: lexer
+
 
 ## Index
 
@@ -144,7 +143,7 @@ ___
 
 ###  cannotSeekStatement
 
-▸ **cannotSeekStatement**(`chars`: string, `pos`: object, `filename`: string): *`EdgeError`*
+▸ **cannotSeekStatement**(`chars`: string, `pos`: object, `filename`: string): *EdgeError*
 
 Raised when there is inline content next to a tag opening
 block. For example:
@@ -169,7 +168,7 @@ Name | Type |
 `pos` | object |
 `filename` | string |
 
-**Returns:** *`EdgeError`*
+**Returns:** *EdgeError*
 
 ___
 
@@ -212,7 +211,7 @@ ___
 
 ###  unclosedCurlyBrace
 
-▸ **unclosedCurlyBrace**(`pos`: object, `filename`: string): *`EdgeError`*
+▸ **unclosedCurlyBrace**(`pos`: object, `filename`: string): *EdgeError*
 
 Raised when the curly closing brace is missing from the mustache
 statement. For example:
@@ -235,13 +234,13 @@ Name | Type |
 `pos` | object |
 `filename` | string |
 
-**Returns:** *`EdgeError`*
+**Returns:** *EdgeError*
 
 ___
 
 ###  unclosedParen
 
-▸ **unclosedParen**(`pos`: object, `filename`: string): *`EdgeError`*
+▸ **unclosedParen**(`pos`: object, `filename`: string): *EdgeError*
 
 Raised when a tag opening body doesn't have a closing brace. For example:
 
@@ -262,13 +261,13 @@ Name | Type |
 `pos` | object |
 `filename` | string |
 
-**Returns:** *`EdgeError`*
+**Returns:** *EdgeError*
 
 ___
 
 ###  unclosedTag
 
-▸ **unclosedTag**(`tag`: string, `pos`: object, `filename`: string): *`EdgeError`*
+▸ **unclosedTag**(`tag`: string, `pos`: object, `filename`: string): *EdgeError*
 
 Raised when a block level tag is opened but never closed. For example:
 
@@ -291,13 +290,13 @@ Name | Type |
 `pos` | object |
 `filename` | string |
 
-**Returns:** *`EdgeError`*
+**Returns:** *EdgeError*
 
 ___
 
 ###  unopenedParen
 
-▸ **unopenedParen**(`pos`: object, `filename`: string): *`EdgeError`*
+▸ **unopenedParen**(`pos`: object, `filename`: string): *EdgeError*
 
 Raised when a tag is used without an opening brace. For example:
 
@@ -318,4 +317,4 @@ Name | Type |
 `pos` | object |
 `filename` | string |
 
-**Returns:** *`EdgeError`*
+**Returns:** *EdgeError*

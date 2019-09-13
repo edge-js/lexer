@@ -1,4 +1,4 @@
-import * as dedent from 'dedent'
+import dedent from 'dedent'
 
 export const fixtures: { name: string, in: string, out: any }[] = [
   {

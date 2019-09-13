@@ -1,8 +1,7 @@
-> **[edge-lexer](../README.md)**
-
-[Globals](../README.md) / [lexer](../modules/lexer.md) / [Tags](lexer.tags.md) /
+[edge-lexer](../README.md) › [lexer](../modules/lexer.md) › [Tags](lexer.tags.md)
 
 # Interface: Tags
+
 
 ## Hierarchy
 
@@ -10,4 +9,4 @@
 
 ## Indexable
 
-● \[▪ **name**: *string*\]: [LexerTagDefinitionContract](lexer.lexertagdefinitioncontract.md)
+* \[ **name**: *string*\]: [LexerTagDefinitionContract](lexer.lexertagdefinitioncontract.md)

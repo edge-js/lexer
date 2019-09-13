@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import * as test from 'japa'
+import test from 'japa'
 import { getTag, getMustache } from '../src/Detector'
 
 test.group('Detector (tag)', () => {

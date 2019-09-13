@@ -1,8 +1,7 @@
-> **[edge-lexer](../README.md)**
-
-[Globals](../README.md) / [lexer](../modules/lexer.md) / [Tokenizer](lexer.tokenizer.md) /
+[edge-lexer](../README.md) › [lexer](../modules/lexer.md) › [Tokenizer](lexer.tokenizer.md)
 
 # Class: Tokenizer
+
 
 Tokenizer converts a bunch of text into an array of tokens. Later
 these tokens can be used to build the transformed text.

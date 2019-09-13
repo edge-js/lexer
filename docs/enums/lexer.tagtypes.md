@@ -1,8 +1,7 @@
-> **[edge-lexer](../README.md)**
-
-[Globals](../README.md) / [lexer](../modules/lexer.md) / [TagTypes](lexer.tagtypes.md) /
+[edge-lexer](../README.md) › [lexer](../modules/lexer.md) › [TagTypes](lexer.tagtypes.md)
 
 # Enumeration: TagTypes
+
 
 The type of node types. Each token
 will have one of these types

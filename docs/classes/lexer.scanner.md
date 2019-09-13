@@ -1,8 +1,7 @@
-> **[edge-lexer](../README.md)**
-
-[Globals](../README.md) / [lexer](../modules/lexer.md) / [Scanner](lexer.scanner.md) /
+[edge-lexer](../README.md) › [lexer](../modules/lexer.md) › [Scanner](lexer.scanner.md)
 
 # Class: Scanner
+
 
 Scan a string and seperate it into 2 pairs. The first pair will be series
 of characters until the ending pattern is found and 2nd pair is the

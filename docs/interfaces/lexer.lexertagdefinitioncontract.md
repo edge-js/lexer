@@ -1,8 +1,7 @@
-> **[edge-lexer](../README.md)**
-
-[Globals](../README.md) / [lexer](../modules/lexer.md) / [LexerTagDefinitionContract](lexer.lexertagdefinitioncontract.md) /
+[edge-lexer](../README.md) › [lexer](../modules/lexer.md) › [LexerTagDefinitionContract](lexer.lexertagdefinitioncontract.md)
 
 # Interface: LexerTagDefinitionContract
+
 
 The properties required by the lexer on a tag
 definition

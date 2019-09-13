@@ -1,6 +1,7 @@
-> **[edge-lexer](README.md)**
+[edge-lexer](README.md)
 
-[Globals](README.md) /
+# edge-lexer
+
 
 ## Index
 
