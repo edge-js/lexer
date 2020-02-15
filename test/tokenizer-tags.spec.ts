@@ -43,7 +43,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -97,7 +97,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
 
     assert.deepEqual(tokenizer.tokens, [
       {
@@ -160,7 +160,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -242,7 +242,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -304,7 +304,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -358,7 +358,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: TagTypes.TAG,
@@ -394,7 +394,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: TagTypes.TAG,
@@ -460,7 +460,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -478,7 +478,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: TagTypes.ETAG,
@@ -585,7 +585,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: TagTypes.TAG,
@@ -640,7 +640,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: TagTypes.TAG,
@@ -673,7 +673,7 @@ test.group('Tokenizer Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: TagTypes.TAG,
@@ -710,7 +710,7 @@ test.group('Tokenizer columns', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -763,7 +763,7 @@ test.group('Tokenizer columns', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -816,7 +816,7 @@ test.group('Tokenizer columns', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -871,7 +871,7 @@ test.group('Tokenizer columns', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -921,7 +921,7 @@ test.group('Tokenizer columns', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -955,7 +955,7 @@ test.group('Tokenizer columns', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_mustacheStatement'])
+    assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -1012,7 +1012,7 @@ test.group('Tokenizer columns', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -1069,7 +1069,7 @@ test.group('Tokenizer columns', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
 
-    assert.isNull(tokenizer['_tagStatement'])
+    assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',

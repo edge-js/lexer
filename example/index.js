@@ -12,10 +12,10 @@ const tagsDef = {
   if: {
     block: true,
     seekable: true,
-  }
+  },
 }
 
-const tokenizer = new Tokenizer(exampleCode, tagsDef)
+const tokenizer = new Tokenizer(exampleCode, tagsDef, { filename: 'exec' })
 tokenizer.parse()
 
 console.log(JSON.stringify(tokenizer['tokens'], null, 2))

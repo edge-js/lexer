@@ -49,52 +49,52 @@ export class Tokenizer {
   /**
    * Holds the current tag statement, until it is closed
    */
-  private _tagStatement: null | { scanner: Scanner, tag: RuntimeTag } = null
+  public tagStatement: null | { scanner: Scanner, tag: RuntimeTag } = null
 
   /**
    * Holds the current tag statement, until it is closed
    */
-  private _mustacheStatement: null | { scanner: Scanner, mustache: RuntimeMustache } = null
+  public mustacheStatement: null | { scanner: Scanner, mustache: RuntimeMustache } = null
 
   /**
    * Current line number
    */
-  private _line: number = 0
+  private line: number = 0
 
   /**
    * An array of opened block level tags
    */
-  private _openedTags: TagToken[] = []
+  private openedTags: TagToken[] = []
 
   /**
    * We skip newlines after the opening/closing tags
    */
-  private _skipNewLine: boolean = false
+  private skipNewLine: boolean = false
 
   constructor (
-    private _template: string,
-    private _tagsDef: Tags,
-    private _options: { filename: string }) {
+    private template: string,
+    private tagsDef: Tags,
+    private options: { filename: string }) {
   }
 
   /**
    * Returns the raw token
    */
-  private _getRawNode (text): RawToken {
+  private getRawNode (text: string): RawToken {
     return {
       type: 'raw',
       value: text,
-      line: this._line,
+      line: this.line,
     }
   }
 
   /**
    * Returns the new line token
    */
-  private _getNewLineNode (): NewLineToken {
+  private getNewLineNode (): NewLineToken {
     return {
       type: 'newline',
-      line: this._line - 1,
+      line: this.line - 1,
     }
   }
 
@@ -103,7 +103,7 @@ export class Tokenizer {
    * loc is computed using the scanner and must be passed to this
    * method.
    */
-  private _getTagNode (tag: RuntimeTag, jsArg: string, closingLoc: LexerLoc['end']): TagToken {
+  private getTagNode (tag: RuntimeTag, jsArg: string, closingLoc: LexerLoc['end']): TagToken {
     return {
       type: tag.escaped ? TagTypes.ETAG : TagTypes.TAG,
       properties: {
@@ -131,20 +131,20 @@ export class Tokenizer {
    *
    * Otherwise, we move it to the tokens array directly.
    */
-  private _consumeTag (tag: RuntimeTag, jsArg: string, loc) {
+  private consumeTag (tag: RuntimeTag, jsArg: string, loc: LexerLoc['end']) {
     if (tag.block && !tag.selfclosed) {
-      this._openedTags.push(this._getTagNode(tag, jsArg, loc))
+      this.openedTags.push(this.getTagNode(tag, jsArg, loc))
     } else {
-      this._consumeNode(this._getTagNode(tag, jsArg, loc))
+      this.consumeNode(this.getTagNode(tag, jsArg, loc))
     }
   }
 
   /**
    * Handles the opening of the tag.
    */
-  private _handleTagOpening (line: string, tag: RuntimeTag) {
+  private handleTagOpening (line: string, tag: RuntimeTag) {
     if (tag.seekable && !tag.hasBrace) {
-      throw unopenedParen({ line: tag.line, col: tag.col }, this._options.filename)
+      throw unopenedParen({ line: tag.line, col: tag.col }, this.options.filename)
     }
 
     /**
@@ -152,7 +152,7 @@ export class Tokenizer {
      * a scanner instance, just consume it right away.
      */
     if (!tag.seekable) {
-      this._consumeTag(tag, '', { line: tag.line, col: tag.col })
+      this.consumeTag(tag, '', { line: tag.line, col: tag.col })
       return
     }
 
@@ -166,23 +166,23 @@ export class Tokenizer {
      * Create a new block statement with the scanner to find
      * the closing brace ')'
      */
-    this._tagStatement = {
+    this.tagStatement = {
       tag: tag,
-      scanner: new Scanner(')', ['(', ')'], this._line, tag.col),
+      scanner: new Scanner(')', ['(', ')'], this.line, tag.col),
     }
 
     /**
      * Pass all remaining content to the scanner
      */
-    this._feedCharsToCurrentTag(line.slice(tag.col))
+    this.feedCharsToCurrentTag(line.slice(tag.col))
   }
 
   /**
    * Scans the string using the scanner and waits for the
    * closing brace ')' to appear
    */
-  private _feedCharsToCurrentTag (content: string) {
-    const { tag, scanner } = this._tagStatement!
+  private feedCharsToCurrentTag (content: string) {
+    const { tag, scanner } = this.tagStatement!
 
     scanner.scan(content)
 
@@ -198,24 +198,24 @@ export class Tokenizer {
      * Consume the tag once we have found the closing brace and set
      * block statement to null
      */
-    this._consumeTag(tag, scanner.match, scanner.loc)
+    this.consumeTag(tag, scanner.match, scanner.loc)
 
     /**
      * Raise error, if there is inline content after the closing brace ')'
      * `@if(username) hello {{ username }}` is invalid
      */
     if (scanner.leftOver.trim()) {
-      throw cannotSeekStatement(scanner.leftOver, scanner.loc, this._options.filename)
+      throw cannotSeekStatement(scanner.leftOver, scanner.loc, this.options.filename)
     }
 
-    this._tagStatement = null
+    this.tagStatement = null
   }
 
   /**
    * Returns the mustache type by checking for `safe` and `escaped`
    * properties.
    */
-  private _getMustacheType (mustache: RuntimeMustache): MustacheTypes {
+  private getMustacheType (mustache: RuntimeMustache): MustacheTypes {
     if (mustache.safe) {
       return mustache.escaped ? MustacheTypes.ESMUSTACHE : MustacheTypes.SMUSTACHE
     }
@@ -233,7 +233,7 @@ export class Tokenizer {
     closingLoc: LexerLoc['end'],
   ): MustacheToken {
     return {
-      type: this._getMustacheType(mustache),
+      type: this.getMustacheType(mustache),
       properties: {
         jsArg: jsArg,
       },
@@ -250,7 +250,7 @@ export class Tokenizer {
   /**
    * Handles the line which has mustache opening braces.
    */
-  private _handleMustacheOpening (line: string, mustache: RuntimeMustache) {
+  private handleMustacheOpening (line: string, mustache: RuntimeMustache) {
     const pattern = mustache.safe ? '}}}' : '}}'
     const textLeftIndex = mustache.escaped ? mustache.realCol - 1 : mustache.realCol
 
@@ -259,7 +259,7 @@ export class Tokenizer {
      * statement and use it as a raw node
      */
     if (textLeftIndex > 0) {
-      this._consumeNode(this._getRawNode(line.slice(0, textLeftIndex)))
+      this.consumeNode(this.getRawNode(line.slice(0, textLeftIndex)))
     }
 
     /**
@@ -276,7 +276,7 @@ export class Tokenizer {
      * closing mustache braces. Note the closing `pattern` is
      * different for safe and normal mustache.
      */
-    this._mustacheStatement = {
+    this.mustacheStatement = {
       mustache,
       scanner: new Scanner(pattern, ['{', '}'], mustache.line, mustache.col),
     }
@@ -284,14 +284,14 @@ export class Tokenizer {
     /**
      * Feed text to the mustache statement and wait for the closing braces
      */
-    this._feedCharsToCurrentMustache(line.slice(mustache.realCol))
+    this.feedCharsToCurrentMustache(line.slice(mustache.realCol))
   }
 
   /**
    * Feed chars to the mustache statement, which isn't closed yet.
    */
-  private _feedCharsToCurrentMustache (content: string): void {
-    const { mustache, scanner } = this._mustacheStatement!
+  private feedCharsToCurrentMustache (content: string): void {
+    const { mustache, scanner } = this.mustacheStatement!
     scanner.scan(content)
 
     /**
@@ -305,7 +305,7 @@ export class Tokenizer {
     /**
      * Consume the node as soon as we have found the closing brace
      */
-    this._consumeNode(this._getMustacheNode(mustache, scanner.match, scanner.loc))
+    this.consumeNode(this._getMustacheNode(mustache, scanner.match, scanner.loc))
 
     /**
      * If their is leftOver text after the mustache closing brace, then re-scan
@@ -324,17 +324,17 @@ export class Tokenizer {
       const anotherMustache = getMustache(scanner.leftOver, scanner.loc.line, scanner.loc.col)
 
       if (anotherMustache) {
-        this._handleMustacheOpening(scanner.leftOver, anotherMustache)
+        this.handleMustacheOpening(scanner.leftOver, anotherMustache)
         return
       }
 
-      this._consumeNode(this._getRawNode(scanner.leftOver))
+      this.consumeNode(this.getRawNode(scanner.leftOver))
     }
 
     /**
      * Set mustache statement to null
      */
-    this._mustacheStatement = null
+    this.mustacheStatement = null
   }
 
   /**
@@ -344,12 +344,12 @@ export class Tokenizer {
    * The opening and closing has to be in a order, otherwise the
    * compiler will get mad.
    */
-  private _isClosingTag (line: string): boolean {
-    if (!this._openedTags.length) {
+  private isClosingTag (line: string): boolean {
+    if (!this.openedTags.length) {
       return false
     }
 
-    const recentTag = this._openedTags[this._openedTags.length - 1]
+    const recentTag = this.openedTags[this.openedTags.length - 1]
     return line.trim() === `@end${recentTag.properties.name}`
   }
 
@@ -358,9 +358,9 @@ export class Tokenizer {
    * opened tags, then the token becomes part of the tag children. Otherwise
    * moved as top level token.
    */
-  private _consumeNode (tag: Token): void {
-    if (this._openedTags.length) {
-      this._openedTags[this._openedTags.length - 1].children.push(tag)
+  private consumeNode (tag: Token): void {
+    if (this.openedTags.length) {
+      this.openedTags[this.openedTags.length - 1].children.push(tag)
       return
     }
 
@@ -371,34 +371,34 @@ export class Tokenizer {
    * Pushes a new line to the list. This method avoids
    * new lines at position 0.
    */
-  private _pushNewLine () {
-    if (this._line === 1) {
+  private pushNewLine () {
+    if (this.line === 1) {
       return
     }
 
-    this._consumeNode(this._getNewLineNode())
+    this.consumeNode(this.getNewLineNode())
   }
 
   /**
    * Process the current line based upon what it is. What it is?
    * That's the job of this method to find out.
    */
-  private _processText (line: string): void {
+  private processText (line: string): void {
     /**
      * There is an open block statement, so feed line to it
      */
-    if (this._tagStatement) {
-      this._feedCharsToCurrentTag('\n')
-      this._feedCharsToCurrentTag(line)
+    if (this.tagStatement) {
+      this.feedCharsToCurrentTag('\n')
+      this.feedCharsToCurrentTag(line)
       return
     }
 
     /**
      * There is an open mustache statement, so feed line to it
      */
-    if (this._mustacheStatement) {
-      this._feedCharsToCurrentMustache('\n')
-      this._feedCharsToCurrentMustache(line)
+    if (this.mustacheStatement) {
+      this.feedCharsToCurrentMustache('\n')
+      this.feedCharsToCurrentMustache(line)
       return
     }
 
@@ -406,8 +406,8 @@ export class Tokenizer {
      * The line is an closing statement for a previously opened
      * block level tag
      */
-    if (this._isClosingTag(line)) {
-      this._consumeNode(this._openedTags.pop()!)
+    if (this.isClosingTag(line)) {
+      this.consumeNode(this.openedTags.pop()!)
       return
     }
 
@@ -415,69 +415,69 @@ export class Tokenizer {
      * Everything from here pushes a new line to the stack before
      * moving forward
      */
-    if (!this._skipNewLine) {
-      this._pushNewLine()
+    if (!this.skipNewLine) {
+      this.pushNewLine()
     }
 
     /**
      * Check if the current line is a tag or not. If yes, then handle
      * it appropriately
      */
-    const tag = getTag(line, this._line, 0, this._tagsDef)
+    const tag = getTag(line, this.line, 0, this.tagsDef)
     if (tag) {
-      this._handleTagOpening(line, tag)
-      this._skipNewLine = true
+      this.handleTagOpening(line, tag)
+      this.skipNewLine = true
       return
     }
 
-    this._skipNewLine = false
+    this.skipNewLine = false
 
     /**
      * Check if the current line contains a mustache statement or not. If yes,
      * then handle it appropriately.
      */
-    const mustache = getMustache(line, this._line, 0)
+    const mustache = getMustache(line, this.line, 0)
     if (mustache) {
-      this._handleMustacheOpening(line, mustache)
+      this.handleMustacheOpening(line, mustache)
       return
     }
 
     /**
      * Otherwise it is a raw line
      */
-    this._consumeNode(this._getRawNode(line))
+    this.consumeNode(this.getRawNode(line))
   }
 
   /**
    * Checks for errors after the tokenizer completes it's work, so that we
    * can find broken statements or unclosed tags.
    */
-  private _checkForErrors () {
+  private checkForErrors () {
     /**
      * We are done scanning the content and there is an open tagStatement
      * seeking for new content. Which means we are missing a closing
      * brace `)`.
      */
-    if (this._tagStatement) {
-      const { tag } = this._tagStatement
-      throw unclosedParen({ line: tag.line, col: tag.col }, this._options.filename)
+    if (this.tagStatement) {
+      const { tag } = this.tagStatement
+      throw unclosedParen({ line: tag.line, col: tag.col }, this.options.filename)
     }
 
     /**
      * We are done scanning the content and there is an open mustache statement
      * seeking for new content. Which means we are missing closing braces `}}`.
      */
-    if (this._mustacheStatement) {
-      const { mustache } = this._mustacheStatement
-      throw unclosedCurlyBrace({ line: mustache.line, col: mustache.col }, this._options.filename)
+    if (this.mustacheStatement) {
+      const { mustache } = this.mustacheStatement
+      throw unclosedCurlyBrace({ line: mustache.line, col: mustache.col }, this.options.filename)
     }
 
     /**
      * A tag was opened, but forgot to close it
      */
-    if (this._openedTags.length) {
-      const openedTag = this._openedTags[this._openedTags.length - 1]
-      throw unclosedTag(openedTag.properties.name, openedTag.loc.start, this._options.filename)
+    if (this.openedTags.length) {
+      const openedTag = this.openedTags[this.openedTags.length - 1]
+      throw unclosedTag(openedTag.properties.name, openedTag.loc.start, this.options.filename)
     }
   }
 
@@ -485,15 +485,15 @@ export class Tokenizer {
    * Parse the template and generate an AST out of it
    */
   public parse (): void {
-    const lines = this._template.split(/\r\n|\r|\n/g)
+    const lines = this.template.split(/\r\n|\r|\n/g)
     const linesLength = lines.length
 
-    while (this._line < linesLength) {
-      const line = lines[this._line]
-      this._line++
-      this._processText(line)
+    while (this.line < linesLength) {
+      const line = lines[this.line]
+      this.line++
+      this.processText(line)
     }
 
-    this._checkForErrors()
+    this.checkForErrors()
   }
 }

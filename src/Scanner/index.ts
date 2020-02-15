@@ -38,10 +38,10 @@
  * first match.
  */
 export class Scanner {
-  private _tolaretionCounts: number = 0
-  private _tolerateLhs: string = ''
-  private _tolerateRhs: string = ''
-  private _patternLength = this._pattern.length
+  private tolaretionCounts: number = 0
+  private tolerateLhs: string = ''
+  private tolerateRhs: string = ''
+  private patternLength = this.pattern.length
 
   /**
    * Tracking if the scanner has been closed
@@ -60,18 +60,18 @@ export class Scanner {
   public leftOver: string = ''
 
   public loc = {
-    line: this._line,
-    col: this._col,
+    line: this.line,
+    col: this.col,
   }
 
   constructor (
-    private _pattern: string,
-    _toleratePair: [string, string],
-    private _line: number,
-    private _col: number,
+    private pattern: string,
+    toleratePair: [string, string],
+    private line: number,
+    private col: number,
   ) {
-    this._tolerateLhs = _toleratePair[0]
-    this._tolerateRhs = _toleratePair[1]
+    this.tolerateLhs = toleratePair[0]
+    this.tolerateRhs = toleratePair[1]
   }
 
   /**
@@ -81,9 +81,9 @@ export class Scanner {
    * This will be used to mark the scanner as closed and stop scanning
    * for more chars
    */
-  private _matchesPattern (chars, iterationCount) {
-    for (let i = 0; i < this._patternLength; i++) {
-      if (this._pattern[i] !== chars[iterationCount + i]) {
+  private matchesPattern (chars: string, iterationCount: number) {
+    for (let i = 0; i < this.patternLength; i++) {
+      if (this.pattern[i] !== chars[iterationCount + i]) {
         return false
       }
     }
@@ -97,7 +97,7 @@ export class Scanner {
    * toleration patterns to make sure they are not making the
    * scanner to end due to pattern mis-match.
    */
-  public scan (chunk): void {
+  public scan (chunk: string): void {
     if (chunk === '\n') {
       this.loc.line++
       this.loc.col = 0
@@ -119,8 +119,8 @@ export class Scanner {
        * Toleration count is 0 and closing pattern matches the current
        * or series of upcoming characters
        */
-      if (this._tolaretionCounts === 0 && this._matchesPattern(chunk, iterations)) {
-        iterations += this._patternLength
+      if (this.tolaretionCounts === 0 && this.matchesPattern(chunk, iterations)) {
+        iterations += this.patternLength
         this.closed = true
         break
       }
@@ -129,16 +129,16 @@ export class Scanner {
        * Increments the tolarate counts when char is the
        * tolerate lhs character
        */
-      if (char === this._tolerateLhs) {
-        this._tolaretionCounts++
+      if (char === this.tolerateLhs) {
+        this.tolaretionCounts++
       }
 
       /**
        * Decrements the tolare counts when char is the
        * tolerate rhs character
        */
-      if (char === this._tolerateRhs) {
-        this._tolaretionCounts--
+      if (char === this.tolerateRhs) {
+        this.tolaretionCounts--
       }
 
       /**
