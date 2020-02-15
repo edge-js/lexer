@@ -20,7 +20,7 @@
     "release": "np",
     "version": "npm run build",
     "prepublishOnly": "npm run build",
-    "lint": "tslint --project tsconfig.json"
+    "lint": "eslint . --ext=.ts"
   },
   "keywords": [
     "edge",
@@ -38,14 +38,14 @@
     "dedent": "^0.7.0",
     "del-cli": "^3.0.0",
     "doctoc": "^1.4.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-adonis": "^1.0.8",
     "husky": "^4.2.3",
     "japa": "^3.0.1",
     "japa-cli": "^1.0.1",
     "mrm": "^2.0.4",
     "np": "^6.0.0",
     "ts-node": "^8.6.2",
-    "tslint": "^6.0.0",
-    "tslint-eslint-rules": "^5.4.0",
     "typedoc": "^0.16.9",
     "typedoc-plugin-external-module-name": "^3.0.0",
     "typedoc-plugin-markdown": "^2.2.16",

@@ -580,7 +580,7 @@ test.group('Tokenizer Tags', () => {
   })
 
   test('consume one liner inline tag', (assert) => {
-    const template = `@include('header')`
+    const template = '@include(\'header\')'
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
     tokenizer.parse()
@@ -656,7 +656,7 @@ test.group('Tokenizer Tags', () => {
         },
         properties: {
           name: 'each',
-          jsArg: `user in users, include = 'user'`,
+          jsArg: 'user in users, include = \'user\'',
           selfclosed: true,
         },
         children: [],
@@ -689,7 +689,7 @@ test.group('Tokenizer Tags', () => {
         },
         properties: {
           name: 'if',
-          jsArg: `!user`,
+          jsArg: '!user',
           selfclosed: false,
         },
         children: [],

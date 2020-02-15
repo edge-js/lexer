@@ -133,7 +133,7 @@ test.group('Tokenizer Mustache', () => {
           },
         },
         properties: {
-          jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
+          jsArg: '\n  users.map((user) => {\n    return user.username\n  }).join(\', \')\n',
         },
       },
       {
@@ -175,7 +175,7 @@ test.group('Tokenizer Mustache', () => {
           },
         },
         properties: {
-          jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
+          jsArg: '\n  users.map((user) => {\n    return user.username\n  }).join(\', \')\n',
         },
       },
       {
@@ -217,7 +217,7 @@ test.group('Tokenizer Mustache', () => {
           },
         },
         properties: {
-          jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
+          jsArg: '\n  users.map((user) => {\n    return user.username\n  }).join(\', \')\n',
         },
       },
       {
@@ -339,7 +339,7 @@ test.group('Tokenizer Mustache', () => {
           },
         },
         properties: {
-          jsArg: `\n  users.map((user) => {\n    return user.username\n  }).join(', ')\n`,
+          jsArg: '\n  users.map((user) => {\n    return user.username\n  }).join(\', \')\n',
         },
       },
       {

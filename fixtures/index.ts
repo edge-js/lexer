@@ -63,7 +63,7 @@ export const fixtures: { name: string, in: string, out: any }[] = [
         type: 'tag',
         properties: {
           name: 'include',
-          jsArg: `'header'`,
+          jsArg: '\'header\'',
           selfclosed: false,
         },
         loc: {
@@ -90,7 +90,7 @@ export const fixtures: { name: string, in: string, out: any }[] = [
         type: 'tag',
         properties: {
           name: 'include',
-          jsArg: `\n'header'\n`,
+          jsArg: '\n\'header\'\n',
           selfclosed: false,
         },
         loc: {
@@ -220,7 +220,7 @@ username
       {
         type: 'mustache',
         properties: {
-          jsArg: `\nusers.map((user) => {\n  return user.username\n}).join(',')\n`,
+          jsArg: '\nusers.map((user) => {\n  return user.username\n}).join(\',\')\n',
         },
         loc: {
           start: {
