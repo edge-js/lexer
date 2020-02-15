@@ -2,7 +2,6 @@
 
 # edge-lexer
 
-
 ## Index
 
 ### External modules

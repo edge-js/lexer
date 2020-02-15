@@ -2,7 +2,6 @@
 
 # Enumeration: MustacheTypes
 
-
 Types for mustache statements
 
 ## Index

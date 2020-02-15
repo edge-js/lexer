@@ -2,7 +2,6 @@
 
 # Interface: Tags
 
-
 ## Hierarchy
 
 * **Tags**

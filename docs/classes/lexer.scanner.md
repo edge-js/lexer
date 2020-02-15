@@ -2,7 +2,6 @@
 
 # Class: Scanner
 
-
 Scan a string and seperate it into 2 pairs. The first pair will be series
 of characters until the ending pattern is found and 2nd pair is the
 left over.
@@ -56,16 +55,16 @@ first match.
 
 ###  constructor
 
-\+ **new Scanner**(`_pattern`: string, `_toleratePair`: [string, string], `_line`: number, `_col`: number): *[Scanner](lexer.scanner.md)*
+\+ **new Scanner**(`pattern`: string, `toleratePair`: [string, string], `line`: number, `col`: number): *[Scanner](lexer.scanner.md)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`_pattern` | string |
-`_toleratePair` | [string, string] |
-`_line` | number |
-`_col` | number |
+`pattern` | string |
+`toleratePair` | [string, string] |
+`line` | number |
+`col` | number |
 
 **Returns:** *[Scanner](lexer.scanner.md)*
 
@@ -98,7 +97,7 @@ The matched content within the pattern
 
 ###  scan
 
-▸ **scan**(`chunk`: any): *void*
+▸ **scan**(`chunk`: string): *void*
 
 Scan a string and look for the closing pattern. The string will
 be seperated with the closing pattern and also tracks the
@@ -109,7 +108,7 @@ scanner to end due to pattern mis-match.
 
 Name | Type |
 ------ | ------ |
-`chunk` | any |
+`chunk` | string |
 
 **Returns:** *void*
 
@@ -121,8 +120,8 @@ Name | Type |
 
 ###  col
 
-• **col**: *number* =  this._col
+• **col**: *number* = this.col
 
 ###  line
 
-• **line**: *number* =  this._line
+• **line**: *number* = this.line

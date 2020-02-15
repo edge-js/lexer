@@ -2,7 +2,6 @@
 
 # Enumeration: TagTypes
 
-
 The type of node types. Each token
 will have one of these types
 

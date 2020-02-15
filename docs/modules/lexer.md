@@ -2,7 +2,6 @@
 
 # External module: lexer
 
-
 ## Index
 
 ### Enumerations
@@ -53,6 +52,18 @@ Location node for tags and mustache braces
 
 #### Type declaration:
 
+* **end**(): *object*
+
+  * **col**: *number*
+
+  * **line**: *number*
+
+* **start**(): *object*
+
+  * **col**: *number*
+
+  * **line**: *number*
+
 ___
 
 ###  MustacheProps
@@ -62,6 +73,8 @@ ___
 Properties for a mustache block
 
 #### Type declaration:
+
+* **jsArg**: *string*
 
 ___
 
@@ -73,6 +86,12 @@ Mustache token
 
 #### Type declaration:
 
+* **loc**: *[LexerLoc](lexer.md#lexerloc)*
+
+* **properties**: *[MustacheProps](lexer.md#mustacheprops)*
+
+* **type**: *[MustacheTypes](../enums/lexer.mustachetypes.md)*
+
 ___
 
 ###  NewLineToken
@@ -82,6 +101,10 @@ ___
 New line token
 
 #### Type declaration:
+
+* **line**: *number*
+
+* **type**: *"newline"*
 
 ___
 
@@ -93,6 +116,12 @@ Raw line token
 
 #### Type declaration:
 
+* **line**: *number*
+
+* **type**: *"raw"*
+
+* **value**: *string*
+
 ___
 
 ###  RuntimeMustache
@@ -102,6 +131,16 @@ ___
 Runtime mustache node to know the shape of the mustache
 
 #### Type declaration:
+
+* **col**: *number*
+
+* **escaped**: *boolean*
+
+* **line**: *number*
+
+* **realCol**: *number*
+
+* **safe**: *boolean*
 
 ___
 
@@ -113,6 +152,22 @@ The runtime tag node to know the shape of a tag
 
 #### Type declaration:
 
+* **block**: *boolean*
+
+* **col**: *number*
+
+* **escaped**: *boolean*
+
+* **hasBrace**: *boolean*
+
+* **line**: *number*
+
+* **name**: *string*
+
+* **seekable**: *boolean*
+
+* **selfclosed**: *boolean*
+
 ___
 
 ###  TagProps
@@ -123,6 +178,12 @@ Properties node for a tag
 
 #### Type declaration:
 
+* **jsArg**: *string*
+
+* **name**: *string*
+
+* **selfclosed**: *boolean*
+
 ___
 
 ###  TagToken
@@ -132,6 +193,14 @@ ___
 Tag token
 
 #### Type declaration:
+
+* **children**: *[Token](lexer.md#token)[]*
+
+* **loc**: *[LexerLoc](lexer.md#lexerloc)*
+
+* **properties**: *[TagProps](lexer.md#tagprops)*
+
+* **type**: *[TagTypes](../enums/lexer.tagtypes.md)*
 
 ___
 
@@ -162,11 +231,16 @@ Correct
 
 **Parameters:**
 
+▪ **chars**: *string*
+
+▪ **pos**: *object*
+
 Name | Type |
 ------ | ------ |
-`chars` | string |
-`pos` | object |
-`filename` | string |
+`col` | number |
+`line` | number |
+
+▪ **filename**: *string*
 
 **Returns:** *EdgeError*
 
@@ -229,10 +303,14 @@ Correct
 
 **Parameters:**
 
+▪ **pos**: *object*
+
 Name | Type |
 ------ | ------ |
-`pos` | object |
-`filename` | string |
+`col` | number |
+`line` | number |
+
+▪ **filename**: *string*
 
 **Returns:** *EdgeError*
 
@@ -256,10 +334,14 @@ Correct
 
 **Parameters:**
 
+▪ **pos**: *object*
+
 Name | Type |
 ------ | ------ |
-`pos` | object |
-`filename` | string |
+`col` | number |
+`line` | number |
+
+▪ **filename**: *string*
 
 **Returns:** *EdgeError*
 
@@ -284,11 +366,16 @@ Correct
 
 **Parameters:**
 
+▪ **tag**: *string*
+
+▪ **pos**: *object*
+
 Name | Type |
 ------ | ------ |
-`tag` | string |
-`pos` | object |
-`filename` | string |
+`col` | number |
+`line` | number |
+
+▪ **filename**: *string*
 
 **Returns:** *EdgeError*
 
@@ -312,9 +399,13 @@ Correct
 
 **Parameters:**
 
+▪ **pos**: *object*
+
 Name | Type |
 ------ | ------ |
-`pos` | object |
-`filename` | string |
+`col` | number |
+`line` | number |
+
+▪ **filename**: *string*
 
 **Returns:** *EdgeError*

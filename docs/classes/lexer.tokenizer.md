@@ -2,7 +2,6 @@
 
 # Class: Tokenizer
 
-
 Tokenizer converts a bunch of text into an array of tokens. Later
 these tokens can be used to build the transformed text.
 
@@ -21,6 +20,8 @@ the tokens output.
 
 ### Properties
 
+* [mustacheStatement](lexer.tokenizer.md#mustachestatement)
+* [tagStatement](lexer.tokenizer.md#tagstatement)
 * [tokens](lexer.tokenizer.md#tokens)
 
 ### Methods
@@ -31,23 +32,43 @@ the tokens output.
 
 ###  constructor
 
-\+ **new Tokenizer**(`_template`: string, `_tagsDef`: [Tags](../interfaces/lexer.tags.md), `_options`: object): *[Tokenizer](lexer.tokenizer.md)*
+\+ **new Tokenizer**(`template`: string, `tagsDef`: [Tags](../interfaces/lexer.tags.md), `options`: object): *[Tokenizer](lexer.tokenizer.md)*
 
 **Parameters:**
 
+▪ **template**: *string*
+
+▪ **tagsDef**: *[Tags](../interfaces/lexer.tags.md)*
+
+▪ **options**: *object*
+
 Name | Type |
 ------ | ------ |
-`_template` | string |
-`_tagsDef` | [Tags](../interfaces/lexer.tags.md) |
-`_options` | object |
+`filename` | string |
 
 **Returns:** *[Tokenizer](lexer.tokenizer.md)*
 
 ## Properties
 
+###  mustacheStatement
+
+• **mustacheStatement**: *null | object* = null
+
+Holds the current tag statement, until it is closed
+
+___
+
+###  tagStatement
+
+• **tagStatement**: *null | object* = null
+
+Holds the current tag statement, until it is closed
+
+___
+
 ###  tokens
 
-• **tokens**: *[Token](../modules/lexer.md#token)[]* =  []
+• **tokens**: *[Token](../modules/lexer.md#token)[]* = []
 
 ## Methods
 
