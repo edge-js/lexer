@@ -1,8 +1,4 @@
 /**
- * @module lexer
- */
-
-/**
  * edge-lexer
  *
  * (c) Harminder Virk <virk@adonisjs.com>
@@ -227,7 +223,7 @@ export class Tokenizer {
    * Returns the mustache token using the runtime mustache node. The `jsArg` and
    * ending `loc` is fetched using the scanner.
    */
-  private _getMustacheNode (
+  private getMustacheNode (
     mustache: RuntimeMustache,
     jsArg: string,
     closingLoc: LexerLoc['end'],
@@ -305,7 +301,7 @@ export class Tokenizer {
     /**
      * Consume the node as soon as we have found the closing brace
      */
-    this.consumeNode(this._getMustacheNode(mustache, scanner.match, scanner.loc))
+    this.consumeNode(this.getMustacheNode(mustache, scanner.match, scanner.loc))
 
     /**
      * If their is leftOver text after the mustache closing brace, then re-scan

@@ -1,8 +1,4 @@
 /**
- * @module lexer
- */
-
-/**
  * edge-lexer
  *
  * (c) Harminder Virk <virk@adonisjs.com>

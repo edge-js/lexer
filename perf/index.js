@@ -32,11 +32,11 @@ suite.add('Tokenizer', function () {
       seekable: true,
       selfclosed: true,
       block: true,
-    }
+    },
   }, { filename: 'welcome.edge' })
   tokenizer.parse()
 })
-.on('cycle', function(event) {
-  console.log(String(event.target))
-})
-.run()
+  .on('cycle', function (event) {
+    console.log(String(event.target))
+  })
+  .run()
