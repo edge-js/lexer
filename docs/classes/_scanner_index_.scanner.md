@@ -1,4 +1,4 @@
-[edge-lexer](../README.md) › [lexer](../modules/lexer.md) › [Scanner](lexer.scanner.md)
+[edge-lexer](../README.md) › ["Scanner/index"](../modules/_scanner_index_.md) › [Scanner](_scanner_index_.scanner.md)
 
 # Class: Scanner
 
@@ -35,27 +35,27 @@ first match.
 
 ### Constructors
 
-* [constructor](lexer.scanner.md#constructor)
+* [constructor](_scanner_index_.scanner.md#constructor)
 
 ### Properties
 
-* [closed](lexer.scanner.md#closed)
-* [leftOver](lexer.scanner.md#leftover)
-* [match](lexer.scanner.md#match)
+* [closed](_scanner_index_.scanner.md#closed)
+* [leftOver](_scanner_index_.scanner.md#leftover)
+* [match](_scanner_index_.scanner.md#match)
 
 ### Methods
 
-* [scan](lexer.scanner.md#scan)
+* [scan](_scanner_index_.scanner.md#scan)
 
 ### Object literals
 
-* [loc](lexer.scanner.md#loc)
+* [loc](_scanner_index_.scanner.md#loc)
 
 ## Constructors
 
 ###  constructor
 
-\+ **new Scanner**(`pattern`: string, `toleratePair`: [string, string], `line`: number, `col`: number): *[Scanner](lexer.scanner.md)*
+\+ **new Scanner**(`pattern`: string, `toleratePair`: [string, string], `line`: number, `col`: number): *[Scanner](_scanner_index_.scanner.md)*
 
 **Parameters:**
 
@@ -66,7 +66,7 @@ Name | Type |
 `line` | number |
 `col` | number |
 
-**Returns:** *[Scanner](lexer.scanner.md)*
+**Returns:** *[Scanner](_scanner_index_.scanner.md)*
 
 ## Properties
 
