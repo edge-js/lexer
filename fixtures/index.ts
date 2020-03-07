@@ -8,6 +8,7 @@ export const fixtures: { name: string, in: string, out: any }[] = [
     out: [
       {
         type: 'tag',
+        filename: 'eval.edge',
         properties: {
           name: 'if',
           jsArg: 'username',
@@ -36,6 +37,7 @@ export const fixtures: { name: string, in: string, out: any }[] = [
     out: [
       {
         type: 'tag',
+        filename: 'eval.edge',
         properties: {
           name: 'if',
           jsArg: '\nusername\n',
@@ -61,6 +63,7 @@ export const fixtures: { name: string, in: string, out: any }[] = [
     out: [
       {
         type: 'tag',
+        filename: 'eval.edge',
         properties: {
           name: 'include',
           jsArg: '\'header\'',
@@ -88,6 +91,7 @@ export const fixtures: { name: string, in: string, out: any }[] = [
     out: [
       {
         type: 'tag',
+        filename: 'eval.edge',
         properties: {
           name: 'include',
           jsArg: '\n\'header\'\n',
@@ -113,6 +117,7 @@ export const fixtures: { name: string, in: string, out: any }[] = [
     out: [
       {
         type: 'tag',
+        filename: 'eval.edge',
         properties: {
           name: 'if',
           jsArg: 'username',
@@ -139,6 +144,7 @@ export const fixtures: { name: string, in: string, out: any }[] = [
     out: [
       {
         type: 'e__tag',
+        filename: 'eval.edge',
         properties: {
           name: 'if',
           jsArg: 'username',
@@ -164,6 +170,7 @@ export const fixtures: { name: string, in: string, out: any }[] = [
     out: [
       {
         type: 'mustache',
+        filename: 'eval.edge',
         properties: {
           jsArg: ' username ',
         },
@@ -188,6 +195,7 @@ username
     out: [
       {
         type: 'mustache',
+        filename: 'eval.edge',
         properties: {
           jsArg: '\nusername\n',
         },
@@ -219,6 +227,7 @@ username
       },
       {
         type: 'mustache',
+        filename: 'eval.edge',
         properties: {
           jsArg: '\nusers.map((user) => {\n  return user.username\n}).join(\',\')\n',
         },
@@ -241,6 +250,7 @@ username
     out: [
       {
         type: 'e__mustache',
+        filename: 'eval.edge',
         properties: {
           jsArg: ' username ',
         },

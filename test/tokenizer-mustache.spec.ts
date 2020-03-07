@@ -34,7 +34,7 @@ test.group('Tokenizer Mustache', () => {
   test('process mustache blocks', (assert) => {
     const template = 'Hello {{ username }}'
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -47,6 +47,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: MustacheTypes.MUSTACHE,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 1,
@@ -67,7 +68,7 @@ test.group('Tokenizer Mustache', () => {
   test('process mustache blocks with text around it', (assert) => {
     const template = 'Hello {{ username }}!'
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -80,6 +81,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: MustacheTypes.MUSTACHE,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 1,
@@ -109,7 +111,7 @@ test.group('Tokenizer Mustache', () => {
       }).join(', ')
     }}.`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -122,6 +124,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: MustacheTypes.MUSTACHE,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 1,
@@ -151,7 +154,7 @@ test.group('Tokenizer Mustache', () => {
       }).join(', ')
     }}}.`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -164,6 +167,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: MustacheTypes.SMUSTACHE,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 1,
@@ -193,7 +197,7 @@ test.group('Tokenizer Mustache', () => {
       }).join(', ')
     }}}.`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -206,6 +210,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: MustacheTypes.ESMUSTACHE,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 1,
@@ -231,7 +236,7 @@ test.group('Tokenizer Mustache', () => {
   test('parse multiple mustache statements in a single line', (assert) => {
     const template = dedent`Hello {{ username }}, your age is {{ age }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -245,6 +250,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: MustacheTypes.MUSTACHE,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 1,
@@ -266,6 +272,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: MustacheTypes.MUSTACHE,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 1,
@@ -293,7 +300,7 @@ test.group('Tokenizer Mustache', () => {
     Bye
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -307,6 +314,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: MustacheTypes.MUSTACHE,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 1,
@@ -327,6 +335,7 @@ test.group('Tokenizer Mustache', () => {
         value: ', your friends are ',
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
           start: {
@@ -363,7 +372,7 @@ test.group('Tokenizer Mustache', () => {
     assert.plan(2)
     const template = 'Hello {{ username'
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     try {
       tokenizer.parse()
     } catch ({ message, line }) {
@@ -375,7 +384,7 @@ test.group('Tokenizer Mustache', () => {
   test('parse 3 mustache statements in a single line', (assert) => {
     const template = dedent`{{ username }}, {{ age }} and {{ state }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -383,6 +392,7 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
           start: {
@@ -404,6 +414,7 @@ test.group('Tokenizer Mustache', () => {
         value: ', ',
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
           start: {
@@ -425,6 +436,7 @@ test.group('Tokenizer Mustache', () => {
         value: ' and ',
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
           start: {
@@ -446,7 +458,7 @@ test.group('Tokenizer Mustache', () => {
   test('work fine with escaped and regular mustache braces', (assert) => {
     const template = dedent`{{ username }}, @{{ age }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -454,6 +466,7 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
           start: {
@@ -475,6 +488,7 @@ test.group('Tokenizer Mustache', () => {
         value: ', ',
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.EMUSTACHE,
         loc: {
           start: {
@@ -498,7 +512,7 @@ test.group('Tokenizer Mustache', () => {
       users.map((user) => user.username)
     }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -506,6 +520,7 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
           start: {
@@ -527,6 +542,7 @@ test.group('Tokenizer Mustache', () => {
         value: ', ',
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.EMUSTACHE,
         loc: {
           start: {
@@ -548,7 +564,7 @@ test.group('Tokenizer Mustache', () => {
   test('parse multiple mustache statements when escaped and unescaped', (assert) => {
     const template = dedent`Hello @{{ username }}, your age is {{ age }}`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -561,6 +577,7 @@ test.group('Tokenizer Mustache', () => {
         value: 'Hello ',
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.EMUSTACHE,
         loc: {
           start: {
@@ -582,6 +599,7 @@ test.group('Tokenizer Mustache', () => {
         value: ', your age is ',
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
           start: {
@@ -604,7 +622,7 @@ test.group('Tokenizer Mustache', () => {
     assert.plan(2)
 
     const template = dedent`Hello {{ username }.`
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
 
     try {
       tokenizer.parse()

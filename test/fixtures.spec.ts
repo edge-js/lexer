@@ -25,7 +25,7 @@ const tags = {
 test.group('fixtures', () => {
   fixtures.forEach((fixture) => {
     test(fixture.name, (assert) => {
-      const tokenizer = new Tokenizer(fixture.in, tags, { filename: 'mem' })
+      const tokenizer = new Tokenizer(fixture.in, tags, { filename: 'eval.edge' })
       tokenizer.parse()
       assert.deepEqual(tokenizer.tokens, fixture.out)
     })

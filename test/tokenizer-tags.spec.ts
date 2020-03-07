@@ -40,7 +40,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -64,6 +64,7 @@ test.group('Tokenizer Tags', () => {
         line: 2,
       },
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         properties: {
           name: 'if',
@@ -94,7 +95,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -120,6 +121,7 @@ test.group('Tokenizer Tags', () => {
       },
       {
         type: TagTypes.TAG,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 3,
@@ -157,7 +159,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -181,6 +183,7 @@ test.group('Tokenizer Tags', () => {
         line: 2,
       },
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
           start: {
@@ -200,6 +203,7 @@ test.group('Tokenizer Tags', () => {
         children: [
           {
             type: TagTypes.TAG,
+            filename: 'eval.edge',
             loc: {
               start: {
                 line: 4,
@@ -239,7 +243,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -263,6 +267,7 @@ test.group('Tokenizer Tags', () => {
         line: 2,
       },
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
           start: {
@@ -301,7 +306,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -325,6 +330,7 @@ test.group('Tokenizer Tags', () => {
         line: 2,
       },
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
           start: {
@@ -355,12 +361,13 @@ test.group('Tokenizer Tags', () => {
   test('parse inline tags', (assert) => {
     const template = dedent`@include('partials.user')`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
           start: {
@@ -391,13 +398,14 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
         type: TagTypes.TAG,
+        filename: 'eval.edge',
         loc: {
           start: {
             line: 1,
@@ -424,6 +432,7 @@ test.group('Tokenizer Tags', () => {
             line: 2,
           },
           {
+            filename: 'eval.edge',
             type: TagTypes.TAG,
             loc: {
               start: {
@@ -457,7 +466,7 @@ test.group('Tokenizer Tags', () => {
     @foo('hello world')
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -475,12 +484,13 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
+        filename: 'eval.edge',
         type: TagTypes.ETAG,
         properties: {
           name: 'if',
@@ -508,7 +518,7 @@ test.group('Tokenizer Tags', () => {
     const template = dedent`@if((2 + 2)
     @endif`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     try {
       tokenizer.parse()
     } catch ({ message, line }) {
@@ -521,7 +531,7 @@ test.group('Tokenizer Tags', () => {
     assert.plan(3)
     const template = dedent`@include('foo') hello world`
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     try {
       tokenizer.parse()
     } catch ({ message, line, col }) {
@@ -541,7 +551,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     try {
       tokenizer.parse()
     } catch ({ message, line, col }) {
@@ -556,9 +566,10 @@ test.group('Tokenizer Tags', () => {
     @else
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
     assert.deepEqual(tokenizer.tokens, [{
+      filename: 'eval.edge',
       type: TagTypes.TAG,
       properties: {
         name: 'else',
@@ -582,12 +593,13 @@ test.group('Tokenizer Tags', () => {
   test('consume one liner inline tag', (assert) => {
     const template = '@include(\'header\')'
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
           start: {
@@ -615,7 +627,7 @@ test.group('Tokenizer Tags', () => {
         Hello world
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     const fn = () => tokenizer.parse()
     assert.throw(fn, 'Unclosed tag if')
   })
@@ -627,7 +639,7 @@ test.group('Tokenizer Tags', () => {
       @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     const fn = () => tokenizer.parse()
     assert.throw(fn, 'Unclosed tag each')
   })
@@ -637,12 +649,13 @@ test.group('Tokenizer Tags', () => {
     @!each(user in users, include = 'user')
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
           start: {
@@ -670,12 +683,13 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
           start: {
@@ -707,7 +721,7 @@ test.group('Tokenizer columns', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -731,6 +745,7 @@ test.group('Tokenizer columns', () => {
         line: 2,
       },
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         properties: {
           name: 'if',
@@ -760,7 +775,7 @@ test.group('Tokenizer columns', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -784,6 +799,7 @@ test.group('Tokenizer columns', () => {
         line: 2,
       },
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         properties: {
           name: 'if',
@@ -813,7 +829,7 @@ test.group('Tokenizer columns', () => {
       @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -837,6 +853,7 @@ test.group('Tokenizer columns', () => {
         line: 2,
       },
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         properties: {
           name: 'if',
@@ -868,7 +885,7 @@ test.group('Tokenizer columns', () => {
     @endif
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -892,6 +909,7 @@ test.group('Tokenizer columns', () => {
         line: 2,
       },
       {
+        filename: 'eval.edge',
         type: TagTypes.TAG,
         properties: {
           name: 'if',
@@ -918,7 +936,7 @@ test.group('Tokenizer columns', () => {
     Hello {{ username }}
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -929,6 +947,7 @@ test.group('Tokenizer columns', () => {
         line: 1,
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         properties: {
           jsArg: ' username ',
@@ -952,7 +971,7 @@ test.group('Tokenizer columns', () => {
     Hello {{ username }}, your age is {{ age }}
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.mustacheStatement)
@@ -963,6 +982,7 @@ test.group('Tokenizer columns', () => {
         line: 1,
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         properties: {
           jsArg: ' username ',
@@ -984,6 +1004,7 @@ test.group('Tokenizer columns', () => {
         line: 1,
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         properties: {
           jsArg: ' age ',
@@ -1009,7 +1030,7 @@ test.group('Tokenizer columns', () => {
     }}, your age is {{ age }}
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -1020,6 +1041,7 @@ test.group('Tokenizer columns', () => {
         line: 1,
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         properties: {
           jsArg: '\n  username\n',
@@ -1041,6 +1063,7 @@ test.group('Tokenizer columns', () => {
         line: 3,
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         properties: {
           jsArg: ' age ',
@@ -1066,7 +1089,7 @@ test.group('Tokenizer columns', () => {
     }}}, your age is {{ age }}
     `
 
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'foo.edge' })
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
@@ -1077,6 +1100,7 @@ test.group('Tokenizer columns', () => {
         line: 1,
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.SMUSTACHE,
         properties: {
           jsArg: '\n  username\n',
@@ -1098,6 +1122,7 @@ test.group('Tokenizer columns', () => {
         line: 3,
       },
       {
+        filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         properties: {
           jsArg: ' age ',

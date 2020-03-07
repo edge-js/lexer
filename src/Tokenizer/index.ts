@@ -102,6 +102,7 @@ export class Tokenizer {
   private getTagNode (tag: RuntimeTag, jsArg: string, closingLoc: LexerLoc['end']): TagToken {
     return {
       type: tag.escaped ? TagTypes.ETAG : TagTypes.TAG,
+      filename: tag.filename,
       properties: {
         name: tag.name,
         jsArg: jsArg,
@@ -140,7 +141,7 @@ export class Tokenizer {
    */
   private handleTagOpening (line: string, tag: RuntimeTag) {
     if (tag.seekable && !tag.hasBrace) {
-      throw unopenedParen({ line: tag.line, col: tag.col }, this.options.filename)
+      throw unopenedParen({ line: tag.line, col: tag.col }, tag.filename)
     }
 
     /**
@@ -201,7 +202,7 @@ export class Tokenizer {
      * `@if(username) hello {{ username }}` is invalid
      */
     if (scanner.leftOver.trim()) {
-      throw cannotSeekStatement(scanner.leftOver, scanner.loc, this.options.filename)
+      throw cannotSeekStatement(scanner.leftOver, scanner.loc, tag.filename)
     }
 
     this.tagStatement = null
@@ -230,6 +231,7 @@ export class Tokenizer {
   ): MustacheToken {
     return {
       type: this.getMustacheType(mustache),
+      filename: mustache.filename,
       properties: {
         jsArg: jsArg,
       },
@@ -317,7 +319,12 @@ export class Tokenizer {
      * process it here by duplicating code (which is fine).
      */
     if (scanner.leftOver.trim()) {
-      const anotherMustache = getMustache(scanner.leftOver, scanner.loc.line, scanner.loc.col)
+      const anotherMustache = getMustache(
+        scanner.leftOver,
+        this.options.filename,
+        scanner.loc.line,
+        scanner.loc.col,
+      )
 
       if (anotherMustache) {
         this.handleMustacheOpening(scanner.leftOver, anotherMustache)
@@ -419,7 +426,7 @@ export class Tokenizer {
      * Check if the current line is a tag or not. If yes, then handle
      * it appropriately
      */
-    const tag = getTag(line, this.line, 0, this.tagsDef)
+    const tag = getTag(line, this.options.filename, this.line, 0, this.tagsDef)
     if (tag) {
       this.handleTagOpening(line, tag)
       this.skipNewLine = true
@@ -432,7 +439,7 @@ export class Tokenizer {
      * Check if the current line contains a mustache statement or not. If yes,
      * then handle it appropriately.
      */
-    const mustache = getMustache(line, this.line, 0)
+    const mustache = getMustache(line, this.options.filename, this.line, 0)
     if (mustache) {
       this.handleMustacheOpening(line, mustache)
       return
@@ -456,7 +463,7 @@ export class Tokenizer {
      */
     if (this.tagStatement) {
       const { tag } = this.tagStatement
-      throw unclosedParen({ line: tag.line, col: tag.col }, this.options.filename)
+      throw unclosedParen({ line: tag.line, col: tag.col }, tag.filename)
     }
 
     /**
@@ -465,7 +472,7 @@ export class Tokenizer {
      */
     if (this.mustacheStatement) {
       const { mustache } = this.mustacheStatement
-      throw unclosedCurlyBrace({ line: mustache.line, col: mustache.col }, this.options.filename)
+      throw unclosedCurlyBrace({ line: mustache.line, col: mustache.col }, mustache.filename)
     }
 
     /**
@@ -473,7 +480,7 @@ export class Tokenizer {
      */
     if (this.openedTags.length) {
       const openedTag = this.openedTags[this.openedTags.length - 1]
-      throw unclosedTag(openedTag.properties.name, openedTag.loc.start, this.options.filename)
+      throw unclosedTag(openedTag.properties.name, openedTag.loc.start, openedTag.filename)
     }
   }
 

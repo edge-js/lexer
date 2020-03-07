@@ -13,7 +13,7 @@
 
 ###  getMustache
 
-▸ **getMustache**(`content`: string, `line`: number, `col`: number): *[RuntimeMustache](_contracts_index_.md#runtimemustache) | null*
+▸ **getMustache**(`content`: string, `filename`: string, `line`: number, `col`: number): *[RuntimeMustache](_contracts_index_.md#runtimemustache) | null*
 
 Returns the runtime mustache node if mustache is detected
 
@@ -22,6 +22,7 @@ Returns the runtime mustache node if mustache is detected
 Name | Type |
 ------ | ------ |
 `content` | string |
+`filename` | string |
 `line` | number |
 `col` | number |
 
@@ -31,7 +32,7 @@ ___
 
 ###  getTag
 
-▸ **getTag**(`content`: string, `line`: number, `col`: number, `tags`: [Tags](../interfaces/_contracts_index_.tags.md)): *[RuntimeTag](_contracts_index_.md#runtimetag) | null*
+▸ **getTag**(`content`: string, `filename`: string, `line`: number, `col`: number, `tags`: [Tags](../interfaces/_contracts_index_.tags.md)): *[RuntimeTag](_contracts_index_.md#runtimetag) | null*
 
 Returns runtime tag node if tag is detected and is a registered tag
 
@@ -40,6 +41,7 @@ Returns runtime tag node if tag is detected and is a registered tag
 Name | Type |
 ------ | ------ |
 `content` | string |
+`filename` | string |
 `line` | number |
 `col` | number |
 `tags` | [Tags](../interfaces/_contracts_index_.tags.md) |

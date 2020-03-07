@@ -15,7 +15,7 @@ const tagsDef = {
   },
 }
 
-const tokenizer = new Tokenizer(exampleCode, tagsDef, { filename: 'exec' })
+const tokenizer = new Tokenizer(exampleCode, tagsDef, { filename: 'eval.edge' })
 tokenizer.parse()
 
 console.log(JSON.stringify(tokenizer['tokens'], null, 2))

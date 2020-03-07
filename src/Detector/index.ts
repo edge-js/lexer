@@ -18,7 +18,13 @@ const TAG_REGEX = /^(\s*)(@{1,2})(!)?(\w+)(\s{0,2})/
 /**
  * Returns runtime tag node if tag is detected and is a registered tag
  */
-export function getTag (content: string, line: number, col: number, tags: Tags): RuntimeTag | null {
+export function getTag (
+  content: string,
+  filename: string,
+  line: number,
+  col: number,
+  tags: Tags
+): RuntimeTag | null {
   const match = TAG_REGEX.exec(content)
 
   /**
@@ -60,6 +66,7 @@ export function getTag (content: string, line: number, col: number, tags: Tags):
 
   return {
     name,
+    filename,
     seekable,
     selfclosed,
     block,
@@ -73,7 +80,12 @@ export function getTag (content: string, line: number, col: number, tags: Tags):
 /**
  * Returns the runtime mustache node if mustache is detected
  */
-export function getMustache (content: string, line: number, col: number): RuntimeMustache | null {
+export function getMustache (
+  content: string,
+  filename: string,
+  line: number,
+  col: number,
+): RuntimeMustache | null {
   const mustacheIndex = content.indexOf('{{')
 
   if (mustacheIndex === -1) {
@@ -86,6 +98,7 @@ export function getMustache (content: string, line: number, col: number): Runtim
 
   return {
     safe,
+    filename,
     escaped,
     line,
     col: col + realCol,

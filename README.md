@@ -112,6 +112,7 @@ Following is the list of Nodes returned by the tokenizer.
 ```js
 {
   type: 'tag'
+  filename: 'eval.edge',
   loc: {
     start: {
       line: 1,
@@ -133,6 +134,7 @@ Following is the list of Nodes returned by the tokenizer.
 {
 - type: 'tag',
 + type: 'e__tag',
+  filename: 'eval.edge',
   loc: {
     start: {
       line: 1,
@@ -182,6 +184,7 @@ Following is the list of Nodes returned by the tokenizer.
 ```js
 {
   type: 'mustache',
+  filename: 'eval.edge',
   loc: {
     start: {
       line: 1,
@@ -202,6 +205,7 @@ Following is the list of Nodes returned by the tokenizer.
 {
 - type: 'mustache',
 + type: 's__mustache',
+  filename: 'eval.edge',
   loc: {
     start: {
       line: 1,
@@ -222,6 +226,7 @@ Following is the list of Nodes returned by the tokenizer.
 {
 - type: 'mustache',
 + type: 'e__mustache',
+  filename: 'eval.edge',
   loc: {
     start: {
       line: 1,
@@ -242,6 +247,7 @@ Following is the list of Nodes returned by the tokenizer.
 {
 - type: 'mustache',
 + type: 'es__mustache',
+  filename: 'eval.edge',
   loc: {
     start: {
       line: 1,
@@ -292,7 +298,7 @@ The block prop is used by the `Block` node. The only difference from the regular
 
 | Key | Description |
 |-------|------------|
-| jsArg | The `jsArg` is the Javascript expression to evaluate |
+| jsArg | The `jsArg` is the Javascript expression to evaluate. Whitespaces and newlines are preserved inside the jsArg |
 | selfclosed | Whether or not the tag was `selfclosed` during usage. |
 
 
@@ -361,6 +367,7 @@ The output of the above text will be
 [
   {
     "type": "tag",
+    "filename": "eval.edge",
     "properties": {
       "name": "if",
       "jsArg": "username",
@@ -384,6 +391,7 @@ The output of the above text will be
       },
       {
         "type": "mustache",
+        "filename": "eval.edge",
         "properties": {
           "jsArg": " username "
         },
@@ -433,4 +441,4 @@ Following the links to documented error codes raised by the lexer.
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
 
 [license-url]: LICENSE.md
-[license-image]: https://img.shields.io/aur/license/pac.svg?style=for-the-badge
+[license-image]: https://img.shields.io/github/license/edge-js/lexer?style=for-the-badge

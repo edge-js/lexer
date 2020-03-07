@@ -89,6 +89,7 @@ export type MustacheToken = {
   type: MustacheTypes,
   properties: MustacheProps,
   loc: LexerLoc,
+  filename: string,
 }
 
 /**
@@ -99,6 +100,7 @@ export type TagToken = {
   properties: TagProps,
   loc: LexerLoc,
   children: Token[],
+  filename: string,
 }
 
 export type Token = RawToken | NewLineToken | TagToken | MustacheToken
@@ -108,6 +110,7 @@ export type Token = RawToken | NewLineToken | TagToken | MustacheToken
  */
 export type RuntimeTag = {
   name: string,
+  filename: string,
   selfclosed: boolean,
   col: number,
   line: number,
@@ -122,6 +125,7 @@ export type RuntimeTag = {
  */
 export type RuntimeMustache = {
   escaped: boolean,
+  filename: string,
   safe: boolean,
   line: number,
   col: number,

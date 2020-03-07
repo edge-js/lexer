@@ -78,6 +78,8 @@ Mustache token
 
 #### Type declaration:
 
+* **filename**: *string*
+
 * **loc**: *[LexerLoc](_contracts_index_.md#lexerloc)*
 
 * **properties**: *[MustacheProps](_contracts_index_.md#mustacheprops)*
@@ -128,6 +130,8 @@ Runtime mustache node to know the shape of the mustache
 
 * **escaped**: *boolean*
 
+* **filename**: *string*
+
 * **line**: *number*
 
 * **realCol**: *number*
@@ -149,6 +153,8 @@ The runtime tag node to know the shape of a tag
 * **col**: *number*
 
 * **escaped**: *boolean*
+
+* **filename**: *string*
 
 * **hasBrace**: *boolean*
 
@@ -187,6 +193,8 @@ Tag token
 #### Type declaration:
 
 * **children**: *[Token](_contracts_index_.md#token)[]*
+
+* **filename**: *string*
 
 * **loc**: *[LexerLoc](_contracts_index_.md#lexerloc)*
 
