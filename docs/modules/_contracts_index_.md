@@ -96,6 +96,8 @@ New line token
 
 #### Type declaration:
 
+* **filename**: *string*
+
 * **line**: *number*
 
 * **type**: *"newline"*
@@ -109,6 +111,8 @@ ___
 Raw line token
 
 #### Type declaration:
+
+* **filename**: *string*
 
 * **line**: *number*
 
