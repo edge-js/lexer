@@ -42,6 +42,7 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: 'Hello ',
       },
@@ -76,6 +77,7 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: 'Hello ',
       },
@@ -98,6 +100,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: '!',
       },
@@ -119,6 +122,7 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: 'List of users are ',
       },
@@ -141,6 +145,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 5,
         value: '.',
       },
@@ -162,6 +167,7 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: 'List of users are ',
       },
@@ -184,6 +190,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 5,
         value: '.',
       },
@@ -205,6 +212,7 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: 'List of users are ',
       },
@@ -227,6 +235,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 5,
         value: '.',
       },
@@ -245,6 +254,7 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: 'Hello ',
       },
@@ -267,6 +277,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: ', your age is ',
       },
@@ -309,6 +320,7 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: 'Hello ',
       },
@@ -331,6 +343,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: ', your friends are ',
       },
@@ -353,15 +366,18 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 5,
         value: '!',
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 5,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 6,
         value: 'Bye',
       },
@@ -410,6 +426,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: ', ',
       },
@@ -432,6 +449,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: ' and ',
       },
@@ -484,6 +502,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: ', ',
       },
@@ -538,6 +557,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: ', ',
       },
@@ -573,6 +593,7 @@ test.group('Tokenizer Mustache', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: 'Hello ',
       },
@@ -595,6 +616,7 @@ test.group('Tokenizer Mustache', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         line: 1,
         value: ', your age is ',
       },

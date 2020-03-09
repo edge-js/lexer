@@ -80,6 +80,7 @@ export class Tokenizer {
     return {
       type: 'raw',
       value: text,
+      filename: this.options.filename,
       line: this.line,
     }
   }
@@ -90,6 +91,7 @@ export class Tokenizer {
   private getNewLineNode (): NewLineToken {
     return {
       type: 'newline',
+      filename: this.options.filename,
       line: this.line - 1,
     }
   }

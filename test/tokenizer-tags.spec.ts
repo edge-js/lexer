@@ -47,20 +47,24 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello',
         line: 1,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 1,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '',
         line: 2,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -103,20 +107,24 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello',
         line: 1,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 1,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '',
         line: 2,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -140,6 +148,7 @@ test.group('Tokenizer Tags', () => {
         children: [
           {
             type: 'raw',
+            filename: 'eval.edge',
             value: '  Hello',
             line: 4,
           },
@@ -166,20 +175,24 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello',
         line: 1,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 1,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '',
         line: 2,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -222,6 +235,7 @@ test.group('Tokenizer Tags', () => {
             children: [
               {
                 type: 'raw',
+                filename: 'eval.edge',
                 value: '    Hi',
                 line: 5,
               },
@@ -250,20 +264,24 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello',
         line: 1,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 1,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '',
         line: 2,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -287,6 +305,7 @@ test.group('Tokenizer Tags', () => {
         children: [
           {
             type: 'raw',
+            filename: 'eval.edge',
             value: '  Hello',
             line: 6,
           },
@@ -313,20 +332,24 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello',
         line: 1,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 1,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '',
         line: 2,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -350,6 +373,7 @@ test.group('Tokenizer Tags', () => {
         children: [
           {
             type: 'raw',
+            filename: 'eval.edge',
             value: '  Answer is 12',
             line: 6,
           },
@@ -424,11 +448,13 @@ test.group('Tokenizer Tags', () => {
         children: [
           {
             type: 'raw',
+            filename: 'eval.edge',
             value: '  Hello',
             line: 2,
           },
           {
             type: 'newline',
+            filename: 'eval.edge',
             line: 2,
           },
           {
@@ -453,6 +479,7 @@ test.group('Tokenizer Tags', () => {
           },
           {
             type: 'raw',
+            filename: 'eval.edge',
             value: '  Hello guest',
             line: 4,
           },
@@ -473,6 +500,7 @@ test.group('Tokenizer Tags', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '@foo(\'hello world\')',
         line: 1,
       },
@@ -728,20 +756,24 @@ test.group('Tokenizer columns', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello',
         line: 1,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 1,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '',
         line: 2,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -782,20 +814,24 @@ test.group('Tokenizer columns', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello',
         line: 1,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 1,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '',
         line: 2,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -836,20 +872,24 @@ test.group('Tokenizer columns', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello',
         line: 1,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 1,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '',
         line: 2,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -892,20 +932,24 @@ test.group('Tokenizer columns', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello',
         line: 1,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 1,
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: '',
         line: 2,
       },
       {
         type: 'newline',
+        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -943,6 +987,7 @@ test.group('Tokenizer columns', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello ',
         line: 1,
       },
@@ -978,6 +1023,7 @@ test.group('Tokenizer columns', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello ',
         line: 1,
       },
@@ -1000,6 +1046,7 @@ test.group('Tokenizer columns', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: ', your age is ',
         line: 1,
       },
@@ -1037,6 +1084,7 @@ test.group('Tokenizer columns', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello ',
         line: 1,
       },
@@ -1059,6 +1107,7 @@ test.group('Tokenizer columns', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: ', your age is ',
         line: 3,
       },
@@ -1096,6 +1145,7 @@ test.group('Tokenizer columns', () => {
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Hello ',
         line: 1,
       },
@@ -1118,6 +1168,7 @@ test.group('Tokenizer columns', () => {
       },
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: ', your age is ',
         line: 3,
       },

@@ -72,6 +72,7 @@ export type RawToken = {
   type: 'raw',
   value: string,
   line: number,
+  filename: string,
 }
 
 /**
@@ -80,6 +81,7 @@ export type RawToken = {
 export type NewLineToken = {
   type: 'newline',
   line: number,
+  filename: string,
 }
 
 /**

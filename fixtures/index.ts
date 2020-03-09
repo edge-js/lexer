@@ -222,6 +222,7 @@ username
     out: [
       {
         type: 'raw',
+        filename: 'eval.edge',
         value: 'Your friends are ',
         line: 1,
       },
