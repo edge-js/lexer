@@ -155,6 +155,7 @@ Following is the list of Nodes returned by the tokenizer.
 ```js
 {
   type: 'raw',
+  filename: 'eval.edge',
   line: number,
   value: string
 }
@@ -165,6 +166,7 @@ Following is the list of Nodes returned by the tokenizer.
 ```js
 {
   type: 'comment',
+  filename: 'eval.edge',
   line: number,
   value: string
 }
