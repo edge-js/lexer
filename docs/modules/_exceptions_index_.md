@@ -1,6 +1,6 @@
 [edge-lexer](../README.md) › ["Exceptions/index"](_exceptions_index_.md)
 
-# External module: "Exceptions/index"
+# Module: "Exceptions/index"
 
 ## Index
 

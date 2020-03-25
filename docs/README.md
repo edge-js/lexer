@@ -4,7 +4,7 @@
 
 ## Index
 
-### External modules
+### Modules
 
 * ["Contracts/index"](modules/_contracts_index_.md)
 * ["Detector/index"](modules/_detector_index_.md)

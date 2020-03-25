@@ -1,6 +1,6 @@
 [edge-lexer](../README.md) › ["Scanner/index"](_scanner_index_.md)
 
-# External module: "Scanner/index"
+# Module: "Scanner/index"
 
 edge-lexer
 

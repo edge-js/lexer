@@ -1,6 +1,6 @@
 [edge-lexer](../README.md) › ["Tokenizer/index"](_tokenizer_index_.md)
 
-# External module: "Tokenizer/index"
+# Module: "Tokenizer/index"
 
 ## Index
 

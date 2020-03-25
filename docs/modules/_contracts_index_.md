@@ -1,6 +1,6 @@
 [edge-lexer](../README.md) › ["Contracts/index"](_contracts_index_.md)
 
-# External module: "Contracts/index"
+# Module: "Contracts/index"
 
 edge-lexer
 

@@ -1,6 +1,6 @@
 [edge-lexer](../README.md) › ["Detector/index"](_detector_index_.md)
 
-# External module: "Detector/index"
+# Module: "Detector/index"
 
 ## Index
 
