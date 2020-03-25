@@ -23,11 +23,13 @@ file that was distributed with this source code.
 
 ### Type aliases
 
+* [CommentToken](_contracts_index_.md#commenttoken)
 * [LexerLoc](_contracts_index_.md#lexerloc)
 * [MustacheProps](_contracts_index_.md#mustacheprops)
 * [MustacheToken](_contracts_index_.md#mustachetoken)
 * [NewLineToken](_contracts_index_.md#newlinetoken)
 * [RawToken](_contracts_index_.md#rawtoken)
+* [RuntimeComment](_contracts_index_.md#runtimecomment)
 * [RuntimeMustache](_contracts_index_.md#runtimemustache)
 * [RuntimeTag](_contracts_index_.md#runtimetag)
 * [TagProps](_contracts_index_.md#tagprops)
@@ -35,6 +37,24 @@ file that was distributed with this source code.
 * [Token](_contracts_index_.md#token)
 
 ## Type aliases
+
+###  CommentToken
+
+Ƭ **CommentToken**: *object*
+
+Comment token
+
+#### Type declaration:
+
+* **filename**: *string*
+
+* **loc**: *[LexerLoc](_contracts_index_.md#lexerloc)*
+
+* **type**: *"comment"*
+
+* **value**: *string*
+
+___
 
 ###  LexerLoc
 
@@ -122,6 +142,26 @@ Raw line token
 
 ___
 
+###  RuntimeComment
+
+Ƭ **RuntimeComment**: *object*
+
+Runtime comment node to know the shape of the comment
+
+#### Type declaration:
+
+* **col**: *number*
+
+* **filename**: *string*
+
+* **isComment**: *true*
+
+* **line**: *number*
+
+* **realCol**: *number*
+
+___
+
 ###  RuntimeMustache
 
 Ƭ **RuntimeMustache**: *object*
@@ -135,6 +175,8 @@ Runtime mustache node to know the shape of the mustache
 * **escaped**: *boolean*
 
 * **filename**: *string*
+
+* **isComment**: *false*
 
 * **line**: *number*
 
@@ -210,4 +252,4 @@ ___
 
 ###  Token
 
-Ƭ **Token**: *[RawToken](_contracts_index_.md#rawtoken) | [NewLineToken](_contracts_index_.md#newlinetoken) | [TagToken](_contracts_index_.md#tagtoken) | [MustacheToken](_contracts_index_.md#mustachetoken)*
+Ƭ **Token**: *[RawToken](_contracts_index_.md#rawtoken) | [NewLineToken](_contracts_index_.md#newlinetoken) | [TagToken](_contracts_index_.md#tagtoken) | [MustacheToken](_contracts_index_.md#mustachetoken) | [CommentToken](_contracts_index_.md#commenttoken)*

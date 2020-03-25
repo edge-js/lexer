@@ -4,7 +4,9 @@ const { Tokenizer } = require('..')
 const dedent = require('dedent')
 
 const exampleCode = dedent`
+{{-- Show username when exists --}}
 @if(username)
+  {{-- Wrap inside h2 --}}
   <h2> Hello {{ username }} </h2>
 @endif
 `

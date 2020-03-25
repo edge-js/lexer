@@ -54,7 +54,7 @@ Name | Type |
 
 • **mustacheStatement**: *null | object* = null
 
-Holds the current tag statement, until it is closed
+Holds the current mustache statement, until it is closed
 
 ___
 

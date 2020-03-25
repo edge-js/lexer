@@ -85,6 +85,16 @@ export type NewLineToken = {
 }
 
 /**
+ * Comment token
+ */
+export type CommentToken = {
+  type: 'comment',
+  value: string,
+  loc: LexerLoc,
+  filename: string,
+}
+
+/**
  * Mustache token
  */
 export type MustacheToken = {
@@ -105,7 +115,7 @@ export type TagToken = {
   filename: string,
 }
 
-export type Token = RawToken | NewLineToken | TagToken | MustacheToken
+export type Token = RawToken | NewLineToken | TagToken | MustacheToken | CommentToken
 
 /**
  * The runtime tag node to know the shape of a tag
@@ -126,9 +136,21 @@ export type RuntimeTag = {
  * Runtime mustache node to know the shape of the mustache
  */
 export type RuntimeMustache = {
+  isComment: false,
   escaped: boolean,
   filename: string,
   safe: boolean,
+  line: number,
+  col: number,
+  realCol: number,
+}
+
+/**
+ * Runtime comment node to know the shape of the comment
+ */
+export type RuntimeComment = {
+  isComment: true,
+  filename: string,
   line: number,
   col: number,
   realCol: number,

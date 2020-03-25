@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { RuntimeTag, RuntimeMustache, Tags } from '../Contracts'
+import { RuntimeTag, RuntimeMustache, RuntimeComment, Tags } from '../Contracts'
 
 /**
  * The only regex we need in the entire lexer. Also tested
@@ -78,25 +78,49 @@ export function getTag (
 }
 
 /**
- * Returns the runtime mustache node if mustache is detected
+ * Returns the runtime mustache node if mustache is detected. It will look for 3 types of
+ * mustache statements.
+ *
+ * - Comments `{{-- --}}`
+ * - Safe Mustache `{{{ }}}`
+ * - Escaped Mustache `@{{}}`
  */
 export function getMustache (
   content: string,
   filename: string,
   line: number,
   col: number,
-): RuntimeMustache | null {
+): RuntimeMustache | RuntimeComment | null {
   const mustacheIndex = content.indexOf('{{')
 
   if (mustacheIndex === -1) {
     return null
   }
 
-  const safe = content[mustacheIndex + 2] === '{'
-  const escaped = content[mustacheIndex - 1] === '@'
   const realCol = mustacheIndex
 
+  /**
+   * Mustache is a comment
+   */
+  const isComment = content[mustacheIndex + 2] === '-' && content[mustacheIndex + 3] === '-'
+  if (isComment) {
+    return {
+      isComment,
+      filename,
+      line,
+      col: col + realCol,
+      realCol,
+    }
+  }
+
+  /**
+   * Mustache is for interpolation
+   */
+  const safe = content[mustacheIndex + 2] === '{'
+  const escaped = content[mustacheIndex - 1] === '@'
+
   return {
+    isComment,
     safe,
     filename,
     escaped,

@@ -13,9 +13,14 @@
 
 ###  getMustache
 
-▸ **getMustache**(`content`: string, `filename`: string, `line`: number, `col`: number): *[RuntimeMustache](_contracts_index_.md#runtimemustache) | null*
+▸ **getMustache**(`content`: string, `filename`: string, `line`: number, `col`: number): *[RuntimeMustache](_contracts_index_.md#runtimemustache) | [RuntimeComment](_contracts_index_.md#runtimecomment) | null*
 
-Returns the runtime mustache node if mustache is detected
+Returns the runtime mustache node if mustache is detected. It will look for 3 types of
+mustache statements.
+
+- Comments `{{-- --}}`
+- Safe Mustache `{{{ }}}`
+- Escaped Mustache `@{{}}`
 
 **Parameters:**
 
@@ -26,7 +31,7 @@ Name | Type |
 `line` | number |
 `col` | number |
 
-**Returns:** *[RuntimeMustache](_contracts_index_.md#runtimemustache) | null*
+**Returns:** *[RuntimeMustache](_contracts_index_.md#runtimemustache) | [RuntimeComment](_contracts_index_.md#runtimecomment) | null*
 
 ___
 

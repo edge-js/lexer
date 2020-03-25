@@ -11,25 +11,27 @@ import { getTag, getMustache } from '../Detector'
 import { Scanner } from '../Scanner'
 
 import {
-  unclosedParen,
   unclosedTag,
+  unclosedParen,
+  unopenedParen,
   unclosedCurlyBrace,
   cannotSeekStatement,
-  unopenedParen,
 } from '../Exceptions'
 
 import {
-  TagToken,
-  MustacheToken,
   Tags,
-  RawToken,
-  NewLineToken,
-  RuntimeTag,
-  RuntimeMustache,
-  TagTypes,
-  MustacheTypes,
   Token,
   LexerLoc,
+  TagToken,
+  TagTypes,
+  RawToken,
+  RuntimeTag,
+  CommentToken,
+  NewLineToken,
+  MustacheTypes,
+  MustacheToken,
+  RuntimeComment,
+  RuntimeMustache,
 } from '../Contracts'
 
 /**
@@ -48,9 +50,9 @@ export class Tokenizer {
   public tagStatement: null | { scanner: Scanner, tag: RuntimeTag } = null
 
   /**
-   * Holds the current tag statement, until it is closed
+   * Holds the current mustache statement, until it is closed
    */
-  public mustacheStatement: null | { scanner: Scanner, mustache: RuntimeMustache } = null
+  public mustacheStatement: null | { scanner: Scanner, mustache: RuntimeMustache | RuntimeComment } = null
 
   /**
    * Current line number
@@ -66,6 +68,8 @@ export class Tokenizer {
    * We skip newlines after the opening/closing tags
    */
   private skipNewLine: boolean = false
+
+  private lastLineTags: (TagTypes | MustacheTypes | 'newline' | 'comment' | 'raw')[] = []
 
   constructor (
     private template: string,
@@ -248,11 +252,33 @@ export class Tokenizer {
   }
 
   /**
+   * Returns the comment token using the runtime comment node.
+   */
+  private getCommentNode (
+    comment: RuntimeComment,
+    value: string,
+    closingLoc: LexerLoc['end'],
+  ): CommentToken {
+    return {
+      type: 'comment',
+      filename: comment.filename,
+      value: value,
+      loc: {
+        start: {
+          line: comment.line,
+          col: comment.col,
+        },
+        end: closingLoc,
+      },
+    }
+  }
+
+  /**
    * Handles the line which has mustache opening braces.
    */
-  private handleMustacheOpening (line: string, mustache: RuntimeMustache) {
-    const pattern = mustache.safe ? '}}}' : '}}'
-    const textLeftIndex = mustache.escaped ? mustache.realCol - 1 : mustache.realCol
+  private handleMustacheOpening (line: string, mustache: RuntimeMustache | RuntimeComment) {
+    const pattern = mustache.isComment ? '--}}' : (mustache.safe ? '}}}' : '}}')
+    const textLeftIndex = mustache.isComment || !mustache.escaped ? mustache.realCol : mustache.realCol - 1
 
     /**
      * Pull everything that is on the left of the mustache
@@ -305,7 +331,11 @@ export class Tokenizer {
     /**
      * Consume the node as soon as we have found the closing brace
      */
-    this.consumeNode(this.getMustacheNode(mustache, scanner.match, scanner.loc))
+    if (mustache.isComment) {
+      this.consumeNode(this.getCommentNode(mustache, scanner.match, scanner.loc))
+    } else {
+      this.consumeNode(this.getMustacheNode(mustache, scanner.match, scanner.loc))
+    }
 
     /**
      * If their is leftOver text after the mustache closing brace, then re-scan
@@ -321,13 +351,10 @@ export class Tokenizer {
      * process it here by duplicating code (which is fine).
      */
     if (scanner.leftOver.trim()) {
-      const anotherMustache = getMustache(
-        scanner.leftOver,
-        this.options.filename,
-        scanner.loc.line,
-        scanner.loc.col,
-      )
-
+      /**
+       * Scan for another mustache in the same line
+       */
+      const anotherMustache = getMustache(scanner.leftOver, this.options.filename, scanner.loc.line, scanner.loc.col)
       if (anotherMustache) {
         this.handleMustacheOpening(scanner.leftOver, anotherMustache)
         return
@@ -364,6 +391,12 @@ export class Tokenizer {
    * moved as top level token.
    */
   private consumeNode (tag: Token): void {
+    if (tag.type === 'newline') {
+      this.lastLineTags = []
+    } else {
+      this.lastLineTags.push(tag.type)
+    }
+
     if (this.openedTags.length) {
       this.openedTags[this.openedTags.length - 1].children.push(tag)
       return
@@ -378,10 +411,16 @@ export class Tokenizer {
    */
   private pushNewLine () {
     if (this.line === 1) {
+      this.lastLineTags = []
       return
     }
 
-    this.consumeNode(this.getNewLineNode())
+    /**
+     * If the last had any sort of tags expect comments then add a newline token
+     */
+    if (this.lastLineTags.find((type) => type !== 'comment')) {
+      this.consumeNode(this.getNewLineNode())
+    }
   }
 
   /**

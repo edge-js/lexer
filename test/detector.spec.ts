@@ -193,6 +193,7 @@ test.group('Detector (mustache)', () => {
       realCol: 6,
       escaped: false,
       safe: false,
+      isComment: false,
     })
   })
 
@@ -204,6 +205,7 @@ test.group('Detector (mustache)', () => {
       realCol: 6,
       escaped: false,
       safe: true,
+      isComment: false,
     })
   })
 
@@ -215,6 +217,7 @@ test.group('Detector (mustache)', () => {
       realCol: 7,
       escaped: true,
       safe: true,
+      isComment: false,
     })
   })
 
@@ -226,6 +229,7 @@ test.group('Detector (mustache)', () => {
       realCol: 7,
       escaped: true,
       safe: true,
+      isComment: false,
     })
   })
 })
