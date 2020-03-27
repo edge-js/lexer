@@ -64,11 +64,6 @@ export class Tokenizer {
    */
   private openedTags: TagToken[] = []
 
-  /**
-   * We skip newlines after the opening/closing tags
-   */
-  private skipNewLine: boolean = false
-
   private lastLineTags: (TagTypes | MustacheTypes | 'newline' | 'comment' | 'raw')[] = []
 
   constructor (
@@ -418,7 +413,7 @@ export class Tokenizer {
     /**
      * If the last had any sort of tags expect comments then add a newline token
      */
-    if (this.lastLineTags.find((type) => type !== 'comment')) {
+    if (this.lastLineTags.length && this.lastLineTags.find((type) => type !== 'comment')) {
       this.consumeNode(this.getNewLineNode())
     }
   }
@@ -456,25 +451,16 @@ export class Tokenizer {
     }
 
     /**
-     * Everything from here pushes a new line to the stack before
-     * moving forward
-     */
-    if (!this.skipNewLine) {
-      this.pushNewLine()
-    }
-
-    /**
      * Check if the current line is a tag or not. If yes, then handle
      * it appropriately
      */
     const tag = getTag(line, this.options.filename, this.line, 0, this.tagsDef)
     if (tag) {
       this.handleTagOpening(line, tag)
-      this.skipNewLine = true
       return
     }
 
-    this.skipNewLine = false
+    this.pushNewLine()
 
     /**
      * Check if the current line contains a mustache statement or not. If yes,

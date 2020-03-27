@@ -63,11 +63,6 @@ test.group('Tokenizer Tags', () => {
         line: 2,
       },
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 2,
-      },
-      {
         filename: 'eval.edge',
         type: TagTypes.TAG,
         properties: {
@@ -103,7 +98,6 @@ test.group('Tokenizer Tags', () => {
     tokenizer.parse()
 
     assert.isNull(tokenizer.tagStatement)
-
     assert.deepEqual(tokenizer.tokens, [
       {
         type: 'raw',
@@ -120,11 +114,6 @@ test.group('Tokenizer Tags', () => {
         type: 'raw',
         filename: 'eval.edge',
         value: '',
-        line: 2,
-      },
-      {
-        type: 'newline',
-        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -146,6 +135,11 @@ test.group('Tokenizer Tags', () => {
           selfclosed: false,
         },
         children: [
+          {
+            type: 'newline',
+            filename: 'eval.edge',
+            line: 3,
+          },
           {
             type: 'raw',
             filename: 'eval.edge',
@@ -191,11 +185,6 @@ test.group('Tokenizer Tags', () => {
         line: 2,
       },
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 2,
-      },
-      {
         filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
@@ -233,6 +222,11 @@ test.group('Tokenizer Tags', () => {
               selfclosed: false,
             },
             children: [
+              {
+                type: 'newline',
+                filename: 'eval.edge',
+                line: 4,
+              },
               {
                 type: 'raw',
                 filename: 'eval.edge',
@@ -280,11 +274,6 @@ test.group('Tokenizer Tags', () => {
         line: 2,
       },
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 2,
-      },
-      {
         filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
@@ -303,6 +292,11 @@ test.group('Tokenizer Tags', () => {
           selfclosed: false,
         },
         children: [
+          {
+            type: 'newline',
+            filename: 'eval.edge',
+            line: 5,
+          },
           {
             type: 'raw',
             filename: 'eval.edge',
@@ -348,11 +342,6 @@ test.group('Tokenizer Tags', () => {
         line: 2,
       },
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 2,
-      },
-      {
         filename: 'eval.edge',
         type: TagTypes.TAG,
         loc: {
@@ -371,6 +360,11 @@ test.group('Tokenizer Tags', () => {
           selfclosed: false,
         },
         children: [
+          {
+            type: 'newline',
+            filename: 'eval.edge',
+            line: 5,
+          },
           {
             type: 'raw',
             filename: 'eval.edge',
@@ -453,11 +447,6 @@ test.group('Tokenizer Tags', () => {
             line: 2,
           },
           {
-            type: 'newline',
-            filename: 'eval.edge',
-            line: 2,
-          },
-          {
             filename: 'eval.edge',
             type: TagTypes.TAG,
             loc: {
@@ -476,6 +465,11 @@ test.group('Tokenizer Tags', () => {
               selfclosed: false,
             },
             children: [],
+          },
+          {
+            type: 'newline',
+            filename: 'eval.edge',
+            line: 3,
           },
           {
             type: 'raw',
@@ -772,11 +766,6 @@ test.group('Tokenizer columns', () => {
         line: 2,
       },
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 2,
-      },
-      {
         filename: 'eval.edge',
         type: TagTypes.TAG,
         properties: {
@@ -827,11 +816,6 @@ test.group('Tokenizer columns', () => {
         type: 'raw',
         filename: 'eval.edge',
         value: '',
-        line: 2,
-      },
-      {
-        type: 'newline',
-        filename: 'eval.edge',
         line: 2,
       },
       {
@@ -888,11 +872,6 @@ test.group('Tokenizer columns', () => {
         line: 2,
       },
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 2,
-      },
-      {
         filename: 'eval.edge',
         type: TagTypes.TAG,
         properties: {
@@ -945,11 +924,6 @@ test.group('Tokenizer columns', () => {
         type: 'raw',
         filename: 'eval.edge',
         value: '',
-        line: 2,
-      },
-      {
-        type: 'newline',
-        filename: 'eval.edge',
         line: 2,
       },
       {

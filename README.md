@@ -358,7 +358,9 @@ error.code
 ## Example
 
 ```html
+{{-- Show username when exists --}}
 @if(username)
+  {{-- Wrap inside h2 --}}
   <h2> Hello {{ username }} </h2>
 @endif
 ```
@@ -367,6 +369,21 @@ The output of the above text will be
 
 ```json
 [
+  {
+    "type": "comment",
+    "filename": "eval.edge",
+    "value": " Show username when exists ",
+    "loc": {
+      "start": {
+        "line": 1,
+        "col": 4
+      },
+      "end": {
+        "line": 1,
+        "col": 35
+      }
+    }
+  },
   {
     "type": "tag",
     "filename": "eval.edge",
@@ -377,19 +394,35 @@ The output of the above text will be
     },
     "loc": {
       "start": {
-        "line": 1,
+        "line": 2,
         "col": 4
       },
       "end": {
-        "line": 1,
+        "line": 2,
         "col": 13
       }
     },
     "children": [
       {
+        "type": "comment",
+        "filename": "eval.edge",
+        "value": " Wrap inside h2 ",
+        "loc": {
+          "start": {
+            "line": 3,
+            "col": 4
+          },
+          "end": {
+            "line": 3,
+            "col": 24
+          }
+        }
+      },
+      {
         "type": "raw",
         "value": "<h2> Hello ",
-        "line": 2
+        "filename": "eval.edge",
+        "line": 4
       },
       {
         "type": "mustache",
@@ -399,11 +432,11 @@ The output of the above text will be
         },
         "loc": {
           "start": {
-            "line": 2,
+            "line": 4,
             "col": 13
           },
           "end": {
-            "line": 2,
+            "line": 4,
             "col": 25
           }
         }
@@ -411,7 +444,8 @@ The output of the above text will be
       {
         "type": "raw",
         "value": " </h2>",
-        "line": 2
+        "filename": "eval.edge",
+        "line": 4
       }
     ]
   }
