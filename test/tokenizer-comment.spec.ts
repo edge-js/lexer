@@ -10,7 +10,7 @@
 import test from 'japa'
 import dedent from 'dedent'
 import { Tokenizer } from '../src/Tokenizer'
-import { MustacheTypes } from '../src/Contracts'
+import { MustacheTypes, TagTypes } from '../src/Contracts'
 
 const tagsDef = {
   if: class If {
@@ -902,6 +902,64 @@ test.group('Tokenizer Comment', () => {
         filename: 'eval.edge',
         value: 'world',
         line: 4,
+      },
+    ])
+  })
+
+  test('do not emit newline when firstline is a comment', (assert) => {
+    const template = dedent`
+    {{-- This is a comment --}}
+    @if(username)
+    @endif
+    Hello world
+    `
+
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer.tagStatement)
+    assert.isNull(tokenizer.mustacheStatement)
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'comment',
+        filename: 'eval.edge',
+        loc: {
+          start: {
+            line: 1,
+            col: 4,
+          },
+          end: {
+            line: 1,
+            col: 27,
+          },
+        },
+        value: ' This is a comment ',
+      },
+      {
+        filename: 'eval.edge',
+        type: TagTypes.TAG,
+        properties: {
+          name: 'if',
+          jsArg: 'username',
+          selfclosed: false,
+        },
+        loc: {
+          start: {
+            line: 2,
+            col: 4,
+          },
+          end: {
+            line: 2,
+            col: 13,
+          },
+        },
+        children: [],
+      },
+      {
+        type: 'raw',
+        filename: 'eval.edge',
+        line: 4,
+        value: 'Hello world',
       },
     ])
   })

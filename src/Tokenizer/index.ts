@@ -60,11 +60,19 @@ export class Tokenizer {
   private line: number = 0
 
   /**
+   * A boolean to know if we have received a new raw text or mustache line
+   */
+  private receivedNonTagLine = false
+
+  /**
+   * A boolean to know if we current line has blocks other than the comment block
+   */
+  private lineHasNonCommentBlocks = false
+
+  /**
    * An array of opened block level tags
    */
   private openedTags: TagToken[] = []
-
-  private lastLineTags: (TagTypes | MustacheTypes | 'newline' | 'comment' | 'raw')[] = []
 
   constructor (
     private template: string,
@@ -386,10 +394,18 @@ export class Tokenizer {
    * moved as top level token.
    */
   private consumeNode (tag: Token): void {
-    if (tag.type === 'newline') {
-      this.lastLineTags = []
-    } else {
-      this.lastLineTags.push(tag.type)
+    if (!this.lineHasNonCommentBlocks && tag.type !== 'comment') {
+      this.lineHasNonCommentBlocks = true
+    }
+
+    // if (tag.type === 'newline') {
+    //   this.lastLineTags = []
+    // } else {
+    //   this.lastLineTags.push(tag.type)
+    // }
+
+    if (!this.receivedNonTagLine && tag.type !== TagTypes.TAG && tag.type !== TagTypes.ETAG && tag.type !== 'comment') {
+      this.receivedNonTagLine = true
     }
 
     if (this.openedTags.length) {
@@ -405,15 +421,14 @@ export class Tokenizer {
    * new lines at position 0.
    */
   private pushNewLine () {
-    if (this.line === 1) {
-      this.lastLineTags = []
+    if (!this.receivedNonTagLine) {
       return
     }
 
     /**
-     * If the last had any sort of tags expect comments then add a newline token
+     * If line has any other blocks except the comment block, then we output a newline
      */
-    if (this.lastLineTags.length && this.lastLineTags.find((type) => type !== 'comment')) {
+    if (this.lineHasNonCommentBlocks) {
       this.consumeNode(this.getNewLineNode())
     }
   }
@@ -472,9 +487,6 @@ export class Tokenizer {
       return
     }
 
-    /**
-     * Otherwise it is a raw line
-     */
     this.consumeNode(this.getRawNode(line))
   }
 
