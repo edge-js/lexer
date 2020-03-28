@@ -60,14 +60,10 @@ export class Tokenizer {
   private line: number = 0
 
   /**
-   * A boolean to know if we have received a new raw text or mustache line
+   * A boolean to know if we have added the newline for the text block
+   * that has one or more mustache braces
    */
-  private receivedNonTagLine = false
-
-  /**
-   * A boolean to know if we current line has blocks other than the comment block
-   */
-  private lineHasNonCommentBlocks = false
+  private addedNewLineForMustache = false
 
   /**
    * An array of opened block level tags
@@ -95,11 +91,11 @@ export class Tokenizer {
   /**
    * Returns the new line token
    */
-  private getNewLineNode (): NewLineToken {
+  private getNewLineNode (line?: number): NewLineToken {
     return {
       type: 'newline',
       filename: this.options.filename,
-      line: this.line - 1,
+      line: (line || this.line) - 1,
     }
   }
 
@@ -288,6 +284,10 @@ export class Tokenizer {
      * statement and use it as a raw node
      */
     if (textLeftIndex > 0) {
+      if (!this.addedNewLineForMustache) {
+        this.addedNewLineForMustache = true
+        this.pushNewLine()
+      }
       this.consumeNode(this.getRawNode(line.slice(0, textLeftIndex)))
     }
 
@@ -332,6 +332,17 @@ export class Tokenizer {
     }
 
     /**
+     * Added new line before committing the mustache tag.
+     *
+     * - Always add newline when line is not a comment
+     * - Add newline when line is a comment, but also has more content to it.
+     */
+    if (!mustache.isComment && !this.addedNewLineForMustache) {
+      this.addedNewLineForMustache = true
+      this.pushNewLine(mustache.line)
+    }
+
+    /**
      * Consume the node as soon as we have found the closing brace
      */
     if (mustache.isComment) {
@@ -363,6 +374,14 @@ export class Tokenizer {
         return
       }
 
+      /**
+       * Add new line when the left over text has no mustache braces
+       */
+      if (!this.addedNewLineForMustache) {
+        this.addedNewLineForMustache = true
+        this.pushNewLine()
+      }
+
       this.consumeNode(this.getRawNode(scanner.leftOver))
     }
 
@@ -370,6 +389,7 @@ export class Tokenizer {
      * Set mustache statement to null
      */
     this.mustacheStatement = null
+    this.addedNewLineForMustache = false
   }
 
   /**
@@ -394,20 +414,6 @@ export class Tokenizer {
    * moved as top level token.
    */
   private consumeNode (tag: Token): void {
-    if (!this.lineHasNonCommentBlocks && tag.type !== 'comment') {
-      this.lineHasNonCommentBlocks = true
-    }
-
-    // if (tag.type === 'newline') {
-    //   this.lastLineTags = []
-    // } else {
-    //   this.lastLineTags.push(tag.type)
-    // }
-
-    if (!this.receivedNonTagLine && tag.type !== TagTypes.TAG && tag.type !== TagTypes.ETAG && tag.type !== 'comment') {
-      this.receivedNonTagLine = true
-    }
-
     if (this.openedTags.length) {
       this.openedTags[this.openedTags.length - 1].children.push(tag)
       return
@@ -420,17 +426,8 @@ export class Tokenizer {
    * Pushes a new line to the list. This method avoids
    * new lines at position 0.
    */
-  private pushNewLine () {
-    if (!this.receivedNonTagLine) {
-      return
-    }
-
-    /**
-     * If line has any other blocks except the comment block, then we output a newline
-     */
-    if (this.lineHasNonCommentBlocks) {
-      this.consumeNode(this.getNewLineNode())
-    }
+  private pushNewLine (line?: number) {
+    this.consumeNode(this.getNewLineNode(line))
   }
 
   /**
@@ -475,8 +472,6 @@ export class Tokenizer {
       return
     }
 
-    this.pushNewLine()
-
     /**
      * Check if the current line contains a mustache statement or not. If yes,
      * then handle it appropriately.
@@ -487,6 +482,7 @@ export class Tokenizer {
       return
     }
 
+    this.pushNewLine()
     this.consumeNode(this.getRawNode(line))
   }
 

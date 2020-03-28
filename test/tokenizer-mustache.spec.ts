@@ -41,6 +41,11 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
+      {
         type: 'raw',
         filename: 'eval.edge',
         line: 1,
@@ -75,6 +80,11 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -121,6 +131,11 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
+      {
         type: 'raw',
         filename: 'eval.edge',
         line: 1,
@@ -165,6 +180,11 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -211,6 +231,11 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
+      {
         type: 'raw',
         filename: 'eval.edge',
         line: 1,
@@ -252,6 +277,11 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer.mustacheStatement)
 
     assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -318,6 +348,11 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer.mustacheStatement)
 
     assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -408,6 +443,11 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
+      {
         filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
@@ -484,6 +524,11 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
+      {
         filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
@@ -539,6 +584,11 @@ test.group('Tokenizer Mustache', () => {
 
     assert.deepEqual(tokenizer.tokens, [
       {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
+      {
         filename: 'eval.edge',
         type: MustacheTypes.MUSTACHE,
         loc: {
@@ -591,6 +641,11 @@ test.group('Tokenizer Mustache', () => {
     assert.isNull(tokenizer.mustacheStatement)
 
     assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 0,
+      },
       {
         type: 'raw',
         filename: 'eval.edge',
