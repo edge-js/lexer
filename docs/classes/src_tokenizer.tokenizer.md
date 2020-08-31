@@ -1,4 +1,4 @@
-[edge-lexer](../README.md) › ["Tokenizer/index"](../modules/_tokenizer_index_.md) › [Tokenizer](_tokenizer_index_.tokenizer.md)
+[edge-lexer](../README.md) › [src/Tokenizer](../modules/src_tokenizer.md) › [Tokenizer](src_tokenizer.tokenizer.md)
 
 # Class: Tokenizer
 
@@ -16,29 +16,29 @@ the tokens output.
 
 ### Constructors
 
-* [constructor](_tokenizer_index_.tokenizer.md#constructor)
+* [constructor](src_tokenizer.tokenizer.md#constructor)
 
 ### Properties
 
-* [mustacheStatement](_tokenizer_index_.tokenizer.md#mustachestatement)
-* [tagStatement](_tokenizer_index_.tokenizer.md#tagstatement)
-* [tokens](_tokenizer_index_.tokenizer.md#tokens)
+* [mustacheStatement](src_tokenizer.tokenizer.md#mustachestatement)
+* [tagStatement](src_tokenizer.tokenizer.md#tagstatement)
+* [tokens](src_tokenizer.tokenizer.md#tokens)
 
 ### Methods
 
-* [parse](_tokenizer_index_.tokenizer.md#parse)
+* [parse](src_tokenizer.tokenizer.md#parse)
 
 ## Constructors
 
 ###  constructor
 
-\+ **new Tokenizer**(`template`: string, `tagsDef`: [Tags](../interfaces/_contracts_index_.tags.md), `options`: object): *[Tokenizer](_tokenizer_index_.tokenizer.md)*
+\+ **new Tokenizer**(`template`: string, `tagsDef`: [Tags](../interfaces/src_contracts.tags.md), `options`: object): *[Tokenizer](src_tokenizer.tokenizer.md)*
 
 **Parameters:**
 
 ▪ **template**: *string*
 
-▪ **tagsDef**: *[Tags](../interfaces/_contracts_index_.tags.md)*
+▪ **tagsDef**: *[Tags](../interfaces/src_contracts.tags.md)*
 
 ▪ **options**: *object*
 
@@ -46,7 +46,7 @@ Name | Type |
 ------ | ------ |
 `filename` | string |
 
-**Returns:** *[Tokenizer](_tokenizer_index_.tokenizer.md)*
+**Returns:** *[Tokenizer](src_tokenizer.tokenizer.md)*
 
 ## Properties
 
@@ -68,7 +68,7 @@ ___
 
 ###  tokens
 
-• **tokens**: *[Token](../modules/_contracts_index_.md#token)[]* = []
+• **tokens**: *[Token](../modules/src_contracts.md#token)[]* = []
 
 ## Methods
 

@@ -1,6 +1,6 @@
-[edge-lexer](../README.md) › ["Scanner/index"](_scanner_index_.md)
+[edge-lexer](../README.md) › [src/Scanner](src_scanner.md)
 
-# Module: "Scanner/index"
+# Module: src/Scanner
 
 edge-lexer
 
@@ -13,4 +13,4 @@ file that was distributed with this source code.
 
 ### Classes
 
-* [Scanner](../classes/_scanner_index_.scanner.md)
+* [Scanner](../classes/src_scanner.scanner.md)

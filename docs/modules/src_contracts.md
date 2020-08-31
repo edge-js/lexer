@@ -1,6 +1,6 @@
-[edge-lexer](../README.md) › ["Contracts/index"](_contracts_index_.md)
+[edge-lexer](../README.md) › [src/Contracts](src_contracts.md)
 
-# Module: "Contracts/index"
+# Module: src/Contracts
 
 edge-lexer
 
@@ -13,28 +13,28 @@ file that was distributed with this source code.
 
 ### Enumerations
 
-* [MustacheTypes](../enums/_contracts_index_.mustachetypes.md)
-* [TagTypes](../enums/_contracts_index_.tagtypes.md)
+* [MustacheTypes](../enums/src_contracts.mustachetypes.md)
+* [TagTypes](../enums/src_contracts.tagtypes.md)
 
 ### Interfaces
 
-* [LexerTagDefinitionContract](../interfaces/_contracts_index_.lexertagdefinitioncontract.md)
-* [Tags](../interfaces/_contracts_index_.tags.md)
+* [LexerTagDefinitionContract](../interfaces/src_contracts.lexertagdefinitioncontract.md)
+* [Tags](../interfaces/src_contracts.tags.md)
 
 ### Type aliases
 
-* [CommentToken](_contracts_index_.md#commenttoken)
-* [LexerLoc](_contracts_index_.md#lexerloc)
-* [MustacheProps](_contracts_index_.md#mustacheprops)
-* [MustacheToken](_contracts_index_.md#mustachetoken)
-* [NewLineToken](_contracts_index_.md#newlinetoken)
-* [RawToken](_contracts_index_.md#rawtoken)
-* [RuntimeComment](_contracts_index_.md#runtimecomment)
-* [RuntimeMustache](_contracts_index_.md#runtimemustache)
-* [RuntimeTag](_contracts_index_.md#runtimetag)
-* [TagProps](_contracts_index_.md#tagprops)
-* [TagToken](_contracts_index_.md#tagtoken)
-* [Token](_contracts_index_.md#token)
+* [CommentToken](src_contracts.md#commenttoken)
+* [LexerLoc](src_contracts.md#lexerloc)
+* [MustacheProps](src_contracts.md#mustacheprops)
+* [MustacheToken](src_contracts.md#mustachetoken)
+* [NewLineToken](src_contracts.md#newlinetoken)
+* [RawToken](src_contracts.md#rawtoken)
+* [RuntimeComment](src_contracts.md#runtimecomment)
+* [RuntimeMustache](src_contracts.md#runtimemustache)
+* [RuntimeTag](src_contracts.md#runtimetag)
+* [TagProps](src_contracts.md#tagprops)
+* [TagToken](src_contracts.md#tagtoken)
+* [Token](src_contracts.md#token)
 
 ## Type aliases
 
@@ -48,7 +48,7 @@ Comment token
 
 * **filename**: *string*
 
-* **loc**: *[LexerLoc](_contracts_index_.md#lexerloc)*
+* **loc**: *[LexerLoc](src_contracts.md#lexerloc)*
 
 * **type**: *"comment"*
 
@@ -100,11 +100,11 @@ Mustache token
 
 * **filename**: *string*
 
-* **loc**: *[LexerLoc](_contracts_index_.md#lexerloc)*
+* **loc**: *[LexerLoc](src_contracts.md#lexerloc)*
 
-* **properties**: *[MustacheProps](_contracts_index_.md#mustacheprops)*
+* **properties**: *[MustacheProps](src_contracts.md#mustacheprops)*
 
-* **type**: *[MustacheTypes](../enums/_contracts_index_.mustachetypes.md)*
+* **type**: *[MustacheTypes](../enums/src_contracts.mustachetypes.md)*
 
 ___
 
@@ -238,18 +238,18 @@ Tag token
 
 #### Type declaration:
 
-* **children**: *[Token](_contracts_index_.md#token)[]*
+* **children**: *[Token](src_contracts.md#token)[]*
 
 * **filename**: *string*
 
-* **loc**: *[LexerLoc](_contracts_index_.md#lexerloc)*
+* **loc**: *[LexerLoc](src_contracts.md#lexerloc)*
 
-* **properties**: *[TagProps](_contracts_index_.md#tagprops)*
+* **properties**: *[TagProps](src_contracts.md#tagprops)*
 
-* **type**: *[TagTypes](../enums/_contracts_index_.tagtypes.md)*
+* **type**: *[TagTypes](../enums/src_contracts.tagtypes.md)*
 
 ___
 
 ###  Token
 
-Ƭ **Token**: *[RawToken](_contracts_index_.md#rawtoken) | [NewLineToken](_contracts_index_.md#newlinetoken) | [TagToken](_contracts_index_.md#tagtoken) | [MustacheToken](_contracts_index_.md#mustachetoken) | [CommentToken](_contracts_index_.md#commenttoken)*
+Ƭ **Token**: *[RawToken](src_contracts.md#rawtoken) | [NewLineToken](src_contracts.md#newlinetoken) | [TagToken](src_contracts.md#tagtoken) | [MustacheToken](src_contracts.md#mustachetoken) | [CommentToken](src_contracts.md#commenttoken)*

@@ -1,4 +1,4 @@
-[edge-lexer](../README.md) › ["Contracts/index"](../modules/_contracts_index_.md) › [TagTypes](_contracts_index_.tagtypes.md)
+[edge-lexer](../README.md) › [src/Contracts](../modules/src_contracts.md) › [TagTypes](src_contracts.tagtypes.md)
 
 # Enumeration: TagTypes
 
@@ -9,8 +9,8 @@ will have one of these types
 
 ### Enumeration members
 
-* [ETAG](_contracts_index_.tagtypes.md#etag)
-* [TAG](_contracts_index_.tagtypes.md#tag)
+* [ETAG](src_contracts.tagtypes.md#etag)
+* [TAG](src_contracts.tagtypes.md#tag)
 
 ## Enumeration members
 

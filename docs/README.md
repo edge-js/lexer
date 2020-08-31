@@ -6,9 +6,9 @@
 
 ### Modules
 
-* ["Contracts/index"](modules/_contracts_index_.md)
-* ["Detector/index"](modules/_detector_index_.md)
-* ["Exceptions/index"](modules/_exceptions_index_.md)
-* ["Scanner/index"](modules/_scanner_index_.md)
-* ["Tokenizer/index"](modules/_tokenizer_index_.md)
-* ["utils/index"](modules/_utils_index_.md)
+* [src/Contracts](modules/src_contracts.md)
+* [src/Detector](modules/src_detector.md)
+* [src/Exceptions](modules/src_exceptions.md)
+* [src/Scanner](modules/src_scanner.md)
+* [src/Tokenizer](modules/src_tokenizer.md)
+* [src/utils](modules/src_utils.md)
