@@ -66,6 +66,11 @@ export class Tokenizer {
   private isLastLineATag: boolean = false
 
   /**
+   * When true, the tokenizer will drop the newline
+   */
+  private dropNewLine: boolean = false
+
+  /**
    * An array of opened block level tags
    */
   private openedTags: TagToken[] = []
@@ -201,6 +206,16 @@ export class Tokenizer {
      * block statement to null
      */
     this.consumeTag(tag, scanner.match, scanner.loc)
+
+    /**
+     * If tag endswith `~`. Then instruct the tokenizer to drop the
+     * next new line
+     */
+    if (scanner.leftOver.trim() === '~') {
+      this.tagStatement = null
+      this.dropNewLine = true
+      return
+    }
 
     /**
      * Raise error, if there is inline content after the closing brace ')'
@@ -406,6 +421,15 @@ export class Tokenizer {
     if ((line || this.line) === 1) {
       return
     }
+
+    /**
+     * Ignore incoming new line
+     */
+    if (this.dropNewLine) {
+      this.dropNewLine = false
+      return
+    }
+
     this.consumeNode(this.getNewLineNode(line))
   }
 
