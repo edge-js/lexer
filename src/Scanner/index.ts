@@ -34,125 +34,125 @@
  * first match.
  */
 export class Scanner {
-  private tolaretionCounts: number = 0
-  private tolerateLhs: string = ''
-  private tolerateRhs: string = ''
-  private patternLength = this.pattern.length
+	private tolaretionCounts: number = 0
+	private tolerateLhs: string = ''
+	private tolerateRhs: string = ''
+	private patternLength = this.pattern.length
 
-  /**
-   * Tracking if the scanner has been closed
-   */
-  public closed: boolean = false
+	/**
+	 * Tracking if the scanner has been closed
+	 */
+	public closed: boolean = false
 
-  /**
-   * The matched content within the pattern
-   */
-  public match: string = ''
+	/**
+	 * The matched content within the pattern
+	 */
+	public match: string = ''
 
-  /**
-   * The content in the same line but after the closing
-   * of the pattern
-   */
-  public leftOver: string = ''
+	/**
+	 * The content in the same line but after the closing
+	 * of the pattern
+	 */
+	public leftOver: string = ''
 
-  public loc = {
-    line: this.line,
-    col: this.col,
-  }
+	public loc = {
+		line: this.line,
+		col: this.col,
+	}
 
-  constructor (
-    private pattern: string,
-    toleratePair: [string, string],
-    private line: number,
-    private col: number,
-  ) {
-    this.tolerateLhs = toleratePair[0]
-    this.tolerateRhs = toleratePair[1]
-  }
+	constructor(
+		private pattern: string,
+		toleratePair: [string, string],
+		private line: number,
+		private col: number
+	) {
+		this.tolerateLhs = toleratePair[0]
+		this.tolerateRhs = toleratePair[1]
+	}
 
-  /**
-   * Returns a boolean telling if the pattern matches the current
-   * char and the upcoming chars or not.
-   *
-   * This will be used to mark the scanner as closed and stop scanning
-   * for more chars
-   */
-  private matchesPattern (chars: string, iterationCount: number) {
-    for (let i = 0; i < this.patternLength; i++) {
-      if (this.pattern[i] !== chars[iterationCount + i]) {
-        return false
-      }
-    }
+	/**
+	 * Returns a boolean telling if the pattern matches the current
+	 * char and the upcoming chars or not.
+	 *
+	 * This will be used to mark the scanner as closed and stop scanning
+	 * for more chars
+	 */
+	private matchesPattern(chars: string, iterationCount: number) {
+		for (let i = 0; i < this.patternLength; i++) {
+			if (this.pattern[i] !== chars[iterationCount + i]) {
+				return false
+			}
+		}
 
-    return true
-  }
+		return true
+	}
 
-  /**
-   * Scan a string and look for the closing pattern. The string will
-   * be seperated with the closing pattern and also tracks the
-   * toleration patterns to make sure they are not making the
-   * scanner to end due to pattern mis-match.
-   */
-  public scan (chunk: string): void {
-    if (chunk === '\n') {
-      this.loc.line++
-      this.loc.col = 0
-      this.match += '\n'
-      return
-    }
+	/**
+	 * Scan a string and look for the closing pattern. The string will
+	 * be seperated with the closing pattern and also tracks the
+	 * toleration patterns to make sure they are not making the
+	 * scanner to end due to pattern mis-match.
+	 */
+	public scan(chunk: string): void {
+		if (chunk === '\n') {
+			this.loc.line++
+			this.loc.col = 0
+			this.match += '\n'
+			return
+		}
 
-    if (!chunk.trim()) {
-      return
-    }
+		if (!chunk.trim()) {
+			return
+		}
 
-    const chunkLength = chunk.length
-    let iterations = 0
+		const chunkLength = chunk.length
+		let iterations = 0
 
-    while (iterations < chunkLength) {
-      const char = chunk[iterations]
+		while (iterations < chunkLength) {
+			const char = chunk[iterations]
 
-      /**
-       * Toleration count is 0 and closing pattern matches the current
-       * or series of upcoming characters
-       */
-      if (this.tolaretionCounts === 0 && this.matchesPattern(chunk, iterations)) {
-        iterations += this.patternLength
-        this.closed = true
-        break
-      }
+			/**
+			 * Toleration count is 0 and closing pattern matches the current
+			 * or series of upcoming characters
+			 */
+			if (this.tolaretionCounts === 0 && this.matchesPattern(chunk, iterations)) {
+				iterations += this.patternLength
+				this.closed = true
+				break
+			}
 
-      /**
-       * Increments the tolarate counts when char is the
-       * tolerate lhs character
-       */
-      if (char === this.tolerateLhs) {
-        this.tolaretionCounts++
-      }
+			/**
+			 * Increments the tolarate counts when char is the
+			 * tolerate lhs character
+			 */
+			if (char === this.tolerateLhs) {
+				this.tolaretionCounts++
+			}
 
-      /**
-       * Decrements the tolare counts when char is the
-       * tolerate rhs character
-       */
-      if (char === this.tolerateRhs) {
-        this.tolaretionCounts--
-      }
+			/**
+			 * Decrements the tolare counts when char is the
+			 * tolerate rhs character
+			 */
+			if (char === this.tolerateRhs) {
+				this.tolaretionCounts--
+			}
 
-      /**
-       * Append to the matched string and waiting for the
-       * closing pattern
-       */
-      this.match += char
+			/**
+			 * Append to the matched string and waiting for the
+			 * closing pattern
+			 */
+			this.match += char
 
-      iterations++
-    }
+			iterations++
+		}
 
-    /**
-     * If closed, then return the matched string and also the
-     * left over string
-     */
-    if (this.closed) {
-      this.loc.col += iterations
-      this.leftOver = chunk.slice(iterations)
-    }
-  }
+		/**
+		 * If closed, then return the matched string and also the
+		 * left over string
+		 */
+		if (this.closed) {
+			this.loc.col += iterations
+			this.leftOver = chunk.slice(iterations)
+		}
+	}
 }

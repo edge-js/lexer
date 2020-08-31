@@ -3,6 +3,7 @@
 This exception is raised when the number of `opened` and `closed` mustache braces mis-matches.
 
 #### Invalid
+
 ```edge
 {{ 2 + 2 }
 ```
@@ -10,7 +11,6 @@ This exception is raised when the number of `opened` and `closed` mustache brace
 ```edge
 {{{ `<p>${username}</p>` }}
 ```
-
 
 Following are the valid expressions
 

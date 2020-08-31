@@ -1,9 +1,10 @@
 # Edge lexer
+
 > Generating high level tokens from Edge whitelisted markup
 
 [![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url]
 
-Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax). 
+Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax).
 
 This module is a blend of a `lexer` and an `AST generator`, since Edge doesn't need a pure [lexer](https://en.wikipedia.org/wiki/Lexical_analysis) that scans for each character. Edge markup is written within other markup languages like **HTML** or **Markdown** and walking over each character is waste of resources.
 
@@ -40,6 +41,7 @@ Instead, this module starts by detecting for the [Edge whitelisted syntax](https
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Highlights
+
 - Zero dependencies (Actually one dependency that is also to standardize edge errors).
 - Just uses one regex statement. That also tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
 - Allows multiline expressions
@@ -58,7 +60,6 @@ Following measures are taken to keep the analysis performant.
 3. Do not analyse Javascript expression and leave that for [edge-parser](https://github.com/edge-js/parser).
 4. Only uses one Regular expression.
 
-
 ---
 
 ## Usage
@@ -71,12 +72,12 @@ const tags = {
   if: {
     block: true,
     seekable: true,
-  }
+  },
 }
 
 // Filename is required to add it to error messages
 const options = {
-  filename: 'welcome.edge'
+  filename: 'welcome.edge',
 }
 
 const tokenizer = new Tokenizer(template, tags, options)
@@ -88,23 +89,25 @@ console.log(tokenizer.tokens)
 ---
 
 ## Terms used
+
 This guide makes use of the following terms to identify core pieces of the tokenizer.
 
-| Term | Token Type | Description |
-|------|-----------|------------ |
-| Tag | tag | Tags are used to define logical blocks in the template engine. For example `if tag` or `include tag`. |
-| Escaped Tag | e__tag | Escaped tag, Edge will not evaluate it at runtime. |
-| Mustache | mustache | Javascript expression wrapped in curly braces. `{{ }}`|
-| Safe Mustache | s__mustache | Safe mustache, that doesn't escape the output `{{{ }}}`|
-| Escaped Mustache | e__mustache | Mustache tag that is escaped |
-| Escaped Safe Mustache | es__mustache | Safe Mustache tag that is escaped |
-| Raw | raw | A raw string, which has no meaning for the template engine |
-| NewLine | newline | Newline |
-| Comment | comment | Edge specific comment block. This will be ripped off in the output.
+| Term                  | Token Type     | Description                                                                                           |
+| --------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| Tag                   | tag            | Tags are used to define logical blocks in the template engine. For example `if tag` or `include tag`. |
+| Escaped Tag           | e\_\_tag       | Escaped tag, Edge will not evaluate it at runtime.                                                    |
+| Mustache              | mustache       | Javascript expression wrapped in curly braces. `{{ }}`                                                |
+| Safe Mustache         | s\_\_mustache  | Safe mustache, that doesn't escape the output `{{{ }}}`                                               |
+| Escaped Mustache      | e\_\_mustache  | Mustache tag that is escaped                                                                          |
+| Escaped Safe Mustache | es\_\_mustache | Safe Mustache tag that is escaped                                                                     |
+| Raw                   | raw            | A raw string, which has no meaning for the template engine                                            |
+| NewLine               | newline        | Newline                                                                                               |
+| Comment               | comment        | Edge specific comment block. This will be ripped off in the output.                                   |
 
 ---
 
 ## Tokens
+
 Following is the list of Nodes returned by the tokenizer.
 
 #### Tag Token
@@ -264,22 +267,23 @@ Following is the list of Nodes returned by the tokenizer.
 }
 ```
 
-
-| Key | Value | Description |
-|-----|------|-------------------|
-| type | string | The type of node determines the behavior of node |
-| loc | object | `loc` is only present for tags and mustache tokens |
-| line | number | `line` is not present  for tags and mustache tokens |
-| properties | Prop | Meta data for the node. See [Properties](#properties) to more info |
-| value | string | If token is a raw or comment token, then value is the string in the source file |
-| children | array | Array of recursive nodes. Only exists, when token is a tag |
+| Key        | Value  | Description                                                                     |
+| ---------- | ------ | ------------------------------------------------------------------------------- |
+| type       | string | The type of node determines the behavior of node                                |
+| loc        | object | `loc` is only present for tags and mustache tokens                              |
+| line       | number | `line` is not present for tags and mustache tokens                              |
+| properties | Prop   | Meta data for the node. See [Properties](#properties) to more info              |
+| value      | string | If token is a raw or comment token, then value is the string in the source file |
+| children   | array  | Array of recursive nodes. Only exists, when token is a tag                      |
 
 ---
 
 ## Properties
-The properties `Prop` is used to define meta data for a given Node. Nodes like `raw`, `comment` and `newline`, doesn't need any metadata. 
+
+The properties `Prop` is used to define meta data for a given Node. Nodes like `raw`, `comment` and `newline`, doesn't need any metadata.
 
 #### BlockProp
+
 The block prop is used by the `Block` node. The only difference from the regular `Prop` is the addition of `selfclosed` attribute.
 
 ```js
@@ -298,11 +302,10 @@ The block prop is used by the `Block` node. The only difference from the regular
 }
 ```
 
-| Key | Description |
-|-------|------------|
-| jsArg | The `jsArg` is the Javascript expression to evaluate. Whitespaces and newlines are preserved inside the jsArg |
-| selfclosed | Whether or not the tag was `selfclosed` during usage. |
-
+| Key        | Description                                                                                                   |
+| ---------- | ------------------------------------------------------------------------------------------------------------- |
+| jsArg      | The `jsArg` is the Javascript expression to evaluate. Whitespaces and newlines are preserved inside the jsArg |
+| selfclosed | Whether or not the tag was `selfclosed` during usage.                                                         |
 
 ---
 
@@ -316,7 +319,7 @@ For mustache nodes props, the `name` is the type of mustache expressions. The le
 {{ username }}
 ```
 
-**e__mustache (Escaped mustache)**
+**e\_\_mustache (Escaped mustache)**
 
 The following expression is ignored by edge. Helpful when you want this expression to be parsed by a frontend template engine
 
@@ -324,7 +327,7 @@ The following expression is ignored by edge. Helpful when you want this expressi
 @{{ username }}
 ```
 
-**s__mustache (Safe mustache)**
+**s\_\_mustache (Safe mustache)**
 
 The following expression output is considered HTML safe.
 
@@ -332,7 +335,7 @@ The following expression output is considered HTML safe.
 {{{ '<p> Hello world </p>' }}}
 ```
 
-**es__mustache (Escaped safe mustache)**
+**es\_\_mustache (Escaped safe mustache)**
 
 ```
 @{{{ '<p> Not touched </p>' }}}
@@ -352,16 +355,13 @@ error.filename
 error.code
 ```
 
-
 ---
 
 ## Example
 
 ```html
-{{-- Show username when exists --}}
-@if(username)
-  {{-- Wrap inside h2 --}}
-  <h2> Hello {{ username }} </h2>
+{{-- Show username when exists --}} @if(username) {{-- Wrap inside h2 --}}
+<h2>Hello {{ username }}</h2>
 @endif
 ```
 
@@ -451,12 +451,15 @@ The output of the above text will be
   }
 ]
 ```
+
 ## API Docs
+
 Following are the autogenerated files via Typedoc
 
-* [API](docs/README.md)
+- [API](docs/README.md)
 
 ## Raised exceptions
+
 Following the links to documented error codes raised by the lexer.
 
 - [E_CANNOT_SEEK_STATEMENT](errors/E_CANNOT_SEEK_STATEMENT.md)
@@ -466,15 +469,13 @@ Following the links to documented error codes raised by the lexer.
 - [E_UNOPENED_PAREN](errors/E_UNOPENED_PAREN.md)
 
 ## Maintainers
+
 [Harminder virk](https://github.com/thetutlage)
 
 [circleci-image]: https://img.shields.io/circleci/project/github/edge-js/lexer/master.svg?style=for-the-badge&logo=circleci
-[circleci-url]: https://circleci.com/gh/edge-js/lexer "circleci"
-
+[circleci-url]: https://circleci.com/gh/edge-js/lexer 'circleci'
 [npm-image]: https://img.shields.io/npm/v/edge-lexer.svg?style=for-the-badge&logo=npm
-[npm-url]: https://npmjs.org/package/edge-lexer "npm"
-
+[npm-url]: https://npmjs.org/package/edge-lexer 'npm'
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
-
 [license-url]: LICENSE.md
 [license-image]: https://img.shields.io/github/license/edge-js/lexer?style=for-the-badge

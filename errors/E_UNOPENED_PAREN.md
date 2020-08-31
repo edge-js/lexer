@@ -3,6 +3,7 @@
 This exception is raised when Javascript expression for tags is not wrapped inside opening and closing braces.
 
 #### Invalid
+
 ```edge
 @if auth.user
 @endif

@@ -11,10 +11,10 @@ const exampleCode = dedent`
 @endif
 `
 const tagsDef = {
-  if: {
-    block: true,
-    seekable: true,
-  },
+	if: {
+		block: true,
+		seekable: true,
+	},
 }
 
 const tokenizer = new Tokenizer(exampleCode, tagsDef, { filename: 'eval.edge' })

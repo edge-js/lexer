@@ -11,10 +11,10 @@
  * Types for mustache statements
  */
 export enum MustacheTypes {
-  SMUSTACHE = 's__mustache',
-  ESMUSTACHE = 'es__mustache',
-  MUSTACHE = 'mustache',
-  EMUSTACHE = 'e__mustache',
+	SMUSTACHE = 's__mustache',
+	ESMUSTACHE = 'es__mustache',
+	MUSTACHE = 'mustache',
+	EMUSTACHE = 'e__mustache',
 }
 
 /**
@@ -22,38 +22,38 @@ export enum MustacheTypes {
  * will have one of these types
  */
 export enum TagTypes {
-  TAG = 'tag',
-  ETAG = 'e__tag',
+	TAG = 'tag',
+	ETAG = 'e__tag',
 }
 
 /**
  * Properties node for a tag
  */
 export type TagProps = {
-  name: string,
-  jsArg: string,
-  selfclosed: boolean,
+	name: string
+	jsArg: string
+	selfclosed: boolean
 }
 
 /**
  * Properties for a mustache block
  */
 export type MustacheProps = {
-  jsArg: string,
+	jsArg: string
 }
 
 /**
  * Location node for tags and mustache braces
  */
 export type LexerLoc = {
-  start: {
-    line: number,
-    col: number,
-  },
-  end: {
-    line: number,
-    col: number,
-  },
+	start: {
+		line: number
+		col: number
+	}
+	end: {
+		line: number
+		col: number
+	}
 }
 
 /**
@@ -61,58 +61,58 @@ export type LexerLoc = {
  * definition
  */
 export interface LexerTagDefinitionContract {
-  block: boolean,
-  seekable: boolean,
+	block: boolean
+	seekable: boolean
 }
 
 /**
  * Raw line token
  */
 export type RawToken = {
-  type: 'raw',
-  value: string,
-  line: number,
-  filename: string,
+	type: 'raw'
+	value: string
+	line: number
+	filename: string
 }
 
 /**
  * New line token
  */
 export type NewLineToken = {
-  type: 'newline',
-  line: number,
-  filename: string,
+	type: 'newline'
+	line: number
+	filename: string
 }
 
 /**
  * Comment token
  */
 export type CommentToken = {
-  type: 'comment',
-  value: string,
-  loc: LexerLoc,
-  filename: string,
+	type: 'comment'
+	value: string
+	loc: LexerLoc
+	filename: string
 }
 
 /**
  * Mustache token
  */
 export type MustacheToken = {
-  type: MustacheTypes,
-  properties: MustacheProps,
-  loc: LexerLoc,
-  filename: string,
+	type: MustacheTypes
+	properties: MustacheProps
+	loc: LexerLoc
+	filename: string
 }
 
 /**
  * Tag token
  */
 export type TagToken = {
-  type: TagTypes,
-  properties: TagProps,
-  loc: LexerLoc,
-  children: Token[],
-  filename: string,
+	type: TagTypes
+	properties: TagProps
+	loc: LexerLoc
+	children: Token[]
+	filename: string
 }
 
 export type Token = RawToken | NewLineToken | TagToken | MustacheToken | CommentToken
@@ -121,41 +121,41 @@ export type Token = RawToken | NewLineToken | TagToken | MustacheToken | Comment
  * The runtime tag node to know the shape of a tag
  */
 export type RuntimeTag = {
-  name: string,
-  filename: string,
-  selfclosed: boolean,
-  col: number,
-  line: number,
-  block: boolean,
-  seekable: boolean,
-  escaped: boolean,
-  hasBrace: boolean,
+	name: string
+	filename: string
+	selfclosed: boolean
+	col: number
+	line: number
+	block: boolean
+	seekable: boolean
+	escaped: boolean
+	hasBrace: boolean
 }
 
 /**
  * Runtime mustache node to know the shape of the mustache
  */
 export type RuntimeMustache = {
-  isComment: false,
-  escaped: boolean,
-  filename: string,
-  safe: boolean,
-  line: number,
-  col: number,
-  realCol: number,
+	isComment: false
+	escaped: boolean
+	filename: string
+	safe: boolean
+	line: number
+	col: number
+	realCol: number
 }
 
 /**
  * Runtime comment node to know the shape of the comment
  */
 export type RuntimeComment = {
-  isComment: true,
-  filename: string,
-  line: number,
-  col: number,
-  realCol: number,
+	isComment: true
+	filename: string
+	line: number
+	col: number
+	realCol: number
 }
 
 export interface Tags {
-  [name: string]: LexerTagDefinitionContract,
+	[name: string]: LexerTagDefinitionContract
 }

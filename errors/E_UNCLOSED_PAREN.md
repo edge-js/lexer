@@ -1,8 +1,9 @@
 # E_UNCLOSED_PAREN
 
-This exception is raised when the number of `opened` and `closed` parentheses *( )* mis-matches
+This exception is raised when the number of `opened` and `closed` parentheses _( )_ mis-matches
 
 #### Invalid
+
 ```edge
 @if((2 + 2) * (3)
 ```
