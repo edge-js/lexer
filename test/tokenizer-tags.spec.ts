@@ -46,11 +46,6 @@ test.group('Tokenizer Tags', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         value: 'Hello',
@@ -104,11 +99,6 @@ test.group('Tokenizer Tags', () => {
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -178,11 +168,6 @@ test.group('Tokenizer Tags', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         value: 'Hello',
@@ -218,6 +203,11 @@ test.group('Tokenizer Tags', () => {
           selfclosed: false,
         },
         children: [
+          {
+            type: 'newline',
+            filename: 'eval.edge',
+            line: 3,
+          },
           {
             type: TagTypes.TAG,
             filename: 'eval.edge',
@@ -271,11 +261,6 @@ test.group('Tokenizer Tags', () => {
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -344,11 +329,6 @@ test.group('Tokenizer Tags', () => {
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -522,11 +502,6 @@ test.group('Tokenizer Tags', () => {
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -784,11 +759,6 @@ test.group('Tokenizer columns', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         value: 'Hello',
@@ -842,11 +812,6 @@ test.group('Tokenizer columns', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         value: 'Hello',
@@ -899,11 +864,6 @@ test.group('Tokenizer columns', () => {
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -960,11 +920,6 @@ test.group('Tokenizer columns', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         value: 'Hello',
@@ -1015,11 +970,6 @@ test.group('Tokenizer columns', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         value: 'Hello ',
@@ -1055,11 +1005,6 @@ test.group('Tokenizer columns', () => {
 
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -1122,11 +1067,6 @@ test.group('Tokenizer columns', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         value: 'Hello ',
@@ -1187,11 +1127,6 @@ test.group('Tokenizer columns', () => {
 
     assert.isNull(tokenizer.tagStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',

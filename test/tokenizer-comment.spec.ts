@@ -103,11 +103,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         line: 1,
@@ -142,11 +137,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: MustacheTypes.MUSTACHE,
         filename: 'eval.edge',
@@ -202,11 +192,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: MustacheTypes.MUSTACHE,
         filename: 'eval.edge',
         loc: {
@@ -258,11 +243,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: MustacheTypes.MUSTACHE,
         filename: 'eval.edge',
@@ -341,11 +321,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: MustacheTypes.MUSTACHE,
         filename: 'eval.edge',
         loc: {
@@ -421,11 +396,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         line: 1,
@@ -468,11 +438,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer.tagStatement)
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -568,11 +533,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         line: 1,
@@ -635,11 +595,6 @@ test.group('Tokenizer Comment', () => {
         value: ' This is a comment ',
       },
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         line: 1,
@@ -685,11 +640,6 @@ test.group('Tokenizer Comment', () => {
           },
         },
         value: ' This is a comment ',
-      },
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
       },
       {
         type: 'raw',
@@ -741,12 +691,9 @@ test.group('Tokenizer Comment', () => {
 
     assert.isNull(tokenizer.tagStatement)
     assert.isNull(tokenizer.mustacheStatement)
+    // console.log(JSON.stringify(tokenizer.tokens, null, 2))
+
     assert.deepEqual(tokenizer.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: MustacheTypes.MUSTACHE,
         filename: 'eval.edge',
@@ -879,11 +826,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer.mustacheStatement)
     assert.deepEqual(tokenizer.tokens, [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'raw',
         filename: 'eval.edge',
         value: 'Hello ',
@@ -941,11 +883,6 @@ test.group('Tokenizer Comment', () => {
     assert.isNull(tokenizer1.tagStatement)
     assert.isNull(tokenizer1.mustacheStatement)
     assert.deepEqual(tokenizer1.tokens, [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',

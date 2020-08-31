@@ -60,10 +60,10 @@ export class Tokenizer {
   private line: number = 0
 
   /**
-   * A boolean to know if we have added the newline for the text block
-   * that has one or more mustache braces
+   * Tracking if two back to back lines are tags or not. Need it for inserting
+   * whitespace between them
    */
-  private addedNewLineForMustache = false
+  private isLastLineATag: boolean = false
 
   /**
    * An array of opened block level tags
@@ -284,10 +284,6 @@ export class Tokenizer {
      * statement and use it as a raw node
      */
     if (textLeftIndex > 0) {
-      if (!this.addedNewLineForMustache) {
-        this.addedNewLineForMustache = true
-        this.pushNewLine()
-      }
       this.consumeNode(this.getRawNode(line.slice(0, textLeftIndex)))
     }
 
@@ -332,17 +328,6 @@ export class Tokenizer {
     }
 
     /**
-     * Added new line before committing the mustache tag.
-     *
-     * - Always add newline when line is not a comment
-     * - Add newline when line is a comment, but also has more content to it.
-     */
-    if (!mustache.isComment && !this.addedNewLineForMustache) {
-      this.addedNewLineForMustache = true
-      this.pushNewLine(mustache.line)
-    }
-
-    /**
      * Consume the node as soon as we have found the closing brace
      */
     if (mustache.isComment) {
@@ -374,14 +359,6 @@ export class Tokenizer {
         return
       }
 
-      /**
-       * Add new line when the left over text has no mustache braces
-       */
-      if (!this.addedNewLineForMustache) {
-        this.addedNewLineForMustache = true
-        this.pushNewLine()
-      }
-
       this.consumeNode(this.getRawNode(scanner.leftOver))
     }
 
@@ -389,7 +366,6 @@ export class Tokenizer {
      * Set mustache statement to null
      */
     this.mustacheStatement = null
-    this.addedNewLineForMustache = false
   }
 
   /**
@@ -427,6 +403,9 @@ export class Tokenizer {
    * new lines at position 0.
    */
   private pushNewLine (line?: number) {
+    if ((line || this.line) === 1) {
+      return
+    }
     this.consumeNode(this.getNewLineNode(line))
   }
 
@@ -468,9 +447,20 @@ export class Tokenizer {
      */
     const tag = getTag(line, this.options.filename, this.line, 0, this.tagsDef)
     if (tag) {
+      /**
+       * When two back to back lines are tags, then we put a newline between them
+       * and one can use `skipNewLines` syntax to remove new lines (if required)
+       */
+      if (this.isLastLineATag) {
+        this.pushNewLine()
+      }
+
+      this.isLastLineATag = true
       this.handleTagOpening(line, tag)
       return
     }
+
+    this.isLastLineATag = false
 
     /**
      * Check if the current line contains a mustache statement or not. If yes,
@@ -478,6 +468,7 @@ export class Tokenizer {
      */
     const mustache = getMustache(line, this.options.filename, this.line, 0)
     if (mustache) {
+      this.pushNewLine()
       this.handleMustacheOpening(line, mustache)
       return
     }

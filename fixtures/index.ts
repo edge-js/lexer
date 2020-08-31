@@ -169,11 +169,6 @@ export const fixtures: { name: string, in: string, out: any }[] = [
     in: dedent`{{ username }}`,
     out: [
       {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
-      {
         type: 'mustache',
         filename: 'eval.edge',
         properties: {
@@ -198,11 +193,6 @@ export const fixtures: { name: string, in: string, out: any }[] = [
 username
 }}`,
     out: [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'mustache',
         filename: 'eval.edge',
@@ -230,11 +220,6 @@ username
   }).join(',')
 }}`,
     out: [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'raw',
         filename: 'eval.edge',
@@ -264,11 +249,6 @@ username
     name: 'escaped mustache',
     in: dedent`@{{ username }}`,
     out: [
-      {
-        type: 'newline',
-        filename: 'eval.edge',
-        line: 0,
-      },
       {
         type: 'e__mustache',
         filename: 'eval.edge',
