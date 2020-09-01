@@ -163,6 +163,9 @@ export class Tokenizer {
 		 */
 		if (!tag.seekable) {
 			this.consumeTag(tag, '', { line: tag.line, col: tag.col })
+			if (tag.noNewLine || line.endsWith('~')) {
+				this.dropNewLine = true
+			}
 			return
 		}
 
