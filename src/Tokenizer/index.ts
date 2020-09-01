@@ -228,6 +228,13 @@ export class Tokenizer {
 			throw cannotSeekStatement(scanner.leftOver, scanner.loc, tag.filename)
 		}
 
+		/**
+		 * Do not add newline when tag instructs for it
+		 */
+		if (tag.noNewLine) {
+			this.dropNewLine = true
+		}
+
 		this.tagStatement = null
 	}
 

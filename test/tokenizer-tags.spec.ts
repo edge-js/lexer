@@ -1048,6 +1048,169 @@ test.group('Tokenizer Tags', () => {
 			},
 		])
 	})
+
+	test('remove newline after the tag when tag has noNewLine property', (assert) => {
+		const template = dedent`
+    Hello
+
+    @if(username)
+      Hello
+    @endif
+    `
+
+    const tags = {
+			if: class If {
+				public static block = true
+				public static seekable = true
+				public static noNewLine = true
+			},
+		}
+
+		const tokenizer = new Tokenizer(template, tags, { filename: 'eval.edge' })
+		tokenizer.parse()
+
+		assert.isNull(tokenizer.tagStatement)
+		assert.deepEqual(tokenizer.tokens, [
+			{
+				type: 'raw',
+				filename: 'eval.edge',
+				value: 'Hello',
+				line: 1,
+			},
+			{
+				type: 'newline',
+				filename: 'eval.edge',
+				line: 1,
+			},
+			{
+				type: 'raw',
+				filename: 'eval.edge',
+				value: '',
+				line: 2,
+			},
+			{
+				type: TagTypes.TAG,
+				filename: 'eval.edge',
+				loc: {
+					start: {
+						line: 3,
+						col: 4,
+					},
+					end: {
+						line: 3,
+						col: 13,
+					},
+				},
+				properties: {
+					name: 'if',
+					jsArg: 'username',
+					selfclosed: false,
+				},
+				children: [
+					{
+						type: 'raw',
+						filename: 'eval.edge',
+						value: '  Hello',
+						line: 4,
+					},
+				],
+			},
+		])
+	})
+
+	test('remove newline between two tags when tag has noNewLine property', (assert) => {
+		const template = dedent`
+    Hello
+
+    @if(
+      username
+    )
+      @if(age)
+      Hello
+      @endif
+    @endif
+    `
+
+    const tags = {
+			if: class If {
+				public static block = true
+				public static seekable = true
+				public static noNewLine = true
+			},
+		}
+
+		const tokenizer = new Tokenizer(template, tags, { filename: 'eval.edge' })
+		tokenizer.parse()
+
+		assert.isNull(tokenizer.tagStatement)
+		assert.deepEqual(tokenizer.tokens, [
+			{
+				type: 'raw',
+				filename: 'eval.edge',
+				value: 'Hello',
+				line: 1,
+			},
+			{
+				type: 'newline',
+				filename: 'eval.edge',
+				line: 1,
+			},
+			{
+				type: 'raw',
+				filename: 'eval.edge',
+				value: '',
+				line: 2,
+			},
+			{
+				type: TagTypes.TAG,
+				filename: 'eval.edge',
+				loc: {
+					start: {
+						line: 3,
+						col: 4,
+					},
+					end: {
+						line: 5,
+						col: 1,
+					},
+				},
+				properties: {
+					name: 'if',
+					jsArg: '\n  username\n',
+					selfclosed: false,
+				},
+				children: [
+					{
+						type: TagTypes.TAG,
+						filename: 'eval.edge',
+						loc: {
+							start: {
+								line: 6,
+								col: 6,
+							},
+							end: {
+								line: 6,
+								col: 10,
+							},
+						},
+						properties: {
+							name: 'if',
+							jsArg: 'age',
+							selfclosed: false,
+						},
+						children: [
+							{
+								type: 'raw',
+								filename: 'eval.edge',
+								value: '  Hello',
+								line: 7,
+							},
+						],
+					},
+				],
+			},
+		])
+	})
 })
 
 test.group('Tokenizer columns', () => {

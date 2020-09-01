@@ -63,6 +63,7 @@ export type LexerLoc = {
 export interface LexerTagDefinitionContract {
 	block: boolean
 	seekable: boolean
+	noNewLine?: boolean
 }
 
 /**
@@ -120,14 +121,12 @@ export type Token = RawToken | NewLineToken | TagToken | MustacheToken | Comment
 /**
  * The runtime tag node to know the shape of a tag
  */
-export type RuntimeTag = {
+export type RuntimeTag = LexerTagDefinitionContract & {
 	name: string
 	filename: string
 	selfclosed: boolean
 	col: number
 	line: number
-	block: boolean
-	seekable: boolean
 	escaped: boolean
 	hasBrace: boolean
 }
