@@ -50,7 +50,7 @@ export function getTag(
 	const whitespaceRight = match[5].length
 	const seekable = tag.seekable
 	const block = tag.block
-	const noNewLine = tag.noNewLine
+	const noNewLine = !!tag.noNewLine
 
 	/**
 	 * Advanced the col position

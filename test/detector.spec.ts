@@ -32,6 +32,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: true,
 			seekable: true,
 			block: false,
+			noNewLine: false,
 		})
 	})
 
@@ -48,6 +49,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: false,
 			seekable: false,
 			block: false,
+			noNewLine: false,
 		})
 	})
 
@@ -64,6 +66,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: false,
 			seekable: false,
 			block: false,
+			noNewLine: false,
 		})
 	})
 
@@ -80,6 +83,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: false,
 			seekable: false,
 			block: false,
+			noNewLine: false,
 		})
 	})
 
@@ -96,6 +100,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: false,
 			seekable: false,
 			block: false,
+			noNewLine: false,
 		})
 	})
 
@@ -112,6 +117,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: false,
 			seekable: false,
 			block: false,
+			noNewLine: false,
 		})
 	})
 
@@ -128,6 +134,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: true,
 			seekable: true,
 			block: true,
+			noNewLine: false,
 		})
 	})
 
@@ -144,6 +151,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: false,
 			seekable: true,
 			block: true,
+			noNewLine: false,
 		})
 	})
 
@@ -160,6 +168,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: true,
 			seekable: true,
 			block: true,
+			noNewLine: false,
 		})
 	})
 
@@ -176,6 +185,7 @@ test.group('Detector (tag)', () => {
 			hasBrace: true,
 			seekable: true,
 			block: true,
+			noNewLine: false,
 		})
 	})
 })
