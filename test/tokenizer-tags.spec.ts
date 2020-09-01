@@ -1058,7 +1058,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tags = {
+		const tags = {
 			if: class If {
 				public static block = true
 				public static seekable = true
@@ -1131,7 +1131,7 @@ test.group('Tokenizer Tags', () => {
     @endif
     `
 
-    const tags = {
+		const tags = {
 			if: class If {
 				public static block = true
 				public static seekable = true
