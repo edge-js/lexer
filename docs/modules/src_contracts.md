@@ -188,29 +188,9 @@ ___
 
 ###  RuntimeTag
 
-Ƭ **RuntimeTag**: *object*
+Ƭ **RuntimeTag**: *[LexerTagDefinitionContract](../interfaces/src_contracts.lexertagdefinitioncontract.md) & object*
 
 The runtime tag node to know the shape of a tag
-
-#### Type declaration:
-
-* **block**: *boolean*
-
-* **col**: *number*
-
-* **escaped**: *boolean*
-
-* **filename**: *string*
-
-* **hasBrace**: *boolean*
-
-* **line**: *number*
-
-* **name**: *string*
-
-* **seekable**: *boolean*
-
-* **selfclosed**: *boolean*
 
 ___
 

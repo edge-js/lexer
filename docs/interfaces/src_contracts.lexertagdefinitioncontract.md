@@ -14,6 +14,7 @@ definition
 ### Properties
 
 * [block](src_contracts.lexertagdefinitioncontract.md#block)
+* [noNewLine](src_contracts.lexertagdefinitioncontract.md#optional-nonewline)
 * [seekable](src_contracts.lexertagdefinitioncontract.md#seekable)
 
 ## Properties
@@ -21,6 +22,12 @@ definition
 ###  block
 
 • **block**: *boolean*
+
+___
+
+### `Optional` noNewLine
+
+• **noNewLine**? : *undefined | false | true*
 
 ___
 
