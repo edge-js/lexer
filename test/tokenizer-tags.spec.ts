@@ -1211,6 +1211,55 @@ test.group('Tokenizer Tags', () => {
 			},
 		])
 	})
+
+	test('remove newline after the endblock', (assert) => {
+		const template = dedent`
+    @if(username)~
+      Hello
+    @endif~
+    world
+    `
+
+		const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
+		tokenizer.parse()
+
+		assert.isNull(tokenizer.tagStatement)
+		assert.deepEqual(tokenizer.tokens, [
+			{
+				type: TagTypes.TAG,
+				filename: 'eval.edge',
+				loc: {
+					start: {
+						line: 1,
+						col: 4,
+					},
+					end: {
+						line: 1,
+						col: 13,
+					},
+				},
+				properties: {
+					name: 'if',
+					jsArg: 'username',
+					selfclosed: false,
+				},
+				children: [
+					{
+						type: 'raw',
+						filename: 'eval.edge',
+						value: '  Hello',
+						line: 2,
+					},
+				],
+			},
+			{
+				type: 'raw',
+				filename: 'eval.edge',
+				value: 'world',
+				line: 4,
+			},
+		])
+	})
 })
 
 test.group('Tokenizer columns', () => {

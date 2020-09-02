@@ -414,8 +414,11 @@ export class Tokenizer {
 			return false
 		}
 
+		line = line.trim()
+
 		const recentTag = this.openedTags[this.openedTags.length - 1]
-		return line.trim() === `@end${recentTag.properties.name}`
+		const endStatement = `@end${recentTag.properties.name}`
+		return line === endStatement || line === `${endStatement}~`
 	}
 
 	/**
@@ -481,6 +484,13 @@ export class Tokenizer {
 		 */
 		if (this.isClosingTag(line)) {
 			this.consumeNode(this.openedTags.pop()!)
+
+			/**
+			 * Do not add next newline when statement ends with `~`
+			 */
+			if (line.endsWith('~')) {
+				this.dropNewLine = true
+			}
 			return
 		}
 
