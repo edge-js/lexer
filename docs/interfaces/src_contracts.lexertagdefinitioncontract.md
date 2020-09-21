@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Contracts](../modules/src_contracts.md) › [LexerTagDefinitionContract](src_contracts.lexertagdefinitioncontract.md)
+**edge-lexer**
+
+> [Globals](../README.md) / [src/Contracts](../modules/src_contracts.md) / LexerTagDefinitionContract
 
 # Interface: LexerTagDefinitionContract
 
@@ -14,23 +16,23 @@ definition
 ### Properties
 
 * [block](src_contracts.lexertagdefinitioncontract.md#block)
-* [noNewLine](src_contracts.lexertagdefinitioncontract.md#optional-nonewline)
+* [noNewLine](src_contracts.lexertagdefinitioncontract.md#nonewline)
 * [seekable](src_contracts.lexertagdefinitioncontract.md#seekable)
 
 ## Properties
 
-###  block
+### block
 
-• **block**: *boolean*
-
-___
-
-### `Optional` noNewLine
-
-• **noNewLine**? : *undefined | false | true*
+•  **block**: boolean
 
 ___
 
-###  seekable
+### noNewLine
 
-• **seekable**: *boolean*
+• `Optional` **noNewLine**: undefined \| false \| true
+
+___
+
+### seekable
+
+•  **seekable**: boolean

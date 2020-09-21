@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Contracts](../modules/src_contracts.md) › [Tags](src_contracts.tags.md)
+**edge-lexer**
+
+> [Globals](../README.md) / [src/Contracts](../modules/src_contracts.md) / Tags
 
 # Interface: Tags
 
@@ -8,4 +10,4 @@
 
 ## Indexable
 
-* \[ **name**: *string*\]: [LexerTagDefinitionContract](src_contracts.lexertagdefinitioncontract.md)
+▪ [name: string]: [LexerTagDefinitionContract](src_contracts.lexertagdefinitioncontract.md)

@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Scanner](../modules/src_scanner.md) › [Scanner](src_scanner.scanner.md)
+**edge-lexer**
+
+> [Globals](../README.md) / [src/Scanner](../modules/src_scanner.md) / Scanner
 
 # Class: Scanner
 
@@ -53,11 +55,11 @@ first match.
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new Scanner**(`pattern`: string, `toleratePair`: [string, string], `line`: number, `col`: number): *[Scanner](src_scanner.scanner.md)*
+\+ **new Scanner**(`pattern`: string, `toleratePair`: [string, string], `line`: number, `col`: number): [Scanner](src_scanner.scanner.md)
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
@@ -66,62 +68,61 @@ Name | Type |
 `line` | number |
 `col` | number |
 
-**Returns:** *[Scanner](src_scanner.scanner.md)*
+**Returns:** [Scanner](src_scanner.scanner.md)
 
 ## Properties
 
-###  closed
+### closed
 
-• **closed**: *boolean* = false
+•  **closed**: boolean = false
 
 Tracking if the scanner has been closed
 
 ___
 
-###  leftOver
+### leftOver
 
-• **leftOver**: *string* = ""
+•  **leftOver**: string = ""
 
 The content in the same line but after the closing
 of the pattern
 
 ___
 
-###  match
+### match
 
-• **match**: *string* = ""
+•  **match**: string = ""
 
 The matched content within the pattern
 
 ## Methods
 
-###  scan
+### scan
 
-▸ **scan**(`chunk`: string): *void*
+▸ **scan**(`chunk`: string): void
 
 Scan a string and look for the closing pattern. The string will
 be seperated with the closing pattern and also tracks the
 toleration patterns to make sure they are not making the
 scanner to end due to pattern mis-match.
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `chunk` | string |
 
-**Returns:** *void*
+**Returns:** void
 
 ## Object literals
 
-###  loc
+### loc
 
-### ▪ **loc**: *object*
+▪  **loc**: object
 
-###  col
+#### Properties:
 
-• **col**: *number* = this.col
-
-###  line
-
-• **line**: *number* = this.line
+Name | Type | Value |
+------ | ------ | ------ |
+`col` | number | this.col |
+`line` | number | this.line |

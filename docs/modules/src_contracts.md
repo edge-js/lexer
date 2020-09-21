@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Contracts](src_contracts.md)
+**edge-lexer**
+
+> [Globals](../README.md) / src/Contracts
 
 # Module: src/Contracts
 
@@ -38,198 +40,182 @@ file that was distributed with this source code.
 
 ## Type aliases
 
-###  CommentToken
+### CommentToken
 
-Ƭ **CommentToken**: *object*
+Ƭ  **CommentToken**: { filename: string ; loc: [LexerLoc](src_contracts.md#lexerloc) ; type: \"comment\" ; value: string  }
 
 Comment token
 
 #### Type declaration:
 
-* **filename**: *string*
-
-* **loc**: *[LexerLoc](src_contracts.md#lexerloc)*
-
-* **type**: *"comment"*
-
-* **value**: *string*
+Name | Type |
+------ | ------ |
+`filename` | string |
+`loc` | [LexerLoc](src_contracts.md#lexerloc) |
+`type` | \"comment\" |
+`value` | string |
 
 ___
 
-###  LexerLoc
+### LexerLoc
 
-Ƭ **LexerLoc**: *object*
+Ƭ  **LexerLoc**: { end: { col: number ; line: number  } ; start: { col: number ; line: number  }  }
 
 Location node for tags and mustache braces
 
 #### Type declaration:
 
-* **end**(): *object*
-
-  * **col**: *number*
-
-  * **line**: *number*
-
-* **start**(): *object*
-
-  * **col**: *number*
-
-  * **line**: *number*
+Name | Type |
+------ | ------ |
+`end` | { col: number ; line: number  } |
+`start` | { col: number ; line: number  } |
 
 ___
 
-###  MustacheProps
+### MustacheProps
 
-Ƭ **MustacheProps**: *object*
+Ƭ  **MustacheProps**: { jsArg: string  }
 
 Properties for a mustache block
 
 #### Type declaration:
 
-* **jsArg**: *string*
+Name | Type |
+------ | ------ |
+`jsArg` | string |
 
 ___
 
-###  MustacheToken
+### MustacheToken
 
-Ƭ **MustacheToken**: *object*
+Ƭ  **MustacheToken**: { filename: string ; loc: [LexerLoc](src_contracts.md#lexerloc) ; properties: [MustacheProps](src_contracts.md#mustacheprops) ; type: [MustacheTypes](../enums/src_contracts.mustachetypes.md)  }
 
 Mustache token
 
 #### Type declaration:
 
-* **filename**: *string*
-
-* **loc**: *[LexerLoc](src_contracts.md#lexerloc)*
-
-* **properties**: *[MustacheProps](src_contracts.md#mustacheprops)*
-
-* **type**: *[MustacheTypes](../enums/src_contracts.mustachetypes.md)*
+Name | Type |
+------ | ------ |
+`filename` | string |
+`loc` | [LexerLoc](src_contracts.md#lexerloc) |
+`properties` | [MustacheProps](src_contracts.md#mustacheprops) |
+`type` | [MustacheTypes](../enums/src_contracts.mustachetypes.md) |
 
 ___
 
-###  NewLineToken
+### NewLineToken
 
-Ƭ **NewLineToken**: *object*
+Ƭ  **NewLineToken**: { filename: string ; line: number ; type: \"newline\"  }
 
 New line token
 
 #### Type declaration:
 
-* **filename**: *string*
-
-* **line**: *number*
-
-* **type**: *"newline"*
+Name | Type |
+------ | ------ |
+`filename` | string |
+`line` | number |
+`type` | \"newline\" |
 
 ___
 
-###  RawToken
+### RawToken
 
-Ƭ **RawToken**: *object*
+Ƭ  **RawToken**: { filename: string ; line: number ; type: \"raw\" ; value: string  }
 
 Raw line token
 
 #### Type declaration:
 
-* **filename**: *string*
-
-* **line**: *number*
-
-* **type**: *"raw"*
-
-* **value**: *string*
+Name | Type |
+------ | ------ |
+`filename` | string |
+`line` | number |
+`type` | \"raw\" |
+`value` | string |
 
 ___
 
-###  RuntimeComment
+### RuntimeComment
 
-Ƭ **RuntimeComment**: *object*
+Ƭ  **RuntimeComment**: { col: number ; filename: string ; isComment: true ; line: number ; realCol: number  }
 
 Runtime comment node to know the shape of the comment
 
 #### Type declaration:
 
-* **col**: *number*
-
-* **filename**: *string*
-
-* **isComment**: *true*
-
-* **line**: *number*
-
-* **realCol**: *number*
+Name | Type |
+------ | ------ |
+`col` | number |
+`filename` | string |
+`isComment` | true |
+`line` | number |
+`realCol` | number |
 
 ___
 
-###  RuntimeMustache
+### RuntimeMustache
 
-Ƭ **RuntimeMustache**: *object*
+Ƭ  **RuntimeMustache**: { col: number ; escaped: boolean ; filename: string ; isComment: false ; line: number ; realCol: number ; safe: boolean  }
 
 Runtime mustache node to know the shape of the mustache
 
 #### Type declaration:
 
-* **col**: *number*
-
-* **escaped**: *boolean*
-
-* **filename**: *string*
-
-* **isComment**: *false*
-
-* **line**: *number*
-
-* **realCol**: *number*
-
-* **safe**: *boolean*
+Name | Type |
+------ | ------ |
+`col` | number |
+`escaped` | boolean |
+`filename` | string |
+`isComment` | false |
+`line` | number |
+`realCol` | number |
+`safe` | boolean |
 
 ___
 
-###  RuntimeTag
+### RuntimeTag
 
-Ƭ **RuntimeTag**: *[LexerTagDefinitionContract](../interfaces/src_contracts.lexertagdefinitioncontract.md) & object*
+Ƭ  **RuntimeTag**: [LexerTagDefinitionContract](../interfaces/src_contracts.lexertagdefinitioncontract.md) & { col: number ; escaped: boolean ; filename: string ; hasBrace: boolean ; line: number ; name: string ; selfclosed: boolean  }
 
 The runtime tag node to know the shape of a tag
 
 ___
 
-###  TagProps
+### TagProps
 
-Ƭ **TagProps**: *object*
+Ƭ  **TagProps**: { jsArg: string ; name: string ; selfclosed: boolean  }
 
 Properties node for a tag
 
 #### Type declaration:
 
-* **jsArg**: *string*
-
-* **name**: *string*
-
-* **selfclosed**: *boolean*
+Name | Type |
+------ | ------ |
+`jsArg` | string |
+`name` | string |
+`selfclosed` | boolean |
 
 ___
 
-###  TagToken
+### TagToken
 
-Ƭ **TagToken**: *object*
+Ƭ  **TagToken**: { children: [Token](src_contracts.md#token)[] ; filename: string ; loc: [LexerLoc](src_contracts.md#lexerloc) ; properties: [TagProps](src_contracts.md#tagprops) ; type: [TagTypes](../enums/src_contracts.tagtypes.md)  }
 
 Tag token
 
 #### Type declaration:
 
-* **children**: *[Token](src_contracts.md#token)[]*
-
-* **filename**: *string*
-
-* **loc**: *[LexerLoc](src_contracts.md#lexerloc)*
-
-* **properties**: *[TagProps](src_contracts.md#tagprops)*
-
-* **type**: *[TagTypes](../enums/src_contracts.tagtypes.md)*
+Name | Type |
+------ | ------ |
+`children` | [Token](src_contracts.md#token)[] |
+`filename` | string |
+`loc` | [LexerLoc](src_contracts.md#lexerloc) |
+`properties` | [TagProps](src_contracts.md#tagprops) |
+`type` | [TagTypes](../enums/src_contracts.tagtypes.md) |
 
 ___
 
-###  Token
+### Token
 
-Ƭ **Token**: *[RawToken](src_contracts.md#rawtoken) | [NewLineToken](src_contracts.md#newlinetoken) | [TagToken](src_contracts.md#tagtoken) | [MustacheToken](src_contracts.md#mustachetoken) | [CommentToken](src_contracts.md#commenttoken)*
+Ƭ  **Token**: [RawToken](src_contracts.md#rawtoken) \| [NewLineToken](src_contracts.md#newlinetoken) \| [TagToken](src_contracts.md#tagtoken) \| [MustacheToken](src_contracts.md#mustachetoken) \| [CommentToken](src_contracts.md#commenttoken)

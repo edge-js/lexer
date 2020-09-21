@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Tokenizer](../modules/src_tokenizer.md) › [Tokenizer](src_tokenizer.tokenizer.md)
+**edge-lexer**
+
+> [Globals](../README.md) / [src/Tokenizer](../modules/src_tokenizer.md) / Tokenizer
 
 # Class: Tokenizer
 
@@ -30,52 +32,48 @@ the tokens output.
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new Tokenizer**(`template`: string, `tagsDef`: [Tags](../interfaces/src_contracts.tags.md), `options`: object): *[Tokenizer](src_tokenizer.tokenizer.md)*
+\+ **new Tokenizer**(`template`: string, `tagsDef`: [Tags](../interfaces/src_contracts.tags.md), `options`: { filename: string  }): [Tokenizer](src_tokenizer.tokenizer.md)
 
-**Parameters:**
-
-▪ **template**: *string*
-
-▪ **tagsDef**: *[Tags](../interfaces/src_contracts.tags.md)*
-
-▪ **options**: *object*
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
-`filename` | string |
+`template` | string |
+`tagsDef` | [Tags](../interfaces/src_contracts.tags.md) |
+`options` | { filename: string  } |
 
-**Returns:** *[Tokenizer](src_tokenizer.tokenizer.md)*
+**Returns:** [Tokenizer](src_tokenizer.tokenizer.md)
 
 ## Properties
 
-###  mustacheStatement
+### mustacheStatement
 
-• **mustacheStatement**: *null | object* = null
+•  **mustacheStatement**: null \| { mustache: [RuntimeMustache](../modules/src_contracts.md#runtimemustache) \| [RuntimeComment](../modules/src_contracts.md#runtimecomment) ; scanner: [Scanner](src_scanner.scanner.md)  } = null
 
 Holds the current mustache statement, until it is closed
 
 ___
 
-###  tagStatement
+### tagStatement
 
-• **tagStatement**: *null | object* = null
+•  **tagStatement**: null \| { scanner: [Scanner](src_scanner.scanner.md) ; tag: [RuntimeTag](../modules/src_contracts.md#runtimetag)  } = null
 
 Holds the current tag statement, until it is closed
 
 ___
 
-###  tokens
+### tokens
 
-• **tokens**: *[Token](../modules/src_contracts.md#token)[]* = []
+•  **tokens**: [Token](../modules/src_contracts.md#token)[] = []
 
 ## Methods
 
-###  parse
+### parse
 
-▸ **parse**(): *void*
+▸ **parse**(): void
 
 Parse the template and generate an AST out of it
 
-**Returns:** *void*
+**Returns:** void

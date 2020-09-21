@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Exceptions](src_exceptions.md)
+**edge-lexer**
+
+> [Globals](../README.md) / src/Exceptions
 
 # Module: src/Exceptions
 
@@ -14,9 +16,9 @@
 
 ## Functions
 
-###  cannotSeekStatement
+### cannotSeekStatement
 
-▸ **cannotSeekStatement**(`chars`: string, `pos`: object, `filename`: string): *EdgeError*
+▸ **cannotSeekStatement**(`chars`: string, `pos`: { col: number ; line: number  }, `filename`: string): EdgeError
 
 Raised when there is inline content next to a tag opening
 block. For example:
@@ -33,26 +35,21 @@ Correct
 @endif
 ```
 
-**Parameters:**
-
-▪ **chars**: *string*
-
-▪ **pos**: *object*
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
-`col` | number |
-`line` | number |
+`chars` | string |
+`pos` | { col: number ; line: number  } |
+`filename` | string |
 
-▪ **filename**: *string*
-
-**Returns:** *EdgeError*
+**Returns:** EdgeError
 
 ___
 
-###  unclosedCurlyBrace
+### unclosedCurlyBrace
 
-▸ **unclosedCurlyBrace**(`pos`: object, `filename`: string): *EdgeError*
+▸ **unclosedCurlyBrace**(`pos`: { col: number ; line: number  }, `filename`: string): EdgeError
 
 Raised when the curly closing brace is missing from the mustache
 statement. For example:
@@ -68,24 +65,20 @@ Correct
 {{ username }}
 ```
 
-**Parameters:**
-
-▪ **pos**: *object*
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
-`col` | number |
-`line` | number |
+`pos` | { col: number ; line: number  } |
+`filename` | string |
 
-▪ **filename**: *string*
-
-**Returns:** *EdgeError*
+**Returns:** EdgeError
 
 ___
 
-###  unclosedParen
+### unclosedParen
 
-▸ **unclosedParen**(`pos`: object, `filename`: string): *EdgeError*
+▸ **unclosedParen**(`pos`: { col: number ; line: number  }, `filename`: string): EdgeError
 
 Raised when a tag opening body doesn't have a closing brace. For example:
 
@@ -99,24 +92,20 @@ Correct
 @if(username)
 ```
 
-**Parameters:**
-
-▪ **pos**: *object*
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
-`col` | number |
-`line` | number |
+`pos` | { col: number ; line: number  } |
+`filename` | string |
 
-▪ **filename**: *string*
-
-**Returns:** *EdgeError*
+**Returns:** EdgeError
 
 ___
 
-###  unclosedTag
+### unclosedTag
 
-▸ **unclosedTag**(`tag`: string, `pos`: object, `filename`: string): *EdgeError*
+▸ **unclosedTag**(`tag`: string, `pos`: { col: number ; line: number  }, `filename`: string): EdgeError
 
 Raised when a block level tag is opened but never closed. For example:
 
@@ -131,26 +120,21 @@ Correct
 @endif
 ```
 
-**Parameters:**
-
-▪ **tag**: *string*
-
-▪ **pos**: *object*
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
-`col` | number |
-`line` | number |
+`tag` | string |
+`pos` | { col: number ; line: number  } |
+`filename` | string |
 
-▪ **filename**: *string*
-
-**Returns:** *EdgeError*
+**Returns:** EdgeError
 
 ___
 
-###  unopenedParen
+### unopenedParen
 
-▸ **unopenedParen**(`pos`: object, `filename`: string): *EdgeError*
+▸ **unopenedParen**(`pos`: { col: number ; line: number  }, `filename`: string): EdgeError
 
 Raised when a tag is used without an opening brace. For example:
 
@@ -164,15 +148,11 @@ Correct
 @if(username)
 ```
 
-**Parameters:**
-
-▪ **pos**: *object*
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
-`col` | number |
-`line` | number |
+`pos` | { col: number ; line: number  } |
+`filename` | string |
 
-▪ **filename**: *string*
-
-**Returns:** *EdgeError*
+**Returns:** EdgeError

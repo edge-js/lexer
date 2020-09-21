@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Contracts](../modules/src_contracts.md) › [TagTypes](src_contracts.tagtypes.md)
+**edge-lexer**
+
+> [Globals](../README.md) / [src/Contracts](../modules/src_contracts.md) / TagTypes
 
 # Enumeration: TagTypes
 
@@ -14,12 +16,12 @@ will have one of these types
 
 ## Enumeration members
 
-###  ETAG
+### ETAG
 
-• **ETAG**: = "e__tag"
+•  **ETAG**: {} = "e\_\_tag"
 
 ___
 
-###  TAG
+### TAG
 
-• **TAG**: = "tag"
+•  **TAG**: {} = "tag"

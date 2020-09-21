@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/utils](src_utils.md)
+**edge-lexer**
+
+> [Globals](../README.md) / src/utils
 
 # Module: src/utils
 
@@ -15,98 +17,98 @@
 
 ## Functions
 
-###  getLineAndColumn
+### getLineAndColumn
 
-▸ **getLineAndColumn**(`token`: [Token](src_contracts.md#token)): *[number, number]*
+▸ **getLineAndColumn**(`token`: [Token](src_contracts.md#token)): [number, number]
 
 Returns line and column number for a given lexer token
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `token` | [Token](src_contracts.md#token) |
 
-**Returns:** *[number, number]*
+**Returns:** [number, number]
 
 ___
 
-###  isEscapedMustache
+### isEscapedMustache
 
-▸ **isEscapedMustache**(`token`: [Token](src_contracts.md#token)): *token is MustacheToken*
+▸ **isEscapedMustache**(`token`: [Token](src_contracts.md#token)): token is MustacheToken
 
 Returns true when toke.type is an escaped mustache type
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `token` | [Token](src_contracts.md#token) |
 
-**Returns:** *token is MustacheToken*
+**Returns:** token is MustacheToken
 
 ___
 
-###  isEscapedTag
+### isEscapedTag
 
-▸ **isEscapedTag**(`token`: [Token](src_contracts.md#token), `name?`: undefined | string): *token is TagToken*
+▸ **isEscapedTag**(`token`: [Token](src_contracts.md#token), `name?`: undefined \| string): token is TagToken
 
 Returns true when token is an escape tag with a given name
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `token` | [Token](src_contracts.md#token) |
-`name?` | undefined &#124; string |
+`name?` | undefined \| string |
 
-**Returns:** *token is TagToken*
+**Returns:** token is TagToken
 
 ___
 
-###  isMustache
+### isMustache
 
-▸ **isMustache**(`token`: [Token](src_contracts.md#token)): *token is MustacheToken*
+▸ **isMustache**(`token`: [Token](src_contracts.md#token)): token is MustacheToken
 
 Returns true when token.type is a mustache type
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `token` | [Token](src_contracts.md#token) |
 
-**Returns:** *token is MustacheToken*
+**Returns:** token is MustacheToken
 
 ___
 
-###  isSafeMustache
+### isSafeMustache
 
-▸ **isSafeMustache**(`token`: [Token](src_contracts.md#token)): *token is MustacheToken*
+▸ **isSafeMustache**(`token`: [Token](src_contracts.md#token)): token is MustacheToken
 
 Returns true when token.type is a safe mustache type
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `token` | [Token](src_contracts.md#token) |
 
-**Returns:** *token is MustacheToken*
+**Returns:** token is MustacheToken
 
 ___
 
-###  isTag
+### isTag
 
-▸ **isTag**(`token`: [Token](src_contracts.md#token), `name?`: undefined | string): *token is TagToken*
+▸ **isTag**(`token`: [Token](src_contracts.md#token), `name?`: undefined \| string): token is TagToken
 
 Returns true when token is a tag with a given name
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `token` | [Token](src_contracts.md#token) |
-`name?` | undefined &#124; string |
+`name?` | undefined \| string |
 
-**Returns:** *token is TagToken*
+**Returns:** token is TagToken

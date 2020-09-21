@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Contracts](../modules/src_contracts.md) › [MustacheTypes](src_contracts.mustachetypes.md)
+**edge-lexer**
+
+> [Globals](../README.md) / [src/Contracts](../modules/src_contracts.md) / MustacheTypes
 
 # Enumeration: MustacheTypes
 
@@ -15,24 +17,24 @@ Types for mustache statements
 
 ## Enumeration members
 
-###  EMUSTACHE
+### EMUSTACHE
 
-• **EMUSTACHE**: = "e__mustache"
-
-___
-
-###  ESMUSTACHE
-
-• **ESMUSTACHE**: = "es__mustache"
+•  **EMUSTACHE**: {} = "e\_\_mustache"
 
 ___
 
-###  MUSTACHE
+### ESMUSTACHE
 
-• **MUSTACHE**: = "mustache"
+•  **ESMUSTACHE**: {} = "es\_\_mustache"
 
 ___
 
-###  SMUSTACHE
+### MUSTACHE
 
-• **SMUSTACHE**: = "s__mustache"
+•  **MUSTACHE**: {} = "mustache"
+
+___
+
+### SMUSTACHE
+
+•  **SMUSTACHE**: {} = "s\_\_mustache"

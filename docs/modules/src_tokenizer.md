@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Tokenizer](src_tokenizer.md)
+**edge-lexer**
+
+> [Globals](../README.md) / src/Tokenizer
 
 # Module: src/Tokenizer
 

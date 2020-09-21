@@ -1,4 +1,6 @@
-[edge-lexer](README.md)
+**edge-lexer**
+
+> Globals
 
 # edge-lexer
 

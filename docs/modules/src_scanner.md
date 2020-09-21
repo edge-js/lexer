@@ -1,4 +1,6 @@
-[edge-lexer](../README.md) › [src/Scanner](src_scanner.md)
+**edge-lexer**
+
+> [Globals](../README.md) / src/Scanner
 
 # Module: src/Scanner
 
