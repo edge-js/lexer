@@ -1,4 +1,4 @@
-**edge-lexer**
+**[edge-lexer](../README.md)**
 
 > [Globals](../README.md) / [src/Contracts](../modules/src_contracts.md) / TagTypes
 
@@ -18,10 +18,10 @@ will have one of these types
 
 ### ETAG
 
-•  **ETAG**: {} = "e\_\_tag"
+•  **ETAG**:  = "e\_\_tag"
 
 ___
 
 ### TAG
 
-•  **TAG**: {} = "tag"
+•  **TAG**:  = "tag"

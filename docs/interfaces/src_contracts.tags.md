@@ -1,4 +1,4 @@
-**edge-lexer**
+**[edge-lexer](../README.md)**
 
 > [Globals](../README.md) / [src/Contracts](../modules/src_contracts.md) / Tags
 
