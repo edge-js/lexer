@@ -418,7 +418,9 @@ export class Tokenizer {
 
 		const recentTag = this.openedTags[this.openedTags.length - 1]
 		const endStatement = `@end${recentTag.properties.name}`
-		return line === endStatement || line === `${endStatement}~`
+		return (
+			line === endStatement || line === `${endStatement}~` || line === '@end' || line === '@end~'
+		)
 	}
 
 	/**
