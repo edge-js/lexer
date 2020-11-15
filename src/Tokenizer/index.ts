@@ -81,7 +81,7 @@ export class Tokenizer {
 	constructor(
 		private template: string,
 		private tagsDef: Tags,
-		private options: { filename: string }
+		private options: { filename: string; onLine?: (line: string) => string }
 	) {}
 
 	/**
@@ -462,6 +462,13 @@ export class Tokenizer {
 	 * That's the job of this method to find out.
 	 */
 	private processText(line: string): void {
+		/**
+		 * Pre process line when the onLine listener is defined
+		 */
+		if (typeof this.options.onLine === 'function') {
+			line = this.options.onLine(line)
+		}
+
 		/**
 		 * There is an open block statement, so feed line to it
 		 */

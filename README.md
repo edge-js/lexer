@@ -19,6 +19,7 @@ Instead, this module starts by detecting for the [Edge whitelisted syntax](https
 - [Highlights](#highlights)
 - [Performance](#performance)
 - [Usage](#usage)
+- [Pre-processing lines](#pre-processing-lines)
 - [Terms used](#terms-used)
 - [Tokens](#tokens)
     - [Tag Token](#tag-token)
@@ -86,6 +87,24 @@ const tokenizer = new Tokenizer(template, tags, options)
 
 tokenizer.parse()
 console.log(tokenizer.tokens)
+```
+
+---
+
+## Pre-processing lines
+
+You can also pre-process lines before the tokenizer tokenizes them.
+
+```ts
+const options = {
+  filename: 'welcome.edge',
+  onLine: (line: string) => {
+    // transform here and return new string value
+    return line
+  },
+}
+
+const tokenizer = new Tokenizer(template, {}, options)
 ```
 
 ---

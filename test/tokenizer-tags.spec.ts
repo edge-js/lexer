@@ -31,7 +31,7 @@ const tagsDef = {
 	},
 }
 
-test.group('Tokenizer Tags', () => {
+test.group('Tokenizer | Tags', () => {
 	test('tokenize a template into tokens', (assert) => {
 		const template = dedent`
     Hello
@@ -1251,6 +1251,76 @@ test.group('Tokenizer Tags', () => {
 						line: 2,
 					},
 				],
+			},
+			{
+				type: 'raw',
+				filename: 'eval.edge',
+				value: 'world',
+				line: 4,
+			},
+		])
+	})
+
+	test('transform lines using onLine method', (assert) => {
+		const template = dedent`
+    @ui.form()
+      Hello
+    @end
+    world
+    `
+
+		const tokenizer = new Tokenizer(
+			template,
+			{
+				component: { block: true, seekable: true },
+			},
+			{
+				filename: 'eval.edge',
+				onLine(line: string) {
+					return line.trim() === '@ui.form()' ? `@component('ui.form')` : line
+				},
+			}
+		)
+		tokenizer.parse()
+
+		assert.isNull(tokenizer.tagStatement)
+		assert.deepEqual(tokenizer.tokens, [
+			{
+				type: TagTypes.TAG,
+				filename: 'eval.edge',
+				loc: {
+					start: {
+						line: 1,
+						col: 11,
+					},
+					end: {
+						line: 1,
+						col: 21,
+					},
+				},
+				properties: {
+					name: 'component',
+					jsArg: `'ui.form'`,
+					selfclosed: false,
+				},
+				children: [
+					{
+						type: 'newline',
+						filename: 'eval.edge',
+						line: 1,
+					},
+					{
+						type: 'raw',
+						filename: 'eval.edge',
+						value: '  Hello',
+						line: 2,
+					},
+				],
+			},
+			{
+				type: 'newline',
+				filename: 'eval.edge',
+				line: 3,
 			},
 			{
 				type: 'raw',
