@@ -1330,6 +1330,71 @@ test.group('Tokenizer | Tags', () => {
 			},
 		])
 	})
+
+	test('allow claiming tags', (assert) => {
+		const template = dedent`
+    Hello
+
+    @hl.modal(username)
+    @end
+    `
+
+		const tokenizer = new Tokenizer(
+			template,
+			{},
+			{
+				filename: 'eval.edge',
+				claimTag: (name) => {
+					if (name === 'hl.modal') {
+						return { seekable: true, block: true }
+					}
+					return null
+				},
+			}
+		)
+		tokenizer.parse()
+
+		assert.isNull(tokenizer.tagStatement)
+		assert.deepEqual(tokenizer.tokens, [
+			{
+				type: 'raw',
+				filename: 'eval.edge',
+				value: 'Hello',
+				line: 1,
+			},
+			{
+				type: 'newline',
+				filename: 'eval.edge',
+				line: 1,
+			},
+			{
+				type: 'raw',
+				filename: 'eval.edge',
+				value: '',
+				line: 2,
+			},
+			{
+				filename: 'eval.edge',
+				type: TagTypes.TAG,
+				properties: {
+					name: 'hl.modal',
+					jsArg: 'username',
+					selfclosed: false,
+				},
+				loc: {
+					start: {
+						line: 3,
+						col: 10,
+					},
+					end: {
+						line: 3,
+						col: 19,
+					},
+				},
+				children: [],
+			},
+		])
+	})
 })
 
 test.group('Tokenizer columns', () => {

@@ -7,13 +7,19 @@
  * file that was distributed with this source code.
  */
 
-import { RuntimeTag, RuntimeMustache, RuntimeComment, Tags } from '../Contracts'
+import {
+	Tags,
+	RuntimeTag,
+	RuntimeComment,
+	RuntimeMustache,
+	LexerTagDefinitionContract,
+} from '../Contracts'
 
 /**
  * The only regex we need in the entire lexer. Also tested
  * with https://github.com/substack/safe-regex
  */
-const TAG_REGEX = /^(\s*)(@{1,2})(!)?(\w+)(\s{0,2})/
+const TAG_REGEX = /^(\s*)(@{1,2})(!)?([a-zA-Z._]+)(\s{0,2})/
 
 /**
  * Returns runtime tag node if tag is detected and is a registered tag
@@ -23,7 +29,8 @@ export function getTag(
 	filename: string,
 	line: number,
 	col: number,
-	tags: Tags
+	tags: Tags,
+	claimTag?: (name: string) => LexerTagDefinitionContract | null
 ): RuntimeTag | null {
 	const match = TAG_REGEX.exec(content)
 
@@ -35,7 +42,14 @@ export function getTag(
 	}
 
 	const name = match[4]
-	const tag = tags[name]
+	let tag: null | LexerTagDefinitionContract = tags[name]
+
+	/**
+	 * See if the tag can be claimed
+	 */
+	if (!tag && claimTag) {
+		tag = claimTag(name)
+	}
 
 	/**
 	 * Return when not a registered tag

@@ -32,6 +32,7 @@ import {
 	MustacheToken,
 	RuntimeComment,
 	RuntimeMustache,
+	LexerTagDefinitionContract,
 } from '../Contracts'
 
 /**
@@ -81,7 +82,11 @@ export class Tokenizer {
 	constructor(
 		private template: string,
 		private tagsDef: Tags,
-		private options: { filename: string; onLine?: (line: string) => string }
+		private options: {
+			filename: string
+			onLine?: (line: string) => string
+			claimTag?: (name: string) => LexerTagDefinitionContract | null
+		}
 	) {}
 
 	/**
@@ -507,7 +512,14 @@ export class Tokenizer {
 		 * Check if the current line is a tag or not. If yes, then handle
 		 * it appropriately
 		 */
-		const tag = getTag(line, this.options.filename, this.line, 0, this.tagsDef)
+		const tag = getTag(
+			line,
+			this.options.filename,
+			this.line,
+			0,
+			this.tagsDef,
+			this.options.claimTag
+		)
 		if (tag) {
 			/**
 			 * When two back to back lines are tags, then we put a newline between them
