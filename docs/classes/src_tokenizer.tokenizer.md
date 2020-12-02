@@ -34,7 +34,7 @@ the tokens output.
 
 ### constructor
 
-\+ **new Tokenizer**(`template`: string, `tagsDef`: [Tags](../interfaces/src_contracts.tags.md), `options`: { filename: string ; onLine?: undefined \| (line: string) => string  }): [Tokenizer](src_tokenizer.tokenizer.md)
+\+ **new Tokenizer**(`template`: string, `tagsDef`: [Tags](../interfaces/src_contracts.tags.md), `options`: { claimTag?: undefined \| (name: string) => [LexerTagDefinitionContract](../interfaces/src_contracts.lexertagdefinitioncontract.md) \| null ; filename: string ; onLine?: undefined \| (line: string) => string  }): [Tokenizer](src_tokenizer.tokenizer.md)
 
 #### Parameters:
 
@@ -42,7 +42,7 @@ Name | Type |
 ------ | ------ |
 `template` | string |
 `tagsDef` | [Tags](../interfaces/src_contracts.tags.md) |
-`options` | { filename: string ; onLine?: undefined \| (line: string) => string  } |
+`options` | { claimTag?: undefined \| (name: string) => [LexerTagDefinitionContract](../interfaces/src_contracts.lexertagdefinitioncontract.md) \| null ; filename: string ; onLine?: undefined \| (line: string) => string  } |
 
 **Returns:** [Tokenizer](src_tokenizer.tokenizer.md)
 

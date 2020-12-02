@@ -39,7 +39,7 @@ ___
 
 ### getTag
 
-▸ **getTag**(`content`: string, `filename`: string, `line`: number, `col`: number, `tags`: [Tags](../interfaces/src_contracts.tags.md)): [RuntimeTag](src_contracts.md#runtimetag) \| null
+▸ **getTag**(`content`: string, `filename`: string, `line`: number, `col`: number, `tags`: [Tags](../interfaces/src_contracts.tags.md), `claimTag?`: undefined \| (name: string) => [LexerTagDefinitionContract](../interfaces/src_contracts.lexertagdefinitioncontract.md) \| null): [RuntimeTag](src_contracts.md#runtimetag) \| null
 
 Returns runtime tag node if tag is detected and is a registered tag
 
@@ -52,5 +52,6 @@ Name | Type |
 `line` | number |
 `col` | number |
 `tags` | [Tags](../interfaces/src_contracts.tags.md) |
+`claimTag?` | undefined \| (name: string) => [LexerTagDefinitionContract](../interfaces/src_contracts.lexertagdefinitioncontract.md) \| null |
 
 **Returns:** [RuntimeTag](src_contracts.md#runtimetag) \| null

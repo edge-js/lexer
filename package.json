@@ -1,6 +1,6 @@
 {
   "name": "edge-lexer",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Parses raw markup files to converts them to Edge tokens",
   "main": "build/index.js",
   "files": [
