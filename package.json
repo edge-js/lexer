@@ -12,7 +12,7 @@
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
     "test": "node japaFile.js",
-    "build": "npm run compile && typedoc --theme markdown --excludePrivate --hideSources && git add docs",
+    "build": "npm run compile",
     "commit": "git-cz",
     "test:win": "node ./node_modules/japa-cli/index.js",
     "clean": "del build",
@@ -53,9 +53,6 @@
     "np": "^7.2.0",
     "npm-audit-html": "^1.5.0",
     "prettier": "^2.2.1",
-    "typedoc": "^0.20.14",
-    "typedoc-plugin-external-module-name": "^4.0.6",
-    "typedoc-plugin-markdown": "^3.4.0",
     "typescript": "^4.1.3"
   },
   "dependencies": {
