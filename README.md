@@ -4,7 +4,7 @@
 
 > Generating high level tokens from Edge whitelisted markup
 
-[![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url]
+[![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![synk-image]][synk-url]
 
 Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax).
 
@@ -16,24 +16,25 @@ Instead, this module starts by detecting for the [Edge whitelisted syntax](https
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of contents
 
+- [Table of contents](#table-of-contents)
 - [Highlights](#highlights)
 - [Performance](#performance)
 - [Usage](#usage)
 - [Pre-processing lines](#pre-processing-lines)
 - [Terms used](#terms-used)
 - [Tokens](#tokens)
-    - [Tag Token](#tag-token)
-    - [Escaped Tag Token](#escaped-tag-token)
-    - [Raw Token](#raw-token)
-    - [Comment Token](#comment-token)
-    - [NewLine Token](#newline-token)
-    - [Mustache Token](#mustache-token)
-    - [Safe Mustache Token](#safe-mustache-token)
-    - [Escaped Mustache Token](#escaped-mustache-token)
-    - [Escaped Safe Mustache Token](#escaped-safe-mustache-token)
+		- [Tag Token](#tag-token)
+		- [Escaped Tag Token](#escaped-tag-token)
+		- [Raw Token](#raw-token)
+		- [Comment Token](#comment-token)
+		- [NewLine Token](#newline-token)
+		- [Mustache Token](#mustache-token)
+		- [Safe Mustache Token](#safe-mustache-token)
+		- [Escaped Mustache Token](#escaped-mustache-token)
+		- [Escaped Safe Mustache Token](#escaped-safe-mustache-token)
 - [Properties](#properties)
-    - [BlockProp](#blockprop)
-    - [Prop](#prop)
+		- [BlockProp](#blockprop)
+		- [Prop](#prop)
 - [Mustache expressions](#mustache-expressions)
 - [Errors](#errors)
 - [Example](#example)
@@ -488,8 +489,14 @@ Following the links to documented error codes raised by the lexer.
 
 [circleci-image]: https://img.shields.io/circleci/project/github/edge-js/lexer/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/edge-js/lexer 'circleci'
+
 [npm-image]: https://img.shields.io/npm/v/edge-lexer.svg?style=for-the-badge&logo=npm
 [npm-url]: https://npmjs.org/package/edge-lexer 'npm'
+
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
+
 [license-url]: LICENSE.md
 [license-image]: https://img.shields.io/github/license/edge-js/lexer?style=for-the-badge
+
+[synk-image]: https://img.shields.io/snyk/vulnerabilities/github/edge-js/lexer?label=Synk%20Vulnerabilities&style=for-the-badge
+[synk-url]: https://snyk.io/test/github/edge-js/lexer?targetFile=package.json "synk"
