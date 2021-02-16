@@ -2,7 +2,7 @@
 root = true
 
 [*]
-indent_style = tab
+indent_style = space
 indent_size = 2
 end_of_line = lf
 charset = utf-8
@@ -23,4 +23,4 @@ indent_style = tab
 trim_trailing_whitespace = false
 
 [MakeFile]
-indent_style = tab
+indent_style = space

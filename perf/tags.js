@@ -18,27 +18,27 @@ Here we will focus on tags only
 `
 
 suite
-	.add('Tokenizer tags', function () {
-		const tokenizer = new Tokenizer(
-			template,
-			{
-				if: {
-					seekable: true,
-					selfclosed: false,
-					block: true,
-				},
-				each: {
-					seekable: true,
-					selfclosed: true,
-					block: true,
-				},
-			},
-			{ filename: 'welcome.edge' }
-		)
+  .add('Tokenizer tags', function () {
+    const tokenizer = new Tokenizer(
+      template,
+      {
+        if: {
+          seekable: true,
+          selfclosed: false,
+          block: true,
+        },
+        each: {
+          seekable: true,
+          selfclosed: true,
+          block: true,
+        },
+      },
+      { filename: 'welcome.edge' }
+    )
 
-		tokenizer.parse()
-	})
-	.on('cycle', function (event) {
-		console.log(String(event.target))
-	})
-	.run()
+    tokenizer.parse()
+  })
+  .on('cycle', function (event) {
+    console.log(String(event.target))
+  })
+  .run()

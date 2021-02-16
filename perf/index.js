@@ -22,26 +22,26 @@ What if we have some tags too?
 `
 
 suite
-	.add('Tokenizer', function () {
-		const tokenizer = new Tokenizer(
-			template,
-			{
-				if: {
-					seekable: true,
-					selfclosed: false,
-					block: true,
-				},
-				each: {
-					seekable: true,
-					selfclosed: true,
-					block: true,
-				},
-			},
-			{ filename: 'welcome.edge' }
-		)
-		tokenizer.parse()
-	})
-	.on('cycle', function (event) {
-		console.log(String(event.target))
-	})
-	.run()
+  .add('Tokenizer', function () {
+    const tokenizer = new Tokenizer(
+      template,
+      {
+        if: {
+          seekable: true,
+          selfclosed: false,
+          block: true,
+        },
+        each: {
+          seekable: true,
+          selfclosed: true,
+          block: true,
+        },
+      },
+      { filename: 'welcome.edge' }
+    )
+    tokenizer.parse()
+  })
+  .on('cycle', function (event) {
+    console.log(String(event.target))
+  })
+  .run()

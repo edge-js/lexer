@@ -11,17 +11,17 @@ import * as utils from './src/utils'
 
 export { Tokenizer } from './src/Tokenizer/index'
 export {
-	Tags,
-	TagToken,
-	MustacheToken,
-	NewLineToken,
-	RawToken,
-	Token,
-	LexerTagDefinitionContract,
-	MustacheTypes,
-	TagTypes,
-	TagProps,
-	LexerLoc,
-	MustacheProps,
+  Tags,
+  TagToken,
+  MustacheToken,
+  NewLineToken,
+  RawToken,
+  Token,
+  LexerTagDefinitionContract,
+  MustacheTypes,
+  TagTypes,
+  TagProps,
+  LexerLoc,
+  MustacheProps,
 } from './src/Contracts/index'
 export { utils }
