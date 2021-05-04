@@ -425,6 +425,11 @@ The output of the above text will be
     },
     "children": [
       {
+        "type": "newline",
+        "filename": "eval.edge",
+        "line": 2
+      },
+      {
         "type": "comment",
         "filename": "eval.edge",
         "value": " Wrap inside h2 ",
@@ -438,6 +443,11 @@ The output of the above text will be
             "col": 24
           }
         }
+      },
+      {
+        "type": "newline",
+        "filename": "eval.edge",
+        "line": 3
       },
       {
         "type": "raw",
