@@ -3,7 +3,7 @@
 # Edge lexer
 > Generating high level tokens from Edge whitelisted markup
 
-[![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![synk-image]][synk-url]
+[![gh-workflow-image]][gh-workflow-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![synk-image]][synk-url]
 
 Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax).
 
@@ -496,8 +496,8 @@ Following the links to documented error codes raised by the lexer.
 
 [Harminder virk](https://github.com/thetutlage)
 
-[circleci-image]: https://img.shields.io/circleci/project/github/edge-js/lexer/master.svg?style=for-the-badge&logo=circleci
-[circleci-url]: https://circleci.com/gh/edge-js/lexer 'circleci'
+[gh-workflow-image]: https://img.shields.io/github/workflow/status/edge-js/lexer/test?style=for-the-badge
+[gh-workflow-url]: https://github.com/edge-js/lexer/actions/workflows/test.yml "Github action"
 
 [npm-image]: https://img.shields.io/npm/v/edge-lexer.svg?style=for-the-badge&logo=npm
 [npm-url]: https://npmjs.org/package/edge-lexer 'npm'
