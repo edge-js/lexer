@@ -14,3 +14,4 @@ build
 dist
 shrinkwrap.yaml
 test/__app
+package-lock.json
