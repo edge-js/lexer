@@ -1,13 +1,13 @@
 /*
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import { Token, TagTypes, TagToken, MustacheToken, MustacheTypes } from '../Contracts'
+import { Token, TagTypes, TagToken, MustacheToken, MustacheTypes } from './types'
 
 /**
  * Returns true when token is a tag with a given name

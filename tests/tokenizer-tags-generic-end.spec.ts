@@ -1,16 +1,16 @@
 /**
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import test from 'japa'
+import { test } from '@japa/runner'
 import dedent from 'dedent'
-import { Tokenizer } from '../src/Tokenizer'
-import { TagTypes, MustacheTypes } from '../src/Contracts'
+import { Tokenizer } from '../src/tokenizer'
+import { TagTypes, MustacheTypes } from '../src/types'
 
 const tagsDef = {
   if: class If {
@@ -32,7 +32,7 @@ const tagsDef = {
 }
 
 test.group('Tokenizer Tags', () => {
-  test('tokenize a template into tokens', (assert) => {
+  test('tokenize a template into tokens', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -85,7 +85,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('add content inside tags as the tag children', (assert) => {
+  test('add content inside tags as the tag children', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -151,7 +151,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('allow nested tags', (assert) => {
+  test('allow nested tags', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -245,7 +245,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('parse when statement is in multiple lines', (assert) => {
+  test('parse when statement is in multiple lines', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -313,7 +313,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('parse when statement is in multiple lines and has internal parens too', (assert) => {
+  test('parse when statement is in multiple lines and has internal parens too', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -381,7 +381,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('parse inline tags', (assert) => {
+  test('parse inline tags', ({ assert }) => {
     const template = dedent`@include('partials.user')`
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -412,7 +412,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('parse inline tags which are not seekable', (assert) => {
+  test('parse inline tags which are not seekable', ({ assert }) => {
     const template = dedent`
     @if(username)
       Hello
@@ -492,7 +492,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('ignore tag when not registered', (assert) => {
+  test('ignore tag when not registered', ({ assert }) => {
     const template = dedent`
     @foo('hello world')
     `
@@ -511,7 +511,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('ignore tag when escaped', (assert) => {
+  test('ignore tag when escaped', ({ assert }) => {
     const template = dedent`@@if(username)
     @end
     `
@@ -544,7 +544,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('throw exception when tag is still seeking', (assert) => {
+  test('throw exception when tag is still seeking', ({ assert }) => {
     assert.plan(2)
 
     const template = dedent`@if((2 + 2)
@@ -559,7 +559,9 @@ test.group('Tokenizer Tags', () => {
     }
   })
 
-  test('throw exception when there is inline content in the tag opening statement', (assert) => {
+  test('throw exception when there is inline content in the tag opening statement', ({
+    assert,
+  }) => {
     assert.plan(3)
     const template = dedent`@include('foo') hello world`
 
@@ -573,7 +575,7 @@ test.group('Tokenizer Tags', () => {
     }
   })
 
-  test('throw exception when opening brace is in a different line', (assert) => {
+  test('throw exception when opening brace is in a different line', ({ assert }) => {
     assert.plan(3)
     const template = dedent`
     @if
@@ -593,7 +595,7 @@ test.group('Tokenizer Tags', () => {
     }
   })
 
-  test('do not raise exception when tag is not seekable and has no parens', (assert) => {
+  test('do not raise exception when tag is not seekable and has no parens', ({ assert }) => {
     const template = dedent`
     @else
     `
@@ -624,7 +626,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('consume one liner inline tag', (assert) => {
+  test('consume one liner inline tag', ({ assert }) => {
     const template = "@include('header')"
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -655,7 +657,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('throw exception when there are unclosed tags', (assert) => {
+  test('throw exception when there are unclosed tags', ({ assert }) => {
     const template = dedent`
       @if(username)
         Hello world
@@ -663,10 +665,10 @@ test.group('Tokenizer Tags', () => {
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     const fn = () => tokenizer.parse()
-    assert.throw(fn, 'Unclosed tag if')
+    assert.throws(fn, 'Unclosed tag if')
   })
 
-  test('throw exception when there are unclosed nested tags', (assert) => {
+  test('throw exception when there are unclosed nested tags', ({ assert }) => {
     const template = dedent`
       @if(username)
         @each(user in users)
@@ -675,10 +677,10 @@ test.group('Tokenizer Tags', () => {
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     const fn = () => tokenizer.parse()
-    assert.throw(fn, 'Unclosed tag if')
+    assert.throws(fn, 'Unclosed tag if')
   })
 
-  test('handle when nested components are closed using generic end', (assert) => {
+  test('handle when nested components are closed using generic end', ({ assert }) => {
     const template = dedent`
       @if(username)
 				@each(user in users)
@@ -740,7 +742,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('work fine if a tag is self closed', (assert) => {
+  test('work fine if a tag is self closed', ({ assert }) => {
     const template = dedent`
     @!each(user in users, include = 'user')
     `
@@ -773,7 +775,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('work fine when bang is defined in tag jsArg', (assert) => {
+  test('work fine when bang is defined in tag jsArg', ({ assert }) => {
     const template = dedent`
     @if(!user)
     @end
@@ -807,7 +809,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('remove newline after the tag', (assert) => {
+  test('remove newline after the tag', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -868,7 +870,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('remove newline after the tag spanned over multiple lines', (assert) => {
+  test('remove newline after the tag spanned over multiple lines', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -931,7 +933,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('remove newline between two tags', (assert) => {
+  test('remove newline between two tags', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -1020,7 +1022,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('remove newline between two tags when spanned over multiple lines', (assert) => {
+  test('remove newline between two tags when spanned over multiple lines', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -1111,7 +1113,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('remove newline after the tag when tag has noNewLine property', (assert) => {
+  test('remove newline after the tag when tag has noNewLine property', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -1180,7 +1182,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('remove newline between two tags when tag has noNewLine property', (assert) => {
+  test('remove newline between two tags when tag has noNewLine property', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -1274,7 +1276,7 @@ test.group('Tokenizer Tags', () => {
     ])
   })
 
-  test('remove newline after the endblock', (assert) => {
+  test('remove newline after the endblock', ({ assert }) => {
     const template = dedent`
     @if(username)~
       Hello
@@ -1325,7 +1327,7 @@ test.group('Tokenizer Tags', () => {
 })
 
 test.group('Tokenizer columns', () => {
-  test('track whitespaces before the opening parenthesis', (assert) => {
+  test('track whitespaces before the opening parenthesis', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -1378,7 +1380,7 @@ test.group('Tokenizer columns', () => {
     ])
   })
 
-  test('do not track whitespaces before the closing parenthesis', (assert) => {
+  test('do not track whitespaces before the closing parenthesis', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -1431,7 +1433,7 @@ test.group('Tokenizer columns', () => {
     ])
   })
 
-  test('track whitespaces before the starting of tag', (assert) => {
+  test('track whitespaces before the starting of tag', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -1484,7 +1486,7 @@ test.group('Tokenizer columns', () => {
     ])
   })
 
-  test('track columns for multiline expression', (assert) => {
+  test('track columns for multiline expression', ({ assert }) => {
     const template = dedent`
     Hello
 
@@ -1539,7 +1541,7 @@ test.group('Tokenizer columns', () => {
     ])
   })
 
-  test('track columns for mustache statement', (assert) => {
+  test('track columns for mustache statement', ({ assert }) => {
     const template = dedent`
     Hello {{ username }}
     `
@@ -1575,7 +1577,7 @@ test.group('Tokenizer columns', () => {
     ])
   })
 
-  test('track columns for multiple mustache statements', (assert) => {
+  test('track columns for multiple mustache statements', ({ assert }) => {
     const template = dedent`
     Hello {{ username }}, your age is {{ age }}
     `
@@ -1634,7 +1636,7 @@ test.group('Tokenizer columns', () => {
     ])
   })
 
-  test('track columns for multiline mustache statements', (assert) => {
+  test('track columns for multiline mustache statements', ({ assert }) => {
     const template = dedent`
     Hello {{
       username
@@ -1695,7 +1697,7 @@ test.group('Tokenizer columns', () => {
     ])
   })
 
-  test('track columns for multiline saf emustache statements', (assert) => {
+  test('track columns for multiline saf emustache statements', ({ assert }) => {
     const template = dedent`
     Hello {{{
       username

@@ -1,18 +1,18 @@
 /**
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 import dedent from 'dedent'
-import test from 'japa'
-import { Scanner } from '../src/Scanner'
+import { test } from '@japa/runner'
+import { Scanner } from '../src/scanner'
 
 test.group('Scanner', () => {
-  test('scan characters till end of a pattern', (assert) => {
+  test('scan characters till end of a pattern', ({ assert }) => {
     const scanner = new Scanner(')', ['(', ')'], 1, 0)
     scanner.scan('username)')
 
@@ -21,7 +21,7 @@ test.group('Scanner', () => {
     assert.equal(scanner.leftOver, '')
   })
 
-  test('scan characters till end of a pattern with tolerations', (assert) => {
+  test('scan characters till end of a pattern with tolerations', ({ assert }) => {
     const scanner = new Scanner(')', ['(', ')'], 1, 0)
     scanner.scan('(2 + 2) * 3)')
 
@@ -30,7 +30,7 @@ test.group('Scanner', () => {
     assert.equal(scanner.leftOver, '')
   })
 
-  test('scan characters and return left over after the match', (assert) => {
+  test('scan characters and return left over after the match', ({ assert }) => {
     const scanner = new Scanner(')', ['(', ')'], 1, 0)
     scanner.scan('(2 + 2) * 3) is 12')
 
@@ -39,13 +39,13 @@ test.group('Scanner', () => {
     assert.equal(scanner.leftOver, ' is 12')
   })
 
-  test('return null when unable to find closing pattern', (assert) => {
+  test('return null when unable to find closing pattern', ({ assert }) => {
     const scanner = new Scanner(')', ['(', ')'], 1, 0)
     scanner.scan('(2 + 2) * 3')
     assert.isFalse(scanner.closed)
   })
 
-  test('scan multiple times unless closing pattern matches', (assert) => {
+  test('scan multiple times unless closing pattern matches', ({ assert }) => {
     const scanner = new Scanner(')', ['(', ')'], 1, 0)
     scanner.scan('(2 + 2)')
     scanner.scan(' * 3')
@@ -57,7 +57,7 @@ test.group('Scanner', () => {
     assert.equal(scanner.leftOver, ' is 12')
   })
 
-  test('scan for pair of ending patterns', (assert) => {
+  test('scan for pair of ending patterns', ({ assert }) => {
     const scanner = new Scanner('}}', ['{', '}'], 1, 0)
     scanner.scan(' username }}')
 
@@ -66,7 +66,7 @@ test.group('Scanner', () => {
     assert.equal(scanner.leftOver, '')
   })
 
-  test('tolerate when scaning for ending pairs', (assert) => {
+  test('tolerate when scaning for ending pairs', ({ assert }) => {
     const scanner = new Scanner('}}', ['{', '}'], 1, 0)
     scanner.scan(' {username} }}')
 
@@ -75,14 +75,14 @@ test.group('Scanner', () => {
     assert.equal(scanner.leftOver, '')
   })
 
-  test('return null when ending pairs are not matched', (assert) => {
+  test('return null when ending pairs are not matched', ({ assert }) => {
     const scanner = new Scanner('}}}', ['{', '}'], 1, 0)
     scanner.scan(' {username} }}')
 
     assert.isFalse(scanner.closed)
   })
 
-  test('work fine when ending patterns are mixed in multiple lines', (assert) => {
+  test('work fine when ending patterns are mixed in multiple lines', ({ assert }) => {
     const template = dedent`
     {{
       {username

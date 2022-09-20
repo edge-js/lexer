@@ -1,15 +1,15 @@
 /*
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import test from 'japa'
+import { test } from '@japa/runner'
 import { fixtures } from '../fixtures/index'
-import { Tokenizer } from '../src/Tokenizer'
+import { Tokenizer } from '../src/tokenizer'
 
 const tags = {
   if: {
@@ -24,7 +24,7 @@ const tags = {
 
 test.group('fixtures', () => {
   fixtures.forEach((fixture) => {
-    test(fixture.name, (assert) => {
+    test(fixture.name, ({ assert }) => {
       const tokenizer = new Tokenizer(fixture.in, tags, { filename: 'eval.edge' })
       tokenizer.parse()
       assert.deepEqual(tokenizer.tokens, fixture.out)

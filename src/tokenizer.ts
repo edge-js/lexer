@@ -1,14 +1,14 @@
 /**
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import { getTag, getMustache } from '../Detector'
-import { Scanner } from '../Scanner'
+import { Scanner } from './scanner'
+import { getTag, getMustache } from './detector'
 
 import {
   unclosedTag,
@@ -16,7 +16,7 @@ import {
   unopenedParen,
   unclosedCurlyBrace,
   cannotSeekStatement,
-} from '../Exceptions'
+} from './exceptions'
 
 import {
   Tags,
@@ -33,7 +33,7 @@ import {
   RuntimeComment,
   RuntimeMustache,
   LexerTagDefinitionContract,
-} from '../Contracts'
+} from './types'
 
 /**
  * Tokenizer converts a bunch of text into an array of tokens. Later

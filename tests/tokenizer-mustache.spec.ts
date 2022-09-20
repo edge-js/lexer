@@ -1,16 +1,16 @@
 /**
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import test from 'japa'
+import { test } from '@japa/runner'
 import dedent from 'dedent'
-import { Tokenizer } from '../src/Tokenizer'
-import { MustacheTypes } from '../src/Contracts'
+import { Tokenizer } from '../src/tokenizer'
+import { MustacheTypes } from '../src/types'
 
 const tagsDef = {
   if: class If {
@@ -31,7 +31,7 @@ const tagsDef = {
 }
 
 test.group('Tokenizer Mustache', () => {
-  test('process mustache blocks', (assert) => {
+  test('process mustache blocks', ({ assert }) => {
     const template = 'Hello {{ username }}'
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -66,7 +66,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('process mustache blocks with text around it', (assert) => {
+  test('process mustache blocks with text around it', ({ assert }) => {
     const template = 'Hello {{ username }}!'
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -107,7 +107,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('parse multiline mustache', (assert) => {
+  test('parse multiline mustache', ({ assert }) => {
     const template = dedent`List of users are {{
       users.map((user) => {
         return user.username
@@ -152,7 +152,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('Allow safe mustache', (assert) => {
+  test('Allow safe mustache', ({ assert }) => {
     const template = dedent`List of users are {{{
       users.map((user) => {
         return user.username
@@ -197,7 +197,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('Allow safe escaped mustache', (assert) => {
+  test('Allow safe escaped mustache', ({ assert }) => {
     const template = dedent`List of users are @{{{
       users.map((user) => {
         return user.username
@@ -242,7 +242,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('parse multiple mustache statements in a single line', (assert) => {
+  test('parse multiple mustache statements in a single line', ({ assert }) => {
     const template = dedent`Hello {{ username }}, your age is {{ age }}`
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -301,7 +301,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('parse multiple mustache statements in multiple lines', (assert) => {
+  test('parse multiple mustache statements in multiple lines', ({ assert }) => {
     const template = dedent`
     Hello {{ username }}, your friends are {{
       users.map((user) => {
@@ -384,7 +384,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('raise error if incomplete mustache statements', (assert) => {
+  test('raise error if incomplete mustache statements', ({ assert }) => {
     assert.plan(2)
     const template = 'Hello {{ username'
 
@@ -397,7 +397,7 @@ test.group('Tokenizer Mustache', () => {
     }
   })
 
-  test('parse 3 mustache statements in a single line', (assert) => {
+  test('parse 3 mustache statements in a single line', ({ assert }) => {
     const template = dedent`{{ username }}, {{ age }} and {{ state }}`
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -473,7 +473,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('work fine with escaped and regular mustache braces', (assert) => {
+  test('work fine with escaped and regular mustache braces', ({ assert }) => {
     const template = dedent`{{ username }}, @{{ age }}`
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -526,7 +526,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('work fine with multiline escaped', (assert) => {
+  test('work fine with multiline escaped', ({ assert }) => {
     const template = dedent`{{ username }}, @{{
       users.map((user) => user.username)
     }}`
@@ -581,7 +581,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('parse multiple mustache statements when escaped and unescaped', (assert) => {
+  test('parse multiple mustache statements when escaped and unescaped', ({ assert }) => {
     const template = dedent`Hello @{{ username }}, your age is {{ age }}`
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -640,7 +640,7 @@ test.group('Tokenizer Mustache', () => {
     ])
   })
 
-  test('raise error if mustache is not properly closed', (assert) => {
+  test('raise error if mustache is not properly closed', ({ assert }) => {
     assert.plan(2)
 
     const template = dedent`Hello {{ username }.`

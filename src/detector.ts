@@ -1,19 +1,19 @@
 /**
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import {
+import type {
   Tags,
   RuntimeTag,
   RuntimeComment,
   RuntimeMustache,
   LexerTagDefinitionContract,
-} from '../Contracts'
+} from './types'
 
 /**
  * The only regex we need in the entire lexer. Also tested

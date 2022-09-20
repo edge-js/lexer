@@ -1,7 +1,7 @@
 /**
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -37,7 +37,7 @@ export class Scanner {
   private tolaretionCounts: number = 0
   private tolerateLhs: string = ''
   private tolerateRhs: string = ''
-  private patternLength = this.pattern.length
+  private patternLength: number = 0
 
   /**
    * Tracking if the scanner has been closed
@@ -55,10 +55,7 @@ export class Scanner {
    */
   public leftOver: string = ''
 
-  public loc = {
-    line: this.line,
-    col: this.col,
-  }
+  public loc: { line: number; col: number }
 
   constructor(
     private pattern: string,
@@ -68,6 +65,11 @@ export class Scanner {
   ) {
     this.tolerateLhs = toleratePair[0]
     this.tolerateRhs = toleratePair[1]
+    this.patternLength = this.pattern.length
+    this.loc = {
+      line: this.line,
+      col: this.col,
+    }
   }
 
   /**

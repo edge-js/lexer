@@ -1,27 +1,30 @@
 {
   "name": "edge-lexer",
   "version": "4.0.10",
-  "description": "Parses raw markup files to converts them to Edge tokens",
+  "description": "Edge parser to convert text markup to lexer tokens",
   "main": "build/index.js",
   "files": [
     "build/src",
     "build/index.d.ts",
     "build/index.js"
   ],
+  "exports": {
+    ".": "./build/index.js",
+    "./types": "./build/src/types.js",
+    "./utils": "./build/src/utils.js"
+  },
   "scripts": {
-    "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
-    "test": "node japaFile.js",
+    "test": "npm run vscode:test",
+    "vscode:test": "node --require=@adonisjs/require-ts/build/register bin/test.ts",
     "build": "npm run compile",
-    "commit": "git-cz",
-    "test:win": "node ./node_modules/japa-cli/index.js",
-    "clean": "del build",
+    "clean": "del-cli build",
     "compile": "npm run lint && npm run clean && tsc",
     "release": "np",
     "version": "npm run build",
     "prepublishOnly": "npm run build",
     "lint": "eslint . --ext=.ts",
-    "sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json edge-js/lexer",
+    "sync-labels": "github-label-sync --labels .github/labels.json edge-js/lexer",
     "format": "prettier --write ."
   },
   "keywords": [
@@ -32,50 +35,30 @@
   "author": "virk",
   "license": "MIT",
   "devDependencies": {
-    "@adonisjs/mrm-preset": "^5.0.3",
     "@adonisjs/require-ts": "^2.0.12",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@japa/assert": "^1.3.6",
+    "@japa/run-failed-tests": "^1.1.0",
+    "@japa/runner": "^2.2.1",
+    "@japa/spec-reporter": "^1.3.1",
+    "@types/dedent": "^0.7.0",
     "@types/node": "^18.7.18",
     "benchmark": "^2.1.4",
     "dedent": "^0.7.0",
     "del-cli": "^5.0.0",
-    "doctoc": "^2.2.0",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-adonis": "^2.1.1",
     "eslint-plugin-prettier": "^4.2.1",
     "github-label-sync": "^2.2.0",
     "husky": "^8.0.1",
-    "japa": "^4.0.0",
-    "mrm": "^4.1.6",
     "np": "^7.6.2",
     "prettier": "^2.7.1",
     "typescript": "^4.8.3"
   },
   "dependencies": {
     "edge-error": "^3.0.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "test"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "doctoc README.md --title='## Table of contents' && git add README.md",
-      "commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
-    }
-  },
-  "np": {
-    "contents": ".",
-    "anyBranch": false
   },
   "repository": {
     "type": "git",
@@ -84,5 +67,45 @@
   "bugs": {
     "url": "https://github.com/edge-js/lexer/issues"
   },
-  "homepage": "https://github.com/edge-js/lexer#readme"
+  "homepage": "https://github.com/edge-js/lexer#readme",
+  "np": {
+    "contents": ".",
+    "message": "chore(release): %s",
+    "anyBranch": false
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:adonis/typescriptPackage",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "endOfLine": "auto"
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "build"
+  ],
+  "prettier": {
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true,
+    "useTabs": false,
+    "quoteProps": "consistent",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "printWidth": 100
+  }
 }

@@ -1,16 +1,16 @@
 /**
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import test from 'japa'
+import { test } from '@japa/runner'
 import dedent from 'dedent'
-import { Tokenizer } from '../src/Tokenizer'
-import { MustacheTypes, TagTypes } from '../src/Contracts'
+import { Tokenizer } from '../src/tokenizer'
+import { MustacheTypes, TagTypes } from '../src/types'
 
 const tagsDef = {
   if: class If {
@@ -31,7 +31,7 @@ const tagsDef = {
 }
 
 test.group('Tokenizer Comment', () => {
-  test('process block level comments', (assert) => {
+  test('process block level comments', ({ assert }) => {
     const template = dedent`
     {{-- This is a comment --}}
     `
@@ -60,7 +60,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('process block level comments spanned to multiple lines', (assert) => {
+  test('process block level comments spanned to multiple lines', ({ assert }) => {
     const template = dedent`
     {{--
        This is a comment
@@ -91,7 +91,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('process inline comments with text', (assert) => {
+  test('process inline comments with text', ({ assert }) => {
     const template = dedent`
     Hello {{-- This is inline comment --}}
     `
@@ -126,7 +126,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('process inline comments with mustache', (assert) => {
+  test('process inline comments with mustache', ({ assert }) => {
     const template = dedent`
     {{ username }} {{-- This is an inline comment --}}
     `
@@ -178,7 +178,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('process inline comments spanning over multiple lines with mustache', (assert) => {
+  test('process inline comments spanning over multiple lines with mustache', ({ assert }) => {
     const template = dedent`
     {{ username }} {{--
       This is an inline comment
@@ -232,7 +232,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('process inline comments surrounded by interpolation braces', (assert) => {
+  test('process inline comments surrounded by interpolation braces', ({ assert }) => {
     const template = dedent`
     {{ username }} {{-- This is an inline comment --}} {{ age }}
     `
@@ -307,7 +307,9 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('process inline comments spanning over multiple lines surrounded by interpolation braces', (assert) => {
+  test('process inline comments spanning over multiple lines surrounded by interpolation braces', ({
+    assert,
+  }) => {
     const template = dedent`
     {{ username }} {{--
       This is an inline comment
@@ -384,7 +386,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('process inline comments surrounded by text', (assert) => {
+  test('process inline comments surrounded by text', ({ assert }) => {
     const template = dedent`
     Hello {{-- This is inline comment --}} world
     `
@@ -425,7 +427,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('process inline comments spanning over multiple lines surrounded by text', (assert) => {
+  test('process inline comments spanning over multiple lines surrounded by text', ({ assert }) => {
     const template = dedent`
     Hello {{--
       This is inline comment
@@ -468,7 +470,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('disallow inline comments with tags', (assert) => {
+  test('disallow inline comments with tags', ({ assert }) => {
     const template = dedent`
     @if(username) {{-- This is a comment --}}
     @endif
@@ -476,10 +478,10 @@ test.group('Tokenizer Comment', () => {
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     const fn = () => tokenizer.parse()
-    assert.throw(fn, 'Unexpected token " {{-- This is a comment --}}"')
+    assert.throws(fn, 'Unexpected token " {{-- This is a comment --}}"')
   })
 
-  test('shrink newlines after block level comments', (assert) => {
+  test('shrink newlines after block level comments', ({ assert }) => {
     const template = dedent`
     {{-- This is a comment --}}
     Hello world
@@ -520,7 +522,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('do not shrink newlines for inline comments', (assert) => {
+  test('do not shrink newlines for inline comments', ({ assert }) => {
     const template = dedent`
     Hey {{-- This is a comment --}}
     Hello world
@@ -567,7 +569,9 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('do not shrink newlines for inline comments when raw text is after the comment', (assert) => {
+  test('do not shrink newlines for inline comments when raw text is after the comment', ({
+    assert,
+  }) => {
     const template = dedent`
     {{-- This is a comment --}} Hey
     Hello world
@@ -614,7 +618,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('do not shrink newlines when comment is next to an interpolation brace', (assert) => {
+  test('do not shrink newlines when comment is next to an interpolation brace', ({ assert }) => {
     const template = dedent`
     {{-- This is a comment --}} {{ username }}
     Hello world
@@ -678,7 +682,9 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('do not shrink newlines when comment spanned over multiple lines, after interpolation brace', (assert) => {
+  test('do not shrink newlines when comment spanned over multiple lines, after interpolation brace', ({
+    assert,
+  }) => {
     const template = dedent`
     {{ username }} {{--
       This is an inline comment
@@ -757,7 +763,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('do shrink comment spanned over multiple lines', (assert) => {
+  test('do shrink comment spanned over multiple lines', ({ assert }) => {
     const template = dedent`
     {{--
       This is an inline comment
@@ -811,7 +817,9 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('do not shrink newlines when comment spanned over multiple lines, after raw text', (assert) => {
+  test('do not shrink newlines when comment spanned over multiple lines, after raw text', ({
+    assert,
+  }) => {
     const template = dedent`
     Hello {{--
       This is an inline comment
@@ -918,7 +926,7 @@ test.group('Tokenizer Comment', () => {
     ])
   })
 
-  test('do not emit newline when firstline is a comment', (assert) => {
+  test('do not emit newline when firstline is a comment', ({ assert }) => {
     const template = dedent`
     {{-- This is a comment --}}
     @if(username)

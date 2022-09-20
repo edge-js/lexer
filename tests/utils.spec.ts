@@ -1,18 +1,18 @@
 /*
  * edge-lexer
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Edge
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import test from 'japa'
-import { TagTypes, MustacheTypes } from '../src/Contracts'
+import { test } from '@japa/runner'
+import { TagTypes, MustacheTypes } from '../src/types'
 import * as utils from '../src/utils'
 
 test.group('Utils | isTag', () => {
-  test('return true when token type is a tag with a given name', (assert) => {
+  test('return true when token type is a tag with a given name', ({ assert }) => {
     assert.isTrue(
       utils.isTag(
         {
@@ -34,7 +34,7 @@ test.group('Utils | isTag', () => {
     )
   })
 
-  test('return false when token type is a tag with different name', (assert) => {
+  test('return false when token type is a tag with different name', ({ assert }) => {
     assert.isFalse(
       utils.isTag(
         {
@@ -56,7 +56,7 @@ test.group('Utils | isTag', () => {
     )
   })
 
-  test('return false when token type is not a tag', (assert) => {
+  test('return false when token type is not a tag', ({ assert }) => {
     assert.isFalse(
       utils.isTag(
         {
@@ -70,7 +70,7 @@ test.group('Utils | isTag', () => {
     )
   })
 
-  test('return true when token type is an escaped tag', (assert) => {
+  test('return true when token type is an escaped tag', ({ assert }) => {
     assert.isTrue(
       utils.isEscapedTag({
         type: TagTypes.ETAG,
@@ -89,7 +89,7 @@ test.group('Utils | isTag', () => {
     )
   })
 
-  test('return true when token type is not an escaped tag', (assert) => {
+  test('return true when token type is not an escaped tag', ({ assert }) => {
     assert.isFalse(
       utils.isEscapedTag({
         type: TagTypes.TAG,
@@ -110,7 +110,7 @@ test.group('Utils | isTag', () => {
 })
 
 test.group('Utils | isMustache', () => {
-  test('return true when token type is a mustache tag', (assert) => {
+  test('return true when token type is a mustache tag', ({ assert }) => {
     assert.isTrue(
       utils.isMustache({
         type: MustacheTypes.EMUSTACHE,
@@ -126,7 +126,7 @@ test.group('Utils | isMustache', () => {
     )
   })
 
-  test('return false when token type is not a mustache tag', (assert) => {
+  test('return false when token type is not a mustache tag', ({ assert }) => {
     assert.isFalse(
       utils.isMustache({
         type: 'raw',
@@ -137,7 +137,7 @@ test.group('Utils | isMustache', () => {
     )
   })
 
-  test('return true when token type is a safe mustache tag', (assert) => {
+  test('return true when token type is a safe mustache tag', ({ assert }) => {
     assert.isTrue(
       utils.isSafeMustache({
         type: MustacheTypes.SMUSTACHE,
@@ -153,7 +153,7 @@ test.group('Utils | isMustache', () => {
     )
   })
 
-  test('return false when token type is not a safe mustache tag', (assert) => {
+  test('return false when token type is not a safe mustache tag', ({ assert }) => {
     assert.isFalse(
       utils.isSafeMustache({
         type: MustacheTypes.MUSTACHE,
@@ -169,7 +169,7 @@ test.group('Utils | isMustache', () => {
     )
   })
 
-  test('return true when token type is an escaped mustache tag', (assert) => {
+  test('return true when token type is an escaped mustache tag', ({ assert }) => {
     assert.isTrue(
       utils.isEscapedMustache({
         type: MustacheTypes.EMUSTACHE,
@@ -185,7 +185,7 @@ test.group('Utils | isMustache', () => {
     )
   })
 
-  test('return false when token type is not an escaped mustache tag', (assert) => {
+  test('return false when token type is not an escaped mustache tag', ({ assert }) => {
     assert.isFalse(
       utils.isEscapedMustache({
         type: MustacheTypes.MUSTACHE,
@@ -203,7 +203,7 @@ test.group('Utils | isMustache', () => {
 })
 
 test.group('Utils | getLineAndColumn', () => {
-  test('return line and column for a tag token', (assert) => {
+  test('return line and column for a tag token', ({ assert }) => {
     assert.deepEqual(
       utils.getLineAndColumn({
         type: TagTypes.TAG,
@@ -223,7 +223,7 @@ test.group('Utils | getLineAndColumn', () => {
     )
   })
 
-  test('return line and column for a mustache token', (assert) => {
+  test('return line and column for a mustache token', ({ assert }) => {
     assert.deepEqual(
       utils.getLineAndColumn({
         type: MustacheTypes.EMUSTACHE,
@@ -240,7 +240,7 @@ test.group('Utils | getLineAndColumn', () => {
     )
   })
 
-  test('return line and column for a raw token', (assert) => {
+  test('return line and column for a raw token', ({ assert }) => {
     assert.deepEqual(
       utils.getLineAndColumn({
         type: 'raw',
@@ -252,7 +252,7 @@ test.group('Utils | getLineAndColumn', () => {
     )
   })
 
-  test('return line and column for a newline token', (assert) => {
+  test('return line and column for a newline token', ({ assert }) => {
     assert.deepEqual(
       utils.getLineAndColumn({
         type: 'newline',
