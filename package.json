@@ -1,6 +1,6 @@
 {
   "name": "edge-lexer",
-  "version": "4.0.10",
+  "version": "5.0.0",
   "description": "Edge parser to convert text markup to lexer tokens",
   "main": "build/index.js",
   "files": [
