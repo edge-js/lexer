@@ -1,7 +1,5 @@
-<div align="center"><img src="https://res.cloudinary.com/adonis-js/image/upload/v1620150474/edge-banner_tzmnox.jpg" width="600px"></div>
-
-# Edge lexer
-> Generating high level tokens from Edge whitelisted markup
+# edge-lexer
+> Generate tokens by parsing a raw edge markup file
 
 [![gh-workflow-image]][gh-workflow-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![synk-image]][synk-url]
 
@@ -494,7 +492,7 @@ Following the links to documented error codes raised by the lexer.
 
 ## Maintainers
 
-[Harminder virk](https://github.com/thetutlage)
+[Harminder virk](https://github.com/sponsors/thetutlage)
 
 [gh-workflow-image]: https://img.shields.io/github/workflow/status/edge-js/lexer/test?style=for-the-badge
 [gh-workflow-url]: https://github.com/edge-js/lexer/actions/workflows/test.yml "Github action"
