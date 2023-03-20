@@ -8,3 +8,5 @@
  */
 
 export { Tokenizer } from './src/tokenizer'
+export * as utils from './src/utils'
+export * from './src/types.js'
