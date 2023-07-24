@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { Token, TagTypes, TagToken, MustacheToken, MustacheTypes } from './types'
+import { Token, TagTypes, TagToken, MustacheToken, MustacheTypes } from './types.js'
 
 /**
  * Returns true when token is a tag with a given name

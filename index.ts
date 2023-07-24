@@ -7,6 +7,6 @@
  * file that was distributed with this source code.
  */
 
-export { Tokenizer } from './src/tokenizer'
-export * as utils from './src/utils'
+export { Tokenizer } from './src/tokenizer.js'
+export * as utils from './src/utils.js'
 export * from './src/types.js'

@@ -8,8 +8,8 @@
  */
 
 import { test } from '@japa/runner'
-import { TagTypes, MustacheTypes } from '../src/types'
-import * as utils from '../src/utils'
+import { TagTypes, MustacheTypes } from '../src/types.js'
+import * as utils from '../src/utils.js'
 
 test.group('Utils | isTag', () => {
   test('return true when token type is a tag with a given name', ({ assert }) => {

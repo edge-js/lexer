@@ -9,7 +9,7 @@
 
 import dedent from 'dedent'
 import { test } from '@japa/runner'
-import { Scanner } from '../src/scanner'
+import { Scanner } from '../src/scanner.js'
 
 test.group('Scanner', () => {
   test('scan characters till end of a pattern', ({ assert }) => {

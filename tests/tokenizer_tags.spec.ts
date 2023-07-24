@@ -9,35 +9,35 @@
 
 import { test } from '@japa/runner'
 import dedent from 'dedent'
-import { Tokenizer } from '../src/tokenizer'
-import { TagTypes, MustacheTypes } from '../src/types'
+import { Tokenizer } from '../src/tokenizer.js'
+import { TagTypes, MustacheTypes } from '../src/types.js'
 
 const tagsDef = {
   if: class If {
-    public static block = true
-    public static seekable = true
+    static block = true
+    static seekable = true
   },
   else: class Else {
-    public static block = false
-    public static seekable = false
+    static block = false
+    static seekable = false
   },
   include: class Include {
-    public static block = false
-    public static seekable = true
+    static block = false
+    static seekable = true
   },
   each: class Each {
-    public static block = true
-    public static seekable = true
+    static block = true
+    static seekable = true
   },
 }
 
-test.group('Tokenizer Tags', () => {
+test.group('Tokenizer | Tags', () => {
   test('tokenize a template into tokens', ({ assert }) => {
     const template = dedent`
     Hello
 
     @if(username)
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -91,7 +91,7 @@ test.group('Tokenizer Tags', () => {
 
     @if(username)
       Hello
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -158,8 +158,8 @@ test.group('Tokenizer Tags', () => {
     @if(username)
       @if(username === 'virk')
         Hi
-      @end
-    @end
+      @endif
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -253,7 +253,7 @@ test.group('Tokenizer Tags', () => {
       username
     )
       Hello
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -321,7 +321,7 @@ test.group('Tokenizer Tags', () => {
       2 + 2) * 3 === 12
     )
       Answer is 12
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -418,7 +418,7 @@ test.group('Tokenizer Tags', () => {
       Hello
     @else
       Hello guest
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -513,7 +513,7 @@ test.group('Tokenizer Tags', () => {
 
   test('ignore tag when escaped', ({ assert }) => {
     const template = dedent`@@if(username)
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -548,7 +548,7 @@ test.group('Tokenizer Tags', () => {
     assert.plan(2)
 
     const template = dedent`@if((2 + 2)
-    @end`
+    @endif`
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     try {
@@ -582,7 +582,7 @@ test.group('Tokenizer Tags', () => {
     (
       username
     )
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -672,74 +672,12 @@ test.group('Tokenizer Tags', () => {
     const template = dedent`
       @if(username)
         @each(user in users)
-      @end
+      @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     const fn = () => tokenizer.parse()
-    assert.throws(fn, 'Unclosed tag if')
-  })
-
-  test('handle when nested components are closed using generic end', ({ assert }) => {
-    const template = dedent`
-      @if(username)
-				@each(user in users)
-				@end
-      @end
-    `
-
-    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
-    tokenizer.parse()
-    assert.isNull(tokenizer.tagStatement)
-
-    assert.deepEqual(tokenizer.tokens, [
-      {
-        type: TagTypes.TAG,
-        filename: 'eval.edge',
-        loc: {
-          start: {
-            line: 1,
-            col: 4,
-          },
-          end: {
-            line: 1,
-            col: 13,
-          },
-        },
-        properties: {
-          name: 'if',
-          jsArg: 'username',
-          selfclosed: false,
-        },
-        children: [
-          {
-            type: 'newline',
-            filename: 'eval.edge',
-            line: 1,
-          },
-          {
-            type: TagTypes.TAG,
-            filename: 'eval.edge',
-            loc: {
-              start: {
-                line: 2,
-                col: 10,
-              },
-              end: {
-                line: 2,
-                col: 24,
-              },
-            },
-            properties: {
-              name: 'each',
-              jsArg: 'user in users',
-              selfclosed: false,
-            },
-            children: [],
-          },
-        ],
-      },
-    ])
+    assert.throws(fn, 'Unclosed tag each')
   })
 
   test('work fine if a tag is self closed', ({ assert }) => {
@@ -778,7 +716,7 @@ test.group('Tokenizer Tags', () => {
   test('work fine when bang is defined in tag jsArg', ({ assert }) => {
     const template = dedent`
     @if(!user)
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -815,7 +753,7 @@ test.group('Tokenizer Tags', () => {
 
     @if(username)~
       Hello
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -878,7 +816,7 @@ test.group('Tokenizer Tags', () => {
       username
     )~
       Hello
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -940,8 +878,8 @@ test.group('Tokenizer Tags', () => {
     @if(username)~
       @if(age)
       Hello
-      @end
-    @end
+      @endif
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -1031,8 +969,8 @@ test.group('Tokenizer Tags', () => {
     )~
       @if(age)
       Hello
-      @end
-    @end
+      @endif
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -1119,14 +1057,14 @@ test.group('Tokenizer Tags', () => {
 
     @if(username)
       Hello
-    @end
+    @endif
     `
 
     const tags = {
       if: class If {
-        public static block = true
-        public static seekable = true
-        public static noNewLine = true
+        static block = true
+        static seekable = true
+        static noNewLine = true
       },
     }
 
@@ -1191,15 +1129,15 @@ test.group('Tokenizer Tags', () => {
     )
       @if(age)
       Hello
-      @end
-    @end
+      @endif
+    @endif
     `
 
     const tags = {
       if: class If {
-        public static block = true
-        public static seekable = true
-        public static noNewLine = true
+        static block = true
+        static seekable = true
+        static noNewLine = true
       },
     }
 
@@ -1280,7 +1218,7 @@ test.group('Tokenizer Tags', () => {
     const template = dedent`
     @if(username)~
       Hello
-    @end~
+    @endif~
     world
     `
 
@@ -1324,6 +1262,141 @@ test.group('Tokenizer Tags', () => {
       },
     ])
   })
+
+  test('transform lines using onLine method', ({ assert }) => {
+    const template = dedent`
+    @ui.form()
+      Hello
+    @end
+    world
+    `
+
+    const tokenizer = new Tokenizer(
+      template,
+      {
+        component: { block: true, seekable: true },
+      },
+      {
+        filename: 'eval.edge',
+        onLine(line: string) {
+          return line.trim() === '@ui.form()' ? `@component('ui.form')` : line
+        },
+      }
+    )
+    tokenizer.parse()
+
+    assert.isNull(tokenizer.tagStatement)
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: TagTypes.TAG,
+        filename: 'eval.edge',
+        loc: {
+          start: {
+            line: 1,
+            col: 11,
+          },
+          end: {
+            line: 1,
+            col: 21,
+          },
+        },
+        properties: {
+          name: 'component',
+          jsArg: `'ui.form'`,
+          selfclosed: false,
+        },
+        children: [
+          {
+            type: 'newline',
+            filename: 'eval.edge',
+            line: 1,
+          },
+          {
+            type: 'raw',
+            filename: 'eval.edge',
+            value: '  Hello',
+            line: 2,
+          },
+        ],
+      },
+      {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 3,
+      },
+      {
+        type: 'raw',
+        filename: 'eval.edge',
+        value: 'world',
+        line: 4,
+      },
+    ])
+  })
+
+  test('allow claiming tags', ({ assert }) => {
+    const template = dedent`
+    Hello
+
+    @hl.modal(username)
+    @end
+    `
+
+    const tokenizer = new Tokenizer(
+      template,
+      {},
+      {
+        filename: 'eval.edge',
+        claimTag: (name) => {
+          if (name === 'hl.modal') {
+            return { seekable: true, block: true }
+          }
+          return null
+        },
+      }
+    )
+    tokenizer.parse()
+
+    assert.isNull(tokenizer.tagStatement)
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'raw',
+        filename: 'eval.edge',
+        value: 'Hello',
+        line: 1,
+      },
+      {
+        type: 'newline',
+        filename: 'eval.edge',
+        line: 1,
+      },
+      {
+        type: 'raw',
+        filename: 'eval.edge',
+        value: '',
+        line: 2,
+      },
+      {
+        filename: 'eval.edge',
+        type: TagTypes.TAG,
+        properties: {
+          name: 'hl.modal',
+          jsArg: 'username',
+          selfclosed: false,
+        },
+        loc: {
+          start: {
+            line: 3,
+            col: 10,
+          },
+          end: {
+            line: 3,
+            col: 19,
+          },
+        },
+        children: [],
+      },
+    ])
+  })
 })
 
 test.group('Tokenizer columns', () => {
@@ -1332,7 +1405,7 @@ test.group('Tokenizer columns', () => {
     Hello
 
     @if  (username)
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -1385,7 +1458,7 @@ test.group('Tokenizer columns', () => {
     Hello
 
     @if(username  )
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -1438,7 +1511,7 @@ test.group('Tokenizer columns', () => {
     Hello
 
       @if(username)
-      @end
+      @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
@@ -1493,7 +1566,7 @@ test.group('Tokenizer columns', () => {
     @if(
       username && age
     )
-    @end
+    @endif
     `
 
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })

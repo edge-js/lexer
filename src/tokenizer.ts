@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import { Scanner } from './scanner'
-import { getTag, getMustache } from './detector'
+import { Scanner } from './scanner.js'
+import { getTag, getMustache } from './detector.js'
 
 import {
   unclosedTag,
@@ -16,7 +16,7 @@ import {
   unopenedParen,
   unclosedCurlyBrace,
   cannotSeekStatement,
-} from './exceptions'
+} from './exceptions.js'
 
 import {
   Tags,
@@ -33,7 +33,7 @@ import {
   RuntimeComment,
   RuntimeMustache,
   LexerTagDefinitionContract,
-} from './types'
+} from './types.js'
 
 /**
  * Tokenizer converts a bunch of text into an array of tokens. Later
@@ -43,17 +43,17 @@ import {
  * the tokens output.
  */
 export class Tokenizer {
-  public tokens: Token[] = []
+  tokens: Token[] = []
 
   /**
    * Holds the current tag statement, until it is closed
    */
-  public tagStatement: null | { scanner: Scanner; tag: RuntimeTag } = null
+  tagStatement: null | { scanner: Scanner; tag: RuntimeTag } = null
 
   /**
    * Holds the current mustache statement, until it is closed
    */
-  public mustacheStatement: null | {
+  mustacheStatement: null | {
     scanner: Scanner
     mustache: RuntimeMustache | RuntimeComment
   } = null
@@ -587,7 +587,7 @@ export class Tokenizer {
   /**
    * Parse the template and generate an AST out of it
    */
-  public parse(): void {
+  parse(): void {
     const lines = this.template.split(/\r\n|\r|\n/g)
     const linesLength = lines.length
 

@@ -13,7 +13,7 @@ import type {
   RuntimeComment,
   RuntimeMustache,
   LexerTagDefinitionContract,
-} from './types'
+} from './types.js'
 
 /**
  * The only regex we need in the entire lexer. Also tested

@@ -42,20 +42,20 @@ export class Scanner {
   /**
    * Tracking if the scanner has been closed
    */
-  public closed: boolean = false
+  closed: boolean = false
 
   /**
    * The matched content within the pattern
    */
-  public match: string = ''
+  match: string = ''
 
   /**
    * The content in the same line but after the closing
    * of the pattern
    */
-  public leftOver: string = ''
+  leftOver: string = ''
 
-  public loc: { line: number; col: number }
+  loc: { line: number; col: number }
 
   constructor(
     private pattern: string,
@@ -95,7 +95,7 @@ export class Scanner {
    * toleration patterns to make sure they are not making the
    * scanner to end due to pattern mis-match.
    */
-  public scan(chunk: string): void {
+  scan(chunk: string): void {
     if (chunk === '\n') {
       this.loc.line++
       this.loc.col = 0
