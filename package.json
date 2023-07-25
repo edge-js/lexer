@@ -2,6 +2,9 @@
   "name": "edge-lexer",
   "description": "Edge parser to convert text markup to lexer tokens",
   "version": "5.0.2",
+  "engines": {
+    "node": ">=18.16.0"
+  },
   "main": "build/index.js",
   "type": "module",
   "files": [
@@ -26,7 +29,7 @@
     "format": "prettier --write .",
     "release": "np",
     "version": "npm run build",
-    "sync-labels": "github-label-sync --labels .github/labels.json edge-js/error",
+    "sync-labels": "github-label-sync --labels .github/labels.json edge-js/lexer",
     "quick:test": "node --enable-source-maps --loader=ts-node/esm bin/test.ts"
   },
   "devDependencies": {
