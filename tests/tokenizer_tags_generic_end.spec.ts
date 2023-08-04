@@ -7,10 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import { test } from '@japa/runner'
 import dedent from 'dedent'
+import { test } from '@japa/runner'
+
 import { Tokenizer } from '../src/tokenizer.js'
-import { TagTypes, MustacheTypes } from '../src/types.js'
+import { TagTypes, MustacheTypes } from '../src/enums.js'
 
 const tagsDef = {
   if: class If {

@@ -7,10 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import { test } from '@japa/runner'
 import dedent from 'dedent'
+import { test } from '@japa/runner'
+
 import { Tokenizer } from '../src/tokenizer.js'
-import { TagTypes, MustacheTypes } from '../src/types.js'
+import { TagTypes, MustacheTypes } from '../src/enums.js'
 
 const tagsDef = {
   if: class If {
@@ -1259,6 +1260,61 @@ test.group('Tokenizer | Tags', () => {
         filename: 'eval.edge',
         value: 'world',
         line: 4,
+      },
+    ])
+  })
+
+  test('remove newline with non-seekable tag', ({ assert }) => {
+    const template = dedent`
+    Hello
+    @include~
+    Hi
+    `
+
+    const tags = {
+      include: class Include {
+        static block = false
+        static seekable = false
+        static noNewLine = false
+      },
+    }
+
+    const tokenizer = new Tokenizer(template, tags, { filename: 'eval.edge' })
+    tokenizer.parse()
+
+    assert.isNull(tokenizer.tagStatement)
+    assert.deepEqual(tokenizer.tokens, [
+      {
+        type: 'raw',
+        filename: 'eval.edge',
+        value: 'Hello',
+        line: 1,
+      },
+      {
+        type: TagTypes.TAG,
+        filename: 'eval.edge',
+        children: [],
+        loc: {
+          start: {
+            line: 2,
+            col: 8,
+          },
+          end: {
+            line: 2,
+            col: 8,
+          },
+        },
+        properties: {
+          name: 'include',
+          jsArg: '',
+          selfclosed: false,
+        },
+      },
+      {
+        type: 'raw',
+        filename: 'eval.edge',
+        value: 'Hi',
+        line: 3,
       },
     ])
   })
