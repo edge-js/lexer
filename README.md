@@ -494,7 +494,7 @@ Following the links to documented error codes raised by the lexer.
 
 [Harminder virk](https://github.com/sponsors/thetutlage)
 
-[gh-workflow-image]: https://img.shields.io/github/workflow/status/edge-js/lexer/checks.yml?style=for-the-badge
+[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/edge-js/lexer/checks.yml?style=for-the-badge
 [gh-workflow-url]: https://github.com/edge-js/lexer/actions/workflows/checks.yml "Github action"
 
 [npm-image]: https://img.shields.io/npm/v/edge-lexer.svg?style=for-the-badge&logo=npm
