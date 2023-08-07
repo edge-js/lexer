@@ -1,4 +1,4 @@
-import { Tokenizer } from '../build/src/tokenizer.js'
+import { Tokenizer } from '../build/index.js'
 import Benchmark from 'benchmark'
 
 const { Suite } = Benchmark
