@@ -13,6 +13,7 @@
   "exports": {
     ".": "./build/index.js",
     "./types": "./build/src/types.js",
+    "./enums": "./build/src/enums.js",
     "./utils": "./build/src/utils.js"
   },
   "scripts": {
