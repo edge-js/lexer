@@ -8,3 +8,4 @@
  */
 
 export { Tokenizer } from './src/tokenizer.js'
+export { MustacheTypes, TagTypes } from './src/enums.js'
