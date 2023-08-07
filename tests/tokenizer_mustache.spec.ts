@@ -654,4 +654,22 @@ test.group('Tokenizer Mustache', () => {
       assert.equal(line, 1)
     }
   })
+
+  test('raise error if multiple mustache is not properly closed', ({ assert }) => {
+    assert.plan(2)
+
+    const template = dedent`Hello {{
+      users.map((user) => {
+        return user.username
+      }) }
+    }`
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
+
+    try {
+      tokenizer.parse()
+    } catch ({ message, line }) {
+      assert.equal(message, 'Missing token "}"')
+      assert.equal(line, 5)
+    }
+  })
 })

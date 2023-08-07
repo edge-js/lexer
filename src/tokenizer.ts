@@ -584,8 +584,8 @@ export class Tokenizer {
      * seeking for new content. Which means we are missing closing braces `}}`.
      */
     if (this.mustacheStatement) {
-      const { mustache } = this.mustacheStatement
-      throw unclosedCurlyBrace({ line: mustache.line, col: mustache.col }, mustache.filename)
+      const { mustache, scanner } = this.mustacheStatement
+      throw unclosedCurlyBrace(scanner.loc, mustache.filename)
     }
 
     /**

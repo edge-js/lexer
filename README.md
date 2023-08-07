@@ -42,12 +42,12 @@ Instead, this module starts by detecting for the [Edge whitelisted syntax](https
 
 ## Highlights
 
-- Zero dependencies (Actually one dependency that is also to standardize edge errors).
-- Just uses one regex statement. That also tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
-- Allows multiline expressions
-- Collects line and columns for accurate stack traces.
-- Detects for unclosed tags.
-- Detects for unwrapped expressions and raises appropriate errors.
+- Just one dependency to standardize edge errors.
+- Uses only one regex statement. Tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
+- Support for multiline expressions
+- Collects line and columns for accurate stack traces
+- Detects for unclosed tags
+- Detects for unwrapped expressions and raises appropriate errors
 
 ---
 
