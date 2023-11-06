@@ -724,11 +724,11 @@ test.group('Tokenizer Tags', () => {
             loc: {
               start: {
                 line: 2,
-                col: 10,
+                col: 6,
               },
               end: {
                 line: 2,
-                col: 24,
+                col: 20,
               },
             },
             properties: {
