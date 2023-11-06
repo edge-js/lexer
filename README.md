@@ -1,7 +1,7 @@
 # edge-lexer
 > Generate tokens by parsing a raw edge markup file
 
-[![gh-workflow-image]][gh-workflow-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![synk-image]][synk-url]
+[![gh-workflow-image]][gh-workflow-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url]
 
 Edge lexer produces a list of `tokens` by scanning for [Edge whitelisted syntax](https://github.com/edge-js/syntax).
 
@@ -42,12 +42,12 @@ Instead, this module starts by detecting for the [Edge whitelisted syntax](https
 
 ## Highlights
 
-- Zero dependencies (Actually one dependency that is also to standardize edge errors).
-- Just uses one regex statement. That also tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
-- Allows multiline expressions
-- Collects line and columns for accurate stack traces.
-- Detects for unclosed tags.
-- Detects for unwrapped expressions and raises appropriate errors.
+- Just one dependency to standardize edge errors.
+- Uses only one regex statement. Tested against [safe-regex](https://github.com/substack/safe-regex) for ReDOS
+- Support for multiline expressions
+- Collects line and columns for accurate stack traces
+- Detects for unclosed tags
+- Detects for unwrapped expressions and raises appropriate errors
 
 ---
 
@@ -494,8 +494,8 @@ Following the links to documented error codes raised by the lexer.
 
 [Harminder virk](https://github.com/sponsors/thetutlage)
 
-[gh-workflow-image]: https://img.shields.io/github/workflow/status/edge-js/lexer/test?style=for-the-badge
-[gh-workflow-url]: https://github.com/edge-js/lexer/actions/workflows/test.yml "Github action"
+[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/edge-js/lexer/checks.yml?style=for-the-badge
+[gh-workflow-url]: https://github.com/edge-js/lexer/actions/workflows/checks.yml "Github action"
 
 [npm-image]: https://img.shields.io/npm/v/edge-lexer.svg?style=for-the-badge&logo=npm
 [npm-url]: https://npmjs.org/package/edge-lexer 'npm'
@@ -504,6 +504,3 @@ Following the links to documented error codes raised by the lexer.
 
 [license-url]: LICENSE.md
 [license-image]: https://img.shields.io/github/license/edge-js/lexer?style=for-the-badge
-
-[synk-image]: https://img.shields.io/snyk/vulnerabilities/github/edge-js/lexer?label=Synk%20Vulnerabilities&style=for-the-badge
-[synk-url]: https://snyk.io/test/github/edge-js/lexer?targetFile=package.json "synk"

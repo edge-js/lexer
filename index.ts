@@ -7,6 +7,5 @@
  * file that was distributed with this source code.
  */
 
-export { Tokenizer } from './src/tokenizer'
-export * as utils from './src/utils'
-export * from './src/types.js'
+export { Tokenizer } from './src/tokenizer.js'
+export { MustacheTypes, TagTypes } from './src/enums.js'

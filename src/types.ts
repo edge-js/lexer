@@ -7,24 +7,7 @@
  * file that was distributed with this source code.
  */
 
-/**
- * Types for mustache statements
- */
-export enum MustacheTypes {
-  SMUSTACHE = 's__mustache',
-  ESMUSTACHE = 'es__mustache',
-  MUSTACHE = 'mustache',
-  EMUSTACHE = 'e__mustache',
-}
-
-/**
- * The type of node types. Each token
- * will have one of these types
- */
-export enum TagTypes {
-  TAG = 'tag',
-  ETAG = 'e__tag',
-}
+import type { MustacheTypes, TagTypes } from './enums.js'
 
 /**
  * Properties node for a tag
@@ -155,6 +138,18 @@ export type RuntimeComment = {
   realCol: number
 }
 
+/**
+ * Tags accepted by the tokenie=zer
+ */
 export interface Tags {
   [name: string]: LexerTagDefinitionContract
+}
+
+/**
+ * Options accepted by the tokenizer
+ */
+export type TokenizerOptions = {
+  filename: string
+  onLine?: (line: string) => string
+  claimTag?: (name: string) => LexerTagDefinitionContract | null
 }

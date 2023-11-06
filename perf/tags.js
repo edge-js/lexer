@@ -1,6 +1,8 @@
-const Tokenizer = require('../build/src/tokenizer').Tokenizer
-const Benchmark = require('benchmark')
-const suite = new Benchmark.Suite()
+import { Tokenizer } from '../build/index.js'
+import Benchmark from 'benchmark'
+
+const { Suite } = Benchmark
+const suite = new Suite()
 
 const template = `
 This is a dummy template string to run some performance checks against

@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { getTag, getMustache } from '../src/detector'
+import { getTag, getMustache } from '../src/detector.js'
 
 test.group('Detector (tag)', () => {
   test("return null when statement isn't starting with @", ({ assert }) => {

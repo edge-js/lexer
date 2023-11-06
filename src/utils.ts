@@ -7,7 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import { Token, TagTypes, TagToken, MustacheToken, MustacheTypes } from './types'
+import { TagTypes, MustacheTypes } from './enums.js'
+import type { Token, TagToken, MustacheToken } from './types.js'
 
 /**
  * Returns true when token is a tag with a given name

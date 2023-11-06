@@ -7,26 +7,27 @@
  * file that was distributed with this source code.
  */
 
-import { test } from '@japa/runner'
 import dedent from 'dedent'
-import { Tokenizer } from '../src/tokenizer'
-import { MustacheTypes } from '../src/types'
+import { test } from '@japa/runner'
+
+import { Tokenizer } from '../src/tokenizer.js'
+import { MustacheTypes } from '../src/enums.js'
 
 const tagsDef = {
   if: class If {
-    public static block = true
-    public static selfclosed = false
-    public static seekable = true
+    static block = true
+    static selfclosed = false
+    static seekable = true
   },
   else: class Else {
-    public static block = false
-    public static selfclosed = false
-    public static seekable = false
+    static block = false
+    static selfclosed = false
+    static seekable = false
   },
   include: class Include {
-    public static block = false
-    public static selfclosed = false
-    public static seekable = true
+    static block = false
+    static selfclosed = false
+    static seekable = true
   },
 }
 
@@ -651,6 +652,24 @@ test.group('Tokenizer Mustache', () => {
     } catch ({ message, line }) {
       assert.equal(message, 'Missing token "}"')
       assert.equal(line, 1)
+    }
+  })
+
+  test('raise error if multiple mustache is not properly closed', ({ assert }) => {
+    assert.plan(2)
+
+    const template = dedent`Hello {{
+      users.map((user) => {
+        return user.username
+      }) }
+    }`
+    const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
+
+    try {
+      tokenizer.parse()
+    } catch ({ message, line }) {
+      assert.equal(message, 'Missing token "}"')
+      assert.equal(line, 5)
     }
   })
 })

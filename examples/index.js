@@ -1,7 +1,5 @@
-// @ts-check
-
-const { Tokenizer } = require('..')
-const dedent = require('dedent')
+import dedent from 'dedent'
+import { Tokenizer } from '../build/index.js'
 
 const exampleCode = dedent`
 {{-- Show username when exists --}}

@@ -34,41 +34,39 @@
  * first match.
  */
 export class Scanner {
-  private tolaretionCounts: number = 0
-  private tolerateLhs: string = ''
-  private tolerateRhs: string = ''
-  private patternLength: number = 0
+  #pattern: string
+
+  #tolaretionCounts: number = 0
+  #tolerateLhs: string = ''
+  #tolerateRhs: string = ''
+  #patternLength: number = 0
 
   /**
    * Tracking if the scanner has been closed
    */
-  public closed: boolean = false
+  closed: boolean = false
 
   /**
    * The matched content within the pattern
    */
-  public match: string = ''
+  match: string = ''
 
   /**
    * The content in the same line but after the closing
    * of the pattern
    */
-  public leftOver: string = ''
+  leftOver: string = ''
 
-  public loc: { line: number; col: number }
+  loc: { line: number; col: number }
 
-  constructor(
-    private pattern: string,
-    toleratePair: [string, string],
-    private line: number,
-    private col: number
-  ) {
-    this.tolerateLhs = toleratePair[0]
-    this.tolerateRhs = toleratePair[1]
-    this.patternLength = this.pattern.length
+  constructor(pattern: string, toleratePair: [string, string], line: number, col: number) {
+    this.#tolerateLhs = toleratePair[0]
+    this.#tolerateRhs = toleratePair[1]
+    this.#patternLength = pattern.length
+    this.#pattern = pattern
     this.loc = {
-      line: this.line,
-      col: this.col,
+      line: line,
+      col: col,
     }
   }
 
@@ -79,9 +77,9 @@ export class Scanner {
    * This will be used to mark the scanner as closed and stop scanning
    * for more chars
    */
-  private matchesPattern(chars: string, iterationCount: number) {
-    for (let i = 0; i < this.patternLength; i++) {
-      if (this.pattern[i] !== chars[iterationCount + i]) {
+  #matchesPattern(chars: string, iterationCount: number) {
+    for (let i = 0; i < this.#patternLength; i++) {
+      if (this.#pattern[i] !== chars[iterationCount + i]) {
         return false
       }
     }
@@ -95,7 +93,7 @@ export class Scanner {
    * toleration patterns to make sure they are not making the
    * scanner to end due to pattern mis-match.
    */
-  public scan(chunk: string): void {
+  scan(chunk: string): void {
     if (chunk === '\n') {
       this.loc.line++
       this.loc.col = 0
@@ -117,8 +115,8 @@ export class Scanner {
        * Toleration count is 0 and closing pattern matches the current
        * or series of upcoming characters
        */
-      if (this.tolaretionCounts === 0 && this.matchesPattern(chunk, iterations)) {
-        iterations += this.patternLength
+      if (this.#tolaretionCounts === 0 && this.#matchesPattern(chunk, iterations)) {
+        iterations += this.#patternLength
         this.closed = true
         break
       }
@@ -127,16 +125,16 @@ export class Scanner {
        * Increments the tolarate counts when char is the
        * tolerate lhs character
        */
-      if (char === this.tolerateLhs) {
-        this.tolaretionCounts++
+      if (char === this.#tolerateLhs) {
+        this.#tolaretionCounts++
       }
 
       /**
        * Decrements the tolare counts when char is the
        * tolerate rhs character
        */
-      if (char === this.tolerateRhs) {
-        this.tolaretionCounts--
+      if (char === this.#tolerateRhs) {
+        this.#tolaretionCounts--
       }
 
       /**

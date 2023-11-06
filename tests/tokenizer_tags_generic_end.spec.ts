@@ -7,27 +7,28 @@
  * file that was distributed with this source code.
  */
 
-import { test } from '@japa/runner'
 import dedent from 'dedent'
-import { Tokenizer } from '../src/tokenizer'
-import { TagTypes, MustacheTypes } from '../src/types'
+import { test } from '@japa/runner'
+
+import { Tokenizer } from '../src/tokenizer.js'
+import { TagTypes, MustacheTypes } from '../src/enums.js'
 
 const tagsDef = {
   if: class If {
-    public static block = true
-    public static seekable = true
+    static block = true
+    static seekable = true
   },
   else: class Else {
-    public static block = false
-    public static seekable = false
+    static block = false
+    static seekable = false
   },
   include: class Include {
-    public static block = false
-    public static seekable = true
+    static block = false
+    static seekable = true
   },
   each: class Each {
-    public static block = true
-    public static seekable = true
+    static block = true
+    static seekable = true
   },
 }
 
@@ -723,11 +724,11 @@ test.group('Tokenizer Tags', () => {
             loc: {
               start: {
                 line: 2,
-                col: 10,
+                col: 6,
               },
               end: {
                 line: 2,
-                col: 24,
+                col: 20,
               },
             },
             properties: {
@@ -1124,9 +1125,9 @@ test.group('Tokenizer Tags', () => {
 
     const tags = {
       if: class If {
-        public static block = true
-        public static seekable = true
-        public static noNewLine = true
+        static block = true
+        static seekable = true
+        static noNewLine = true
       },
     }
 
@@ -1197,9 +1198,9 @@ test.group('Tokenizer Tags', () => {
 
     const tags = {
       if: class If {
-        public static block = true
-        public static seekable = true
-        public static noNewLine = true
+        static block = true
+        static seekable = true
+        static noNewLine = true
       },
     }
 

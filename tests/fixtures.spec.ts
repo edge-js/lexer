@@ -8,8 +8,8 @@
  */
 
 import { test } from '@japa/runner'
-import { fixtures } from '../fixtures/index'
-import { Tokenizer } from '../src/tokenizer'
+import { fixtures } from '../fixtures/index.js'
+import { Tokenizer } from '../src/tokenizer.js'
 
 const tags = {
   if: {
