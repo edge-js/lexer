@@ -1,7 +1,7 @@
 {
   "name": "edge-lexer",
   "description": "Edge parser to convert text markup to lexer tokens",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "engines": {
     "node": ">=18.16.0"
   },
