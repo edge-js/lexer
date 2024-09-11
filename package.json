@@ -21,18 +21,17 @@
   "scripts": {
     "pretest": "npm run lint",
     "test": "c8 npm run quick:test",
-    "clean": "del-cli build",
+    "lint": "eslint",
+    "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "precompile": "npm run lint && npm run clean",
+    "precompile": "npm run lint",
     "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
     "build": "npm run compile",
-    "prepublishOnly": "npm run build",
-    "lint": "eslint . --ext=.ts",
-    "format": "prettier --write .",
-    "release": "np",
     "version": "npm run build",
+    "prepublishOnly": "npm run build",
+    "release": "np",
     "sync-labels": "github-label-sync --labels .github/labels.json edge-js/lexer",
-    "quick:test": "node --enable-source-maps --loader=ts-node/esm bin/test.ts"
+    "quick:test": "node --enable-source-maps --import=ts-node-maintained/register/esm bin/test.ts"
   },
   "devDependencies": {
     "@adonisjs/eslint-config": "^2.0.0-beta.6",
@@ -42,19 +41,19 @@
     "@commitlint/config-conventional": "^19.4.1",
     "@japa/assert": "^3.0.0",
     "@japa/runner": "^3.1.4",
+    "@release-it/conventional-changelog": "^8.0.1",
     "@swc/core": "^1.7.23",
     "@types/dedent": "^0.7.2",
     "@types/node": "^22.5.4",
     "benchmark": "^2.1.4",
     "c8": "^10.1.2",
     "dedent": "^1.5.3",
-    "del-cli": "^5.1.0",
     "eslint": "^9.10.0",
     "github-label-sync": "^2.3.1",
     "husky": "^9.1.5",
-    "np": "^10.0.7",
     "prettier": "^3.3.3",
-    "ts-node": "^10.9.2",
+    "release-it": "^17.6.0",
+    "ts-node-maintained": "^10.9.4",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4"
   },
@@ -76,36 +75,9 @@
     "template",
     "template-engine"
   ],
-  "eslintConfig": {
-    "extends": "@adonisjs/eslint-config/package"
-  },
-  "prettier": "@adonisjs/prettier-config",
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
   "publishConfig": {
-    "access": "public",
-    "tag": "latest"
-  },
-  "directories": {
-    "test": "test"
-  },
-  "np": {
-    "message": "chore(release): %s",
-    "tag": "latest",
-    "branch": "main",
-    "anyBranch": false
-  },
-  "c8": {
-    "reporter": [
-      "text",
-      "html"
-    ],
-    "exclude": [
-      "tests/**"
-    ]
+    "provenance": true,
+    "access": "public"
   },
   "tsup": {
     "entry": [
@@ -119,5 +91,44 @@
     "dts": false,
     "sourcemap": true,
     "target": "esnext"
-  }
+  },
+  "release-it": {
+    "git": {
+      "requireCleanWorkingDir": true,
+      "requireUpstream": true,
+      "commitMessage": "chore(release): ${version}",
+      "tagAnnotation": "v${version}",
+      "push": true,
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "c8": {
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "exclude": [
+      "tests/**"
+    ]
+  },
+  "prettier": "@adonisjs/prettier-config"
 }
