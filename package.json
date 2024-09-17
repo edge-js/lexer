@@ -29,7 +29,7 @@
     "build": "npm run compile",
     "version": "npm run build",
     "prepublishOnly": "npm run build",
-    "release": "np",
+    "release": "release-it",
     "quick:test": "node --enable-source-maps --import=ts-node-maintained/register/esm bin/test.ts"
   },
   "devDependencies": {
