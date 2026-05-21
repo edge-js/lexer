@@ -392,7 +392,7 @@ test.group('Tokenizer Mustache', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     try {
       tokenizer.parse()
-    } catch ({ message, line }) {
+    } catch ({ message, line }: any) {
       assert.equal(message, 'Missing token "}"')
       assert.equal(line, 1)
     }
@@ -649,7 +649,7 @@ test.group('Tokenizer Mustache', () => {
 
     try {
       tokenizer.parse()
-    } catch ({ message, line }) {
+    } catch ({ message, line }: any) {
       assert.equal(message, 'Missing token "}"')
       assert.equal(line, 1)
     }
@@ -667,7 +667,7 @@ test.group('Tokenizer Mustache', () => {
 
     try {
       tokenizer.parse()
-    } catch ({ message, line }) {
+    } catch ({ message, line }: any) {
       assert.equal(message, 'Missing token "}"')
       assert.equal(line, 5)
     }

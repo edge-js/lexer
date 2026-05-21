@@ -554,7 +554,7 @@ test.group('Tokenizer | Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     try {
       tokenizer.parse()
-    } catch ({ message, line }) {
+    } catch ({ message, line }: any) {
       assert.equal(message, 'Missing token ")"')
       assert.equal(line, 1)
     }
@@ -569,7 +569,7 @@ test.group('Tokenizer | Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     try {
       tokenizer.parse()
-    } catch ({ message, line, col }) {
+    } catch ({ message, line, col }: any) {
       assert.equal(message, 'Unexpected token " hello world"')
       assert.equal(line, 1)
       assert.equal(col, 15)
@@ -589,7 +589,7 @@ test.group('Tokenizer | Tags', () => {
     const tokenizer = new Tokenizer(template, tagsDef, { filename: 'eval.edge' })
     try {
       tokenizer.parse()
-    } catch ({ message, line, col }) {
+    } catch ({ message, line, col }: any) {
       assert.equal(message, 'Missing token "("')
       assert.equal(line, 1)
       assert.equal(col, 3)
