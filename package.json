@@ -3,7 +3,7 @@
   "description": "Edge parser to convert text markup to lexer tokens",
   "version": "6.0.4",
   "engines": {
-    "node": ">=18.16.0"
+    "node": ">=24.0.0"
   },
   "main": "build/index.js",
   "type": "module",
